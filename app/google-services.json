@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "58660324526",
+    "firebase_url": "https://fchat-40a6f.firebaseio.com",
+    "project_id": "fchat-40a6f",
+    "storage_bucket": "fchat-40a6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58660324526:android:9bd62dfcb1842214",
+        "android_client_info": {
+          "package_name": "vn.phuongcong.fchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58660324526-0qjj6cqoa1qvj3onbvtjna65t27evm90.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.phuongcong.fchat",
+            "certificate_hash": "a109fdffef81119e78e2def8c14f6df550d3f272"
+          }
+        },
+        {
+          "client_id": "58660324526-cat0a3g9irra2jdijrt38as70f13efnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHAQhEdf4CGIqpEKXtE21FgKyAFf9wj0Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58660324526-cat0a3g9irra2jdijrt38as70f13efnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
