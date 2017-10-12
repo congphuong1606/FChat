@@ -2,21 +2,25 @@ package vn.phuongcong.fchat
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_login.*
+import vn.phuongcong.fchat.di.login.LoginModule
 import vn.phuongcong.fchat.ui.login.LoginPresenter
 import vn.phuongcong.fchat.ui.login.LoginView
 import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity(),LoginView {
+class LoginActivity : AppCompatActivity(), LoginView {
+
     @Inject
-    lateinit var mPresenter:LoginPresenter
+    var loginPresenter: LoginPresenter?=null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-//        (myApp as MyApp).appComponent.injectTo(this)
+        (application as MyApp).component.plus(LoginModule(this)).injectTo(this)
 
 
     }
+
     override fun onError(string: String) {
 
     }

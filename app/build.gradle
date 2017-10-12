@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 
 
 
+
+
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -12,6 +15,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,10 +31,10 @@ android {
         unitTests.returnDefaultValues = true
     }
 }
+
 kapt {
     generateStubs = true
 }
-
 dependencies {
 
 
@@ -42,11 +46,9 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:11.4.2'
 
 
-
-
-    compile 'com.google.dagger:dagger-android:2.11-rc2'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11-rc2'
-    kapt 'com.google.dagger:dagger-android-processor:2.11-rc2'
+    kapt 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.google.dagger:dagger:2.7'
+    provided 'javax.annotation:javax.annotation-api:1.2'
 
 
 
@@ -57,7 +59,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 repositories {

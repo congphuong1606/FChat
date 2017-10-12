@@ -7,14 +7,12 @@ import dagger.Provides
 import javax.inject.Singleton
 
 /**
- * Created by Ominext on 10/11/2017.
+ * Created by Ominext on 10/12/2017.
  */
 @Module
-class FireBaseModule {
+class FirebaseModule {
     @Provides
     @Singleton
-    fun getFireBaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
-    @Provides
-    @Singleton
-    fun getFireBaseDataBase():FirebaseDatabase= FirebaseDatabase.getInstance()
+    fun getFirebaseAuth():FirebaseAuth =FirebaseAuth.getInstance()
+
 }
