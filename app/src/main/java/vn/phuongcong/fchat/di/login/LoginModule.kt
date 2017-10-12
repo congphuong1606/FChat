@@ -14,4 +14,11 @@ class LoginModule(var loginActivity: LoginActivity) {
     @Singleton
     fun provideLoginActivity():LoginActivity= loginActivity
 
+//    var loginActivity: LoginActivity?=null
+//    constructor( loginActivity: LoginActivity):this(){
+//        this.loginActivity=loginActivity
+//    }
+//    @Provides
+//    @Singleton
+//    fun provideLoginActivity():LoginActivity= loginActivity
 }
