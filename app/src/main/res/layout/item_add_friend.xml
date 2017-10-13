@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/addFriendAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/bacgroud" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/tvAddFriendName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btnAddFriend"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Nguyen Van Phuong"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnAddFriend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="thêm bạn"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</LinearLayout>

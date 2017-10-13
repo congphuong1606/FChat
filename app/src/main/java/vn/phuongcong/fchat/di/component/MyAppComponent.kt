@@ -1,11 +1,11 @@
 package vn.phuongcong.fchat.di.component
 
 import dagger.Component
-import vn.phuongcong.fchat.MyApp
-import vn.phuongcong.fchat.di.login.LoginModule
+import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.di.module.FirebaseModule
 
 import vn.phuongcong.fchat.di.module.MyAppModule
+import vn.phuongcong.fchat.di.module.ViewModule
 import javax.inject.Singleton
 
 /**
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(MyAppModule::class,FirebaseModule::class))
 interface MyAppComponent {
-    fun inject(app: MyApp)
-    fun plus(loginModule: LoginModule):SubComponent
+    fun inject(app: App)
+    fun plus(viewModule: ViewModule):SubComponent
 
 }

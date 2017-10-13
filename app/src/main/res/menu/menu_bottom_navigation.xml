@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_mesage"
+        android:enabled="true"
+        android:icon="@drawable/ic_message"
+        android:title="@string/text_tinnhan"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_friend"
+        android:enabled="true"
+        android:icon="@drawable/ic_perm_contact"
+        android:title="@string/text_banbe"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_chat_group"
+        android:enabled="true"
+        android:icon="@drawable/ic_supervisor"
+        android:title="@string/text_chatnhom"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_account"
+        android:title="@string/text_chatnhom"
+        app:showAsAction="ifRoom" />
+</menu>

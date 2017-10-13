@@ -7,13 +7,17 @@ import vn.phuongcong.fchat.di.component.MyAppComponent
 import vn.phuongcong.fchat.di.module.MyAppModule
 
 
-class MyApp : Application() {
+class App : Application() {
 
     val component: MyAppComponent by lazy {
         DaggerMyAppComponent.builder().myAppModule(MyAppModule(this)).build()
     }
+
+
+
     override fun onCreate() {
         super.onCreate()
         component.inject(this)
     }
+
 }

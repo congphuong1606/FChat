@@ -2,7 +2,7 @@ package vn.phuongcong.fchat.di.module
 
 import dagger.Module
 import dagger.Provides
-import vn.phuongcong.fchat.MyApp
+import vn.phuongcong.fchat.App
 import javax.inject.Singleton
 
 /**
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 
 @Module
-class MyAppModule(val app: MyApp) {
+class MyAppModule(val app: App) {
     @Provides
     @Singleton
     fun provideApp() = app
