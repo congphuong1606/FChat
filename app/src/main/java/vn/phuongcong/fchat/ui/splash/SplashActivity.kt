@@ -14,19 +14,19 @@ import vn.phuongcong.fchat.common.Contans
 
 class SplashActivity : AppCompatActivity() {
     private var preferences: SharedPreferences? = null
-    private var accName: String? = null
-    private var accPass: String? = null
+    private var email: String? = null
+    private var pass: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         preferences = getSharedPreferences(Contans.SPF_NAME, Context.MODE_PRIVATE)
-        accName = preferences!!.getString("name", "")
-        accPass = preferences!!.getString("pass", "")
+        email = preferences!!.getString(Contans.LOGIN_EMAIL, "")
+        pass = preferences!!.getString(Contans.LOGIN_PASS, "")
         val handler = Handler()
         handler.postDelayed(Runnable {
             val i = Intent(this@SplashActivity, LoginActivity::class.java)
-            i.putExtra("name", accName)
-            i.putExtra("pass", accPass)
+            i.putExtra("email", email)
+            i.putExtra("pass", pass)
             i.putExtra("fromActivity", "splash")
             startActivity(i)
             finish()

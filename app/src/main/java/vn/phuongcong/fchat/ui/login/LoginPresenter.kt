@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DatabaseReference
+import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.common.Contans
 
 
@@ -51,15 +52,20 @@ class LoginPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 databaseReference.child(Contans.USERS_PATH).child(uid)
         databaseUser.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user= dataSnapshot.value
-
-//                loginView.onVerified(user)
+                var user=dataSnapshot.getValue(User::class.java)
+                loginView.onVerified(user)
 
             }
             override fun onCancelled(databaseError: DatabaseError) {
                loginView.onError(databaseError.toString())
             }
         })
+    }
+
+    fun oncurentLogin() {
+        if(mAuth.currentUser!=null){
+
+        }
     }
 
 }

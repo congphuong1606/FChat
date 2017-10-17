@@ -7,6 +7,8 @@ import vn.phuongcong.fchat.di.module.SharedPreference
 
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
+import vn.phuongcong.fchat.ui.main.MainActivity
+
 
 /**
  * Created by Ominext on 10/12/2017.
@@ -16,4 +18,6 @@ import vn.phuongcong.fchat.di.scope.ActivityScope
 interface SubComponent {
     fun injectTo(loginActivity: LoginActivity)
     fun injectTo(regisActivity: RegisActivity)
+    fun injectTo(mainActivity: MainActivity)
+
 }

@@ -9,15 +9,27 @@ import vn.phuongcong.fchat.di.module.AppModule
 
 
 class App : Application() {
+
+    var UID=""
+    lateinit var myApplication:App
     val component: AppComponent by lazy {
         DaggerAppComponent.builder().appModule(AppModule(this)).build()
     }
 
-
+    companion object Factory {
+        fun create(): App = App()
+    }
 
     override fun onCreate() {
         super.onCreate()
+        myApplication=this
         component.inject(this)
     }
+
+    fun get(): App {
+            return myApplication
+    }
+
+
 
 }

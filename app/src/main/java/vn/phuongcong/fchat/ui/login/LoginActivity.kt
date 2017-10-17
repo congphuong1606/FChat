@@ -41,6 +41,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun initData() {
+        mPresenter.oncurentLogin()
         dialogUtils = DialogUtils(dialog, this)
         onGetIntent()
     }
@@ -54,6 +55,10 @@ class LoginActivity : BaseActivity(), LoginView {
         fromActivity?.let {
             if (fromActivity.equals(Contans.REGIS_ACTIVITY)) {
                 DialogUtils.showErorr(this, Contans.REQUEST_CHECK_EMAIL)
+            }else {
+                if(pass!!.length>0)
+                    Remember.isChecked=true
+                else Remember.isChecked=false
             }
         }
 
@@ -82,7 +87,6 @@ class LoginActivity : BaseActivity(), LoginView {
                 prefsEditor.putString(Contans.LOGIN_EMAIL,email)
                         .putString(Contans.LOGIN_PASS, pass)
                         .commit()
-
             }else{
                 prefsEditor.clear().commit()
             }
@@ -109,10 +113,10 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onVerified(user: User?) {
         dialogUtils.hideLoading()
-        prefsEditor.putString(Contans.PRE_USER_ID, user?.id)
+       prefsEditor.putString(Contans.PRE_USER_ID, user?.id)
                 .putString(Contans.PRE_USER_EMAIL, user?.email)
                 .putString(Contans.PRE_USER_NAME, user?.name)
-                .putString(Contans.PRE_USER_PASS, user?.pass)
+                .putString(Contans.PRE_USER_AVATAR, user?.avatar)
                 .putString(Contans.PRE_USER_TOKEN, user?.id)
                 .commit()
         onStartActivity(MainActivity::class.java)
