@@ -11,5 +11,12 @@ object Contans {
     val ACOUNT_EXISTED = "địa chỉ email đã được sử dụng cho một tài khoản khác ! hê hê"
     val REGIS_ACTIVITY="regisActivity"
     val REQUEST_CHECK_EMAIL="kiểm tra hộp thứ đến email để xác nhận tài khoản mới"
+    val  PRE_USER_PASS="prefs_pass"
+    val  PRE_USER_EMAIL="prefs_email"
+    val  PRE_USER_NAME="prefs_name"
+    val  PRE_USER_TOKEN="prefs_token"
+    val  PRE_USER_ID="prefs_id"
+    val  LOGIN_PASS="loginpass"
+    val  LOGIN_EMAIL="loginemail"
 
 }

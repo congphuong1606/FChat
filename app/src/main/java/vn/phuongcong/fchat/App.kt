@@ -1,16 +1,16 @@
 package vn.phuongcong.fchat
 
 import android.app.Application
-import vn.phuongcong.fchat.di.component.DaggerMyAppComponent
 
-import vn.phuongcong.fchat.di.component.MyAppComponent
-import vn.phuongcong.fchat.di.module.MyAppModule
+
+import vn.phuongcong.fchat.di.component.AppComponent
+import vn.phuongcong.fchat.di.component.DaggerAppComponent
+import vn.phuongcong.fchat.di.module.AppModule
 
 
 class App : Application() {
-
-    val component: MyAppComponent by lazy {
-        DaggerMyAppComponent.builder().myAppModule(MyAppModule(this)).build()
+    val component: AppComponent by lazy {
+        DaggerAppComponent.builder().appModule(AppModule(this)).build()
     }
 
 

@@ -2,10 +2,12 @@ package vn.phuongcong.fchat
 
 
 import android.app.ProgressDialog
+import android.content.SharedPreferences
 import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.data.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.utils.CheckInput
@@ -16,13 +18,17 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity(), LoginView {
 
 
-    private  var email: String?=null
-    private  var pass: String?=null
+    private var email: String? = null
+    private var pass: String? = null
     private lateinit var dialogUtils: DialogUtils
-    private  var dialog: ProgressDialog?=null
+    private var dialog: ProgressDialog? = null
 
     @Inject
     lateinit var mPresenter: LoginPresenter
+    @Inject
+    lateinit var prefs: SharedPreferences
+    @Inject
+    lateinit var prefsEditor: SharedPreferences.Editor
 
     override val contentLayoutID: Int
         get() = R.layout.activity_login
@@ -35,21 +41,19 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun initData() {
-        dialogUtils= DialogUtils(dialog,this)
+        dialogUtils = DialogUtils(dialog, this)
         onGetIntent()
-
-
     }
 
     private fun onGetIntent() {
-        email=getIntent().getStringExtra("email")
-        pass=getIntent().getStringExtra("pass")
+        email = getIntent().getStringExtra("email")
+        pass = getIntent().getStringExtra("pass")
         edtLoginEmail.setText(email)
         edtLoginPass.setText(pass)
-        var fromActivity=getIntent().getStringExtra("fromActivity")
+        var fromActivity = getIntent().getStringExtra("fromActivity")
         fromActivity?.let {
-            if(fromActivity.equals(Contans.REGIS_ACTIVITY)){
-                DialogUtils.showErorr(this,Contans.REQUEST_CHECK_EMAIL)
+            if (fromActivity.equals(Contans.REGIS_ACTIVITY)) {
+                DialogUtils.showErorr(this, Contans.REQUEST_CHECK_EMAIL)
             }
         }
 
@@ -57,6 +61,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onClick() {
         btnLogin.setOnClickListener {
+
             loginAction()
         }
         btnRegis.setOnClickListener {
@@ -73,6 +78,14 @@ class LoginActivity : BaseActivity(), LoginView {
             dialogUtils.showLoading()
             email = edtLoginEmail.text.toString().trim();
             pass = edtLoginPass.text.toString().trim();
+            if (Remember.isChecked) {
+                prefsEditor.putString(Contans.LOGIN_EMAIL,email)
+                        .putString(Contans.LOGIN_PASS, pass)
+                        .commit()
+
+            }else{
+                prefsEditor.clear().commit()
+            }
             mPresenter.onSignIn(email!!, pass!!)
         }
     }
@@ -80,7 +93,7 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onError(string: String) {
         dialogUtils.hideLoading()
-        DialogUtils.showErorr(this,string)
+        DialogUtils.showErorr(this, string)
 
     }
 
@@ -93,18 +106,22 @@ class LoginActivity : BaseActivity(), LoginView {
 
 
     }
-    override fun onVerified() {
-        dialogUtils.hideLoading()
-        if(Remember.isChecked){
 
-        }
+    override fun onVerified(user: User?) {
+        dialogUtils.hideLoading()
+        prefsEditor.putString(Contans.PRE_USER_ID, user?.id)
+                .putString(Contans.PRE_USER_EMAIL, user?.email)
+                .putString(Contans.PRE_USER_NAME, user?.name)
+                .putString(Contans.PRE_USER_PASS, user?.pass)
+                .putString(Contans.PRE_USER_TOKEN, user?.id)
+                .commit()
         onStartActivity(MainActivity::class.java)
         finish()
     }
 
     override fun onViriFail() {
         dialogUtils.hideLoading()
-        DialogUtils.showErorr(this,Contans.VERY_FAIL)
+        DialogUtils.showErorr(this, Contans.VERY_FAIL)
     }
 
 

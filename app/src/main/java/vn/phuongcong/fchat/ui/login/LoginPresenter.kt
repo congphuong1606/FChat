@@ -1,11 +1,16 @@
 package vn.phuongcong.fchat
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import vn.phuongcong.fchat.data.User
 
 import vn.phuongcong.fchat.ui.login.LoginView
 import javax.inject.Inject
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.DatabaseReference
+import vn.phuongcong.fchat.common.Contans
 
 
 /**
@@ -13,6 +18,7 @@ import javax.inject.Inject
  */
 
 class LoginPresenter @Inject constructor(var mAuth: FirebaseAuth,
+                                         var databaseReference: DatabaseReference,
                                          var loginView: LoginView) {
 
     fun onSignIn(email: String, pass: String) {
@@ -32,11 +38,28 @@ class LoginPresenter @Inject constructor(var mAuth: FirebaseAuth,
     fun checkEmailVerified() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user!!.isEmailVerified) {
-            loginView.onVerified()
+            getUserDatabase(user.uid)
+
         } else {
             FirebaseAuth.getInstance().signOut()
             loginView.onViriFail()
         }
+    }
+
+    private fun getUserDatabase(uid: String) {
+        val databaseUser:DatabaseReference =
+                databaseReference.child(Contans.USERS_PATH).child(uid)
+        databaseUser.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user= dataSnapshot.value
+
+//                loginView.onVerified(user)
+
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+               loginView.onError(databaseError.toString())
+            }
+        })
     }
 
 }

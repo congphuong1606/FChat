@@ -10,7 +10,7 @@ class AddFriendFragment : BaseFragment() {
     override val LayoutId: Int
         get() = R.layout.fragment_add_friend
 
-    override fun injectDependence(view: View) {
+    override fun injectDependence() {
 
     }
 

@@ -1,6 +1,6 @@
 package vn.phuongcong.fchat.ui.regis
 
-import vn.phuongcong.fchat.base.BaseView
+import vn.phuongcong.fchat.ui.base.BaseView
 
 /**
  * Created by Ominext on 10/13/2017.

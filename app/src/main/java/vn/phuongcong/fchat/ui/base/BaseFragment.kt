@@ -12,7 +12,7 @@ import vn.phuongcong.fchat.R
 
 abstract class BaseFragment : Fragment() {
     protected abstract val LayoutId: Int
-    abstract fun injectDependence(view: View)
+    protected abstract fun injectDependence()
     protected abstract fun initData()
 
     protected abstract fun onDestroyComposi()
@@ -20,7 +20,7 @@ abstract class BaseFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         fun View(): View = inflater!!.inflate(LayoutId, container, false)
-        injectDependence(View())
+        injectDependence()
         initData()
         return View();
     }

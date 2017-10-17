@@ -9,16 +9,16 @@ class ChatFragment : BaseFragment() {
     override val LayoutId: Int
         get() = R.layout.fragment_chat
 
-    override fun injectDependence(view: View) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun injectDependence() {
+
     }
 
     override fun initData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onDestroyComposi() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 }

@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.base
+package vn.phuongcong.fchat.ui.base
 
 /**
  * Created by Ominext on 10/11/2017.

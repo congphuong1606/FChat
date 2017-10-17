@@ -1,14 +1,13 @@
-package vn.phuongcong.fchat.ui.main.fragment.listgroup
+package vn.phuongcong.fchat.ui.main.fragment.addFriend
 
-import android.os.Bundle
 import android.view.View
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.ui.base.BaseFragment
 
 
-class GroupFragment : BaseFragment() {
+class NewChatFragment : BaseFragment() {
     override val LayoutId: Int
-        get() = R.layout.fragment_group
+        get() = R.layout.fragment_new_chat
 
     override fun injectDependence() {
 
@@ -19,6 +18,7 @@ class GroupFragment : BaseFragment() {
     }
 
     override fun onDestroyComposi() {
+
     }
 
 
