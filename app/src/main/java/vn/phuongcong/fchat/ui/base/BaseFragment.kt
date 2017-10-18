@@ -10,7 +10,6 @@ abstract class BaseFragment : Fragment() {
     protected abstract val LayoutId: Int
     protected abstract fun injectDependence()
     protected abstract fun initData()
-
     protected abstract fun onDestroyComposi()
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
