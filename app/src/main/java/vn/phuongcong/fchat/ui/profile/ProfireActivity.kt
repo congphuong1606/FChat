@@ -12,6 +12,7 @@ import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.SharedPreference
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
+import vn.phuongcong.fchat.ui.splash.SplashActivity
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
@@ -31,12 +32,10 @@ class ProfireActivity : BaseActivity(), ProfileView {
     }
 
     override fun onSignOutSuccessful() {
-        var email = sharedPref!!.getString(Contans.LOGIN_EMAIL, "")
-        var pass = sharedPref!!.getString(Contans.LOGIN_PASS, "")
-        val i = Intent(this@ProfireActivity, LoginActivity::class.java)
-        i.putExtra(Contans.KEY_EMAIL, email)
-        i.putExtra(Contans.KEY_PASS, pass)
-        i.putExtra(Contans.KEY_FROM_ACTIVTY, Contans.SPLASH_ACTIVITY)
+
+        val i = Intent(this@ProfireActivity, SplashActivity::class.java)
+        LoginActivity().finish()
+        MainActivity().finish()
         startActivity(i)
         finish()
     }

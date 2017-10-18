@@ -22,5 +22,6 @@ object Contans {
     val KEY_PASS:String="pass"
     val KEY_EMAIL:String="email"
     val SPLASH_ACTIVITY:String="splashActivity"
+    val PROFILE_ACTIVITY: String="profieActivity"
 
 }

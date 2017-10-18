@@ -14,6 +14,9 @@ import vn.phuongcong.fchat.utils.CheckInput
 import vn.phuongcong.fchat.utils.DialogUtils
 
 import javax.inject.Inject
+import android.app.Activity
+
+
 
 class LoginActivity : BaseActivity(), LoginView {
 
@@ -54,7 +57,7 @@ class LoginActivity : BaseActivity(), LoginView {
         fromActivity?.let {
             if (fromActivity.equals(Contans.REGIS_ACTIVITY)) {
                 DialogUtils.showErorr(this, Contans.REQUEST_CHECK_EMAIL)
-            }else{
+            }else {
                 if(pass!!.length>0){
                     Remember.isChecked=true
                 }else Remember.isChecked=false
@@ -97,7 +100,10 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onError(string: String) {
         dialogUtils.hideLoading()
-        DialogUtils.showErorr(this, string)
+        if (!isFinishing) {
+            DialogUtils.showErorr(this, string)
+        }
+
 
     }
 
