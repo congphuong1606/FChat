@@ -2,14 +2,10 @@ package vn.phuongcong.fchat.ui.profile
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Handler
 import kotlinx.android.synthetic.main.activity_profile.*
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.LoginActivity
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.R.id.btnSignOut
-import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.di.module.SharedPreference
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.ui.splash.SplashActivity
@@ -17,13 +13,11 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 
-class ProfireActivity : BaseActivity(), ProfileView {
-
+class ProfileActivity : BaseActivity(), ProfileView {
 
     @Inject
     lateinit var mPresenter: ProfilePresenter
-    @Inject
-    lateinit var sharedPref: SharedPreferences
+
 
     override fun injectDependence() {
         (application as App).component
@@ -32,11 +26,9 @@ class ProfireActivity : BaseActivity(), ProfileView {
     }
 
     override fun onSignOutSuccessful() {
-
-        val i = Intent(this@ProfireActivity, SplashActivity::class.java)
-        LoginActivity().finish()
-        MainActivity().finish()
+        val i = Intent(this@ProfileActivity, SplashActivity::class.java)
         startActivity(i)
+        MainActivity().finish()
         finish()
     }
 
