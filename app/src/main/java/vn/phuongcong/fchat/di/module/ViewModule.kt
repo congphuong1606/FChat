@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import vn.phuongcong.fchat.di.scope.ActivityScope
 import vn.phuongcong.fchat.ui.login.LoginView
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupView
 import vn.phuongcong.fchat.ui.regis.RegisView
 import javax.inject.Singleton
 
@@ -14,6 +15,7 @@ import javax.inject.Singleton
 class ViewModule{
     lateinit var loginView: LoginView
     lateinit var regisView: RegisView
+    lateinit var groupView: GroupView
 
 
 
@@ -25,12 +27,19 @@ class ViewModule{
     @Provides
     @ActivityScope
     fun provideRegisView(): RegisView = regisView
+    @Provides
+    @ActivityScope
+    fun provideGROUP(): GroupView = groupView
 
     constructor(loginView: LoginView)  {
         this.loginView = loginView
     }
     constructor(regisView: RegisView)  {
         this.regisView = regisView
+    }
+
+    constructor(groupView: GroupView){
+        this.groupView=groupView
     }
 
 }
