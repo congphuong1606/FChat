@@ -98,7 +98,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
 
-    override fun onError(string: String) {
+    override fun onRequestFailure(string: String) {
         dialogUtils.hideLoading()
         if (!isFinishing) {
             DialogUtils.showErorr(this, string)

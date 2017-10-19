@@ -20,7 +20,7 @@ class ChatFragment : BaseFragment(),ChatView {
                 .injectTo(this)
     }
 
-    override fun initData() {
+    override fun initData(v: View) {
 
     }
 

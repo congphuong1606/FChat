@@ -20,7 +20,7 @@ class MsgFragment : BaseFragment() ,ListMsgView{
                 .injectTo(this)
     }
 
-    override fun initData() {
+    override fun initData(v: View) {
 
     }
 

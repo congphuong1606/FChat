@@ -14,7 +14,7 @@ class NewChatFragment : BaseFragment() {
 
     }
 
-    override fun initData() {
+    override fun initData(v: View) {
 
     }
 
