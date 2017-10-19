@@ -7,7 +7,7 @@ import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_main.*
 
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.adapter.ViewPagerAdapter
+import vn.phuongcong.fchat.ui.adapter.ViewPagerAdapter
 import vn.phuongcong.fchat.ui.profile.ProfileActivity
 
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity

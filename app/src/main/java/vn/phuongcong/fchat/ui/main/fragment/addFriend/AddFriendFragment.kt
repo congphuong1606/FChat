@@ -24,7 +24,7 @@ class AddFriendFragment : BaseFragment(),AddFriendView {
                 .injectTo(this)
     }
 
-    override fun initData() {
+    override fun initData(v: View) {
 
     }
 

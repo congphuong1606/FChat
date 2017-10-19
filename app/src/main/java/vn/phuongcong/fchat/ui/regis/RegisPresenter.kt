@@ -1,15 +1,11 @@
 package vn.phuongcong.fchat.ui.regis
 
-import android.support.annotation.NonNull
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import javax.inject.Inject
 
-import kotlin.reflect.jvm.internal.impl.load.java.lazy.ContextKt.child
-import android.R.attr.name
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.data.User
@@ -33,7 +29,7 @@ class RegisPresenter @Inject constructor(var regisView: RegisView,
                     }
                 }
                 .addOnFailureListener{exception ->
-                    regisView.onError(exception.toString())
+                    regisView.onRequestFailure(exception.toString())
                 }
     }
 

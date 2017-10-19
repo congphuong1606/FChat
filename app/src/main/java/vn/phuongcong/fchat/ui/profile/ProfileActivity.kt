@@ -47,7 +47,7 @@ class ProfileActivity : BaseActivity(), ProfileView {
 
     }
 
-    override fun onError(string: String) {
+    override fun onRequestFailure(string: String) {
 
     }
 

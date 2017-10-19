@@ -9,15 +9,14 @@ import android.view.ViewGroup
 abstract class BaseFragment : Fragment() {
     protected abstract val LayoutId: Int
     protected abstract fun injectDependence()
-    protected abstract fun initData()
+    protected abstract fun initData(v: View)
     protected abstract fun onDestroyComposi()
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        fun View(): View = inflater!!.inflate(LayoutId, container, false)
+        var v: View = inflater.inflate(LayoutId, container, false)
         injectDependence()
-        initData()
-        return View();
+        initData(v)
+        return v;
     }
 
 
