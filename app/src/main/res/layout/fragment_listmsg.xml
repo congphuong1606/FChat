@@ -1,12 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#2c3178"
     android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     tools:context="vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcvListMsg"
+        android:id="@+id/rc_list_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

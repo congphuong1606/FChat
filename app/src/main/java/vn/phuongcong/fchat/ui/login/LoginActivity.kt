@@ -7,15 +7,13 @@ import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.utils.CheckInput
 import vn.phuongcong.fchat.utils.DialogUtils
 
 import javax.inject.Inject
-import android.app.Activity
-
 
 
 class LoginActivity : BaseActivity(), LoginView {

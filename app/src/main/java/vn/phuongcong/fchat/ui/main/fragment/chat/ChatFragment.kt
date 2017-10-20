@@ -9,6 +9,14 @@ import javax.inject.Inject
 
 
 class ChatFragment : BaseFragment(),ChatView {
+    override fun onRequestFailure(string: String) {
+
+    }
+
+    override fun showToast(msg: String) {
+
+    }
+
     @Inject
     lateinit var mPresenter: ChatPresenter
     override val LayoutId: Int

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.event.OnFriendClick
 
 /**
@@ -33,6 +33,7 @@ class FriendsAdapter(var friends: ArrayList<User>,var listener: OnFriendClick)
 
     override fun getItemCount(): Int {
         return friends.size
+
     }
 
     class FriendsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
