@@ -16,6 +16,8 @@ import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import vn.phuongcong.fchat.ui.chat.ChatActivity
 import javax.inject.Inject
+import android.os.Bundle
+import vn.phuongcong.fchat.ui.main.MainActivity
 
 
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
@@ -67,8 +69,12 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
     }
 
-    override fun onItemClick(user: User) {
-         var intent:Intent= Intent(context,ChatActivity::class.java)
+    override fun onItemClick(friend: User) {
+        var intent: Intent = Intent(activity, ChatActivity::class.java)
+        val bundle = Bundle()
+        bundle.putSerializable("friend", friend)
+        intent.putExtra("b",bundle)
+        activity.startActivity(intent)
 
     }
 
