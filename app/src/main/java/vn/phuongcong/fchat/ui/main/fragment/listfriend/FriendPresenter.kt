@@ -14,18 +14,16 @@ import javax.inject.Inject
 /**
  * Created by Ominext on 10/18/2017.
  */
-class FriendPresenter @Inject constructor(var mAuth: FirebaseAuth,
-                                          var sPref: SharedPreferences,
+class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                                           var dbReference: DatabaseReference,
                                           var friendView: FriendView) {
     fun onLoadFriendIds() {
-
         var uid = sPref.getString(Contans.PRE_USER_ID, "")
         dbReference.child(Contans.FRIEND_PATH).child(uid)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (data in dataSnapshot.children) {
-                            val id=data.getValue(Friend::class.java)!!.id
+                            val id = data.getValue(Friend::class.java)!!.id
                             loadFriends(id)
                         }
                     }
@@ -35,6 +33,7 @@ class FriendPresenter @Inject constructor(var mAuth: FirebaseAuth,
                     }
                 })
     }
+
     private fun loadFriends(id: String) {
         dbReference.child(Contans.USERS_PATH).child(id)
                 .addValueEventListener(object : ValueEventListener {
@@ -42,6 +41,7 @@ class FriendPresenter @Inject constructor(var mAuth: FirebaseAuth,
                         val user = dataSnapshot.getValue(User::class.java)
                         friendView.onLoadFriendsSuccess(user!!)
                     }
+
                     override fun onCancelled(error: DatabaseError) {
                         friendView.onRequestFailure(error.toString())
                     }

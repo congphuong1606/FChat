@@ -14,7 +14,7 @@ import vn.phuongcong.fchat.event.OnFriendClick
 /**
  * Created by Ominext on 10/19/2017.
  */
-class FriendsAdapter(var friends: ArrayList<User>,var listener: OnFriendClick)
+class FriendsAdapter(var friends: MutableList<User>,var listener: OnFriendClick)
     : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 //    lateinit var listener: OnFriendClick
 //    fun onListener(onFriendClick: OnFriendClick) {

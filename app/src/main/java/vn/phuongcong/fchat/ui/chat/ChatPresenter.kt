@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.ui.main.fragment.chat
+package vn.phuongcong.fchat.ui.chat
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference

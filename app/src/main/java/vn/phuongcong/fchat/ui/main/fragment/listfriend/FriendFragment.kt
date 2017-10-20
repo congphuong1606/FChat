@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -13,13 +14,14 @@ import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
 import vn.phuongcong.fchat.ui.base.BaseFragment
+import vn.phuongcong.fchat.ui.chat.ChatActivity
 import javax.inject.Inject
 
 
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
 
-    lateinit var friends: ArrayList<User>
+    lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
     @Inject
     lateinit var mPresenter: FriendPresenter
@@ -41,7 +43,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
         var rcvListFriend = v.findViewById<RecyclerView>(R.id.rcvListFriend)
         rcvListFriend.layoutManager = LinearLayoutManager(context)
         rcvListFriend.setHasFixedSize(true)
-        friends = ArrayList<User>()
+        friends = mutableListOf()
         mAdapter = FriendsAdapter(friends, this)
         rcvListFriend.adapter = mAdapter
     }
@@ -59,8 +61,6 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
             friends.add(friend)
         mAdapter.notifyDataSetChanged()
         rcvListFriend.smoothScrollToPosition(0)
-
-
     }
 
     override fun onDestroyComposi() {
@@ -68,6 +68,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun onItemClick(user: User) {
+         var intent:Intent= Intent(context,ChatActivity::class.java)
 
     }
 

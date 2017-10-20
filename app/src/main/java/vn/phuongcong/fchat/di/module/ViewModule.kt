@@ -5,13 +5,12 @@ import dagger.Provides
 import vn.phuongcong.fchat.di.scope.ActivityScope
 import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendView
-import vn.phuongcong.fchat.ui.main.fragment.chat.ChatView
+import vn.phuongcong.fchat.ui.chat.ChatView
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupView
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.ListMsgView
 import vn.phuongcong.fchat.ui.profile.ProfileView
 import vn.phuongcong.fchat.ui.regis.RegisView
-import vn.phuongcong.fchat.ui.splash.SplashActivity
 import vn.phuongcong.fchat.ui.splash.SplashView
 
 /**

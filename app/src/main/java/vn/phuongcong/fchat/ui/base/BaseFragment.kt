@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -30,4 +31,7 @@ abstract class BaseFragment : Fragment() {
         onDestroyComposi()
     }
 
+    fun onStartActivity(b: Class<*>) {
+        startActivity(Intent(context, b))
+    }
 }
