@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.main.fragment.listmsg
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -10,6 +11,7 @@ import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.ui.base.BaseFragment
+import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import javax.inject.Inject
 
 
@@ -63,7 +65,8 @@ class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat {
 
     }
     override fun chat(chat: Chat) {
-
+        var intent =Intent(activity,ChatActivity::class.java)
+        startActivity(intent)
     }
 
 
