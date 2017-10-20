@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.profile.ProfireActivity">
+        <activity android:name=".ui.profile.ProfileActivity">
 
         </activity>
     </application>

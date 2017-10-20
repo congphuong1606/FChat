@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".ui.profile.ProfireActivity">
+    tools:context=".ui.profile.ProfileActivity">
 
 
     <LinearLayout

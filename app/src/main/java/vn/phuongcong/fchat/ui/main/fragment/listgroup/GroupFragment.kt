@@ -6,7 +6,6 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 
 class GroupFragment : BaseFragment(),GroupView {
@@ -23,7 +22,7 @@ class GroupFragment : BaseFragment(),GroupView {
                 .injectTo(this)
     }
 
-    override fun initData() {
+    override fun initData(v: View) {
 
     }
 

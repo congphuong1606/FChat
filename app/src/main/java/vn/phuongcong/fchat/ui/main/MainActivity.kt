@@ -7,8 +7,8 @@ import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_main.*
 
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.adapter.ViewPagerAdapter
-import vn.phuongcong.fchat.ui.profile.ProfireActivity
+import vn.phuongcong.fchat.ui.adapter.ViewPagerAdapter
+import vn.phuongcong.fchat.ui.profile.ProfileActivity
 
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import java.util.*
@@ -58,7 +58,7 @@ class MainActivity : BaseActivity(){
 
 
     override fun onClick() {
-        profileAction.setOnClickListener {onStartActivity(ProfireActivity::class.java)}
+        profileAction.setOnClickListener {onStartActivity(ProfileActivity::class.java)}
     }
 
 }

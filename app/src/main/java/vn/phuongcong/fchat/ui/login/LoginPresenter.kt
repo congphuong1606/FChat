@@ -23,17 +23,17 @@ class LoginPresenter @Inject constructor(var fAuth: FirebaseAuth,
     fun onSignIn(email: String, pass: String) {
         fAuth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
-                        loginView.onLoginSuccessfull();
+                    loginView.onLoginSuccessfull();
                 }
                 .addOnFailureListener { exception: Exception ->
-                    loginView.onError(exception.toString())
+                    loginView.onRequestFailure(exception.toString())
                 }
     }
 
 
     fun checkEmailVerified() {
-      val user = fAuth.currentUser
-        if(user!=null ){
+        val user = fAuth.currentUser
+        if (user != null) {
             if (user.isEmailVerified) {
                 getUserDatabase(user.uid)
 
@@ -46,16 +46,17 @@ class LoginPresenter @Inject constructor(var fAuth: FirebaseAuth,
     }
 
     private fun getUserDatabase(uid: String) {
-        val databaseUser:DatabaseReference =
+        val databaseUser: DatabaseReference =
                 dbReference.child(Contans.USERS_PATH).child(uid)
         databaseUser.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user= dataSnapshot.getValue(User::class.java)
+                val user = dataSnapshot.getValue(User::class.java)
                 loginView.onVerified(user)
 
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
-               loginView.onError(databaseError.toString())
+                loginView.onRequestFailure(databaseError.toString())
             }
         })
     }

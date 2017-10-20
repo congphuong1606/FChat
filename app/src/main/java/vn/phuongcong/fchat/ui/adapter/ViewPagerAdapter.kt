@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.adapter
+package vn.phuongcong.fchat.ui.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -12,9 +12,10 @@ import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
  */
 class ViewPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
-        if(position==1)
+
+        if(position==0)
             return MsgFragment()
-        if(position==2)
+        if(position==1)
             return FriendFragment()
         else
             return GroupFragment()

@@ -59,7 +59,7 @@ class RegisActivity : BaseActivity(), RegisView {
         }
     }
 
-    override fun onError(string: String) {
+    override fun onRequestFailure(string: String) {
         dialogUtils.hideLoading()
         if(string.equals(Contans.ERROR_ACOUNT_EXISTED)){
             DialogUtils.showErorr(this, Contans.ACOUNT_EXISTED)
