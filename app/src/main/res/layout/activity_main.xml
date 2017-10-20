@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context="vn.phuongcong.fchat.ui.main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -29,15 +30,15 @@
                 android:layout_height="30dp">
 
                 <EditText
-                    android:id="@+id/searchView"
+                    android:id="@+id/editText"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/profileAction"
                     android:background="@drawable/searchbox"
                     android:drawableLeft="@drawable/ic_search_black"
                     android:drawablePadding="10dp"
-                    android:focusable="false"
                     android:hint="tìm kiếm"
                     android:padding="5dp"
                     android:textColor="@color/red"
@@ -45,72 +46,100 @@
 
                 </EditText>
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileAction"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_no_image" />
+
 
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
 
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavigation"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            app:itemBackground="@color/colorPrimary"
-            app:itemIconTint="@drawable/nav_item_color_state"
-            app:itemTextColor="@drawable/nav_item_color_state"
-            app:layout_collapseMode="pin"
-            app:menu="@menu/menu_bottom_navigation" />
+            android:background="@color/tablayout"
+            app:layout_collapseMode="pin">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tin nhắn" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bạn bè" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nhóm" />
+        </android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/framlayout"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout_editor_absoluteY="96dp" />
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fabMenu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        fab:fab_colorNormal="#DA4336"
-        fab:fab_colorPressed="#E75043"
-        fab:fab_colorRipple="#99FFFFFF"
-        fab:fab_shadowColor="#66000000"
-        fab:fab_showShadow="true"
-        fab:menu_backgroundColor="#ccffffff"
-        fab:menu_fab_label="Choose an action"
-        fab:menu_labels_colorNormal="#333333"
-        fab:menu_labels_colorPressed="#444444"
-        fab:menu_labels_colorRipple="#66FFFFFF"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_maxLines="-1"
-        fab:menu_labels_position="left"
-        fab:menu_labels_showShadow="true"
-        fab:menu_labels_singleLine="true"
-        fab:menu_openDirection="up">
+    </android.support.v4.view.ViewPager>
+    <!-- <FrameLayout
+         android:id="@+id/framlayout"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         tools:layout_editor_absoluteY="96dp" />-->
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fAddFriend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add_friend"
-            fab:fab_label="thêm bạn"
-            fab:fab_size="mini" />
+    <!--<com.github.clans.fab.FloatingActionMenu-->
+    <!--android:id="@+id/fabMenu"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:paddingBottom="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--fab:fab_colorNormal="#DA4336"-->
+    <!--fab:fab_colorPressed="#E75043"-->
+    <!--fab:fab_colorRipple="#99FFFFFF"-->
+    <!--fab:fab_shadowColor="#66000000"-->
+    <!--fab:fab_showShadow="true"-->
+    <!--fab:menu_backgroundColor="#ccffffff"-->
+    <!--fab:menu_fab_label="Choose an action"-->
+    <!--fab:menu_labels_colorNormal="#333333"-->
+    <!--fab:menu_labels_colorPressed="#444444"-->
+    <!--fab:menu_labels_colorRipple="#66FFFFFF"-->
+    <!--fab:menu_labels_ellipsize="end"-->
+    <!--fab:menu_labels_maxLines="-1"-->
+    <!--fab:menu_labels_position="left"-->
+    <!--fab:menu_labels_showShadow="true"-->
+    <!--fab:menu_labels_singleLine="true"-->
+    <!--fab:menu_openDirection="up">-->
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fNewChat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/newchat"
-            fab:fab_label="trờ chuyện mới"
-            fab:fab_size="mini" />
+    <!--<com.github.clans.fab.FloatingActionButton-->
+    <!--android:id="@+id/fAddFriend"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@drawable/add_friend"-->
+    <!--fab:fab_label="thêm bạn"-->
+    <!--fab:fab_size="mini" />-->
 
-    </com.github.clans.fab.FloatingActionMenu>
+    <!--<com.github.clans.fab.FloatingActionButton-->
+    <!--android:id="@+id/fNewChat"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@drawable/newchat"-->
+    <!--fab:fab_label="trờ chuyện mới"-->
+    <!--fab:fab_size="mini" />-->
+
+    <!--</com.github.clans.fab.FloatingActionMenu>-->
 
 </android.support.design.widget.CoordinatorLayout>

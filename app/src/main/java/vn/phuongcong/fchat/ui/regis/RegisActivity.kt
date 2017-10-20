@@ -76,12 +76,13 @@ class RegisActivity : BaseActivity(), RegisView {
     override fun onSignUpSuccessful() {
         regisPresenter.onCreatUserDatabase(email, pass)
     }
+
     override fun onCreateUserSuccessful() {
         dialogUtils.hideLoading()
         intent= Intent(this,LoginActivity::class.java)
-        intent.putExtra("email",email)
-        intent.putExtra("pass",pass)
-        intent.putExtra("fromActivity",Contans.REGIS_ACTIVITY)
+        intent.putExtra(Contans.KEY_EMAIL,email)
+        intent.putExtra(Contans.KEY_PASS,pass)
+        intent.putExtra(Contans.KEY_FROM_ACTIVTY,Contans.REGIS_ACTIVITY)
         startActivity(intent)
         finish()
     }

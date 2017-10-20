@@ -22,9 +22,6 @@ class FirebaseModule {
     @Singleton
     fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
 
-    @Provides
-    @Singleton
-    fun provideFirebaseUser(): FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 
     @Provides
     @Singleton

@@ -7,6 +7,13 @@ import vn.phuongcong.fchat.di.module.SharedPreference
 
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
+import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendFragment
+import vn.phuongcong.fchat.ui.main.fragment.chat.ChatFragment
+import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
+import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
+import vn.phuongcong.fchat.ui.profile.ProfireActivity
+import vn.phuongcong.fchat.ui.splash.SplashActivity
 
 /**
  * Created by Ominext on 10/12/2017.
@@ -16,4 +23,11 @@ import vn.phuongcong.fchat.di.scope.ActivityScope
 interface SubComponent {
     fun injectTo(loginActivity: LoginActivity)
     fun injectTo(regisActivity: RegisActivity)
+    fun injectTo(groupFragment: GroupFragment)
+    fun injectTo(addFriendFragment: AddFriendFragment)
+    fun injectTo(friendFragment: FriendFragment)
+    fun injectTo(msgFragment: MsgFragment)
+    fun injectTo(profireActivity: ProfireActivity)
+    fun injectTo(chatFragment: ChatFragment) {}
+    fun injectTo(splashActivity: SplashActivity)
 }

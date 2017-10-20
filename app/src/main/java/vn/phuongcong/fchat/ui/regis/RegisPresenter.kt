@@ -46,7 +46,7 @@ class RegisPresenter @Inject constructor(var regisView: RegisView,
     fun onCreatUserDatabase(email: String, pass: String) {
         val id = firebaseAuth.currentUser!!.uid
         val userName = (email.split("@".toRegex()))[0]
-        val currentUser = User(id, userName, email, pass)
+        val currentUser = User(id, userName, email, "")
         databaseReference.child(Contans.USERS_PATH).child(id).setValue(currentUser).addOnSuccessListener {
             regisView.onCreateUserSuccessful();
         }

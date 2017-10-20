@@ -56,23 +56,15 @@ class DialogUtils(internal var dialog: ProgressDialog?, internal var activity: A
     companion object {
 
         fun showErorr(mContext: Context, msg: String) {
-            if (msg != mContext.resources.getString(R.string.isempity)) {
-                var error = msg
-                if (msg == mContext.resources.getString(R.string.nointernet)) {
-                    error = mContext.resources.getString(R.string.chedokhonginternet)
-                } else if (msg.split("/".toRegex()).dropLastWhile({
-                    it.isEmpty() }).toTypedArray()[0] == mContext.resources.getString(R.string.loiketnoi)) {
-                    error = mContext.resources.getString(R.string.connectfail)
-                }
-                val builder = AlertDialog.Builder(mContext)
-                builder.setTitle("lỗi")
-                builder.setMessage(error)
-                builder.setIcon(R.drawable.logo_app)
-                builder.setCancelable(true)
-                val dialog = builder.create()
-                builder.setNegativeButton("ok") { dialogInterface, i -> dialog.dismiss() }
-                dialog.show()
-            }
+
+            val builder = AlertDialog.Builder(mContext)
+            builder.setTitle("Thông báo")
+            builder.setMessage(msg)
+            builder.setIcon(R.drawable.logo_app)
+            builder.setCancelable(true)
+            val dialog = builder.create()
+            builder.setNegativeButton("ok") { dialogInterface, i -> dialog.dismiss() }
+            dialog.show()
         }
     }
 
