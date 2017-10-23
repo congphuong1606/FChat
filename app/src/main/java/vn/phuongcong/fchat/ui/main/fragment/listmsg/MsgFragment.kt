@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
+import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.User
@@ -22,7 +23,7 @@ class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat {
     override fun OnLoadListChatSuccess(listChat: MutableList<User>) {
         var listMessage = mutableListOf<Chat>()
         for (user in listChat) {
-            listMessage.add(Chat(user.name, user.avatar, "", null))
+            listMessage.add(Chat(user.id,user.name, user.avatar, "", null))
         }
         listMessageAdapter.mListMessage = listMessage
         listMessageAdapter.notifyDataSetChanged()
@@ -66,6 +67,7 @@ class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat {
     }
     override fun chat(chat: Chat) {
         var intent =Intent(activity,ChatActivity::class.java)
+        intent.putExtra(Contans.CHAT_ITEM,chat)
         startActivity(intent)
     }
 

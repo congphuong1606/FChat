@@ -17,17 +17,18 @@
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
+        android:id="@+id/ll_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_weight="8"
-        android:gravity="right"
         android:orientation="vertical">
 
+
         <TextView
-            android:id="@+id/txt_message"
+            android:id="@+id/txt_message_receiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
@@ -35,8 +36,9 @@
             android:text="Thanh Nam"
             android:textSize="20sp" />
 
+
         <TextView
-            android:id="@+id/txt_time_send"
+            android:id="@+id/txt_time_receicver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
@@ -46,11 +48,5 @@
 
     </LinearLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_send"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_launcher" />
+
 </LinearLayout>

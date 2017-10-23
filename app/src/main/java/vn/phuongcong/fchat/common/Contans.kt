@@ -24,5 +24,6 @@ object Contans {
     val USERS_PATH  = "USER"
     val NOT_HAVE_FRIEND="bạn hãy thử tính năng thêm bạn bè của chúng tôi"
     val CHAT: String?="CHAT"
+    val CHAT_ITEM: String?="chat_item"
 
 }
