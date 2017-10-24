@@ -16,17 +16,11 @@ import vn.phuongcong.fchat.data.Group
 /**
  * Created by vietcoscc on 10/20/2017.
  */
-class GroupAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    var arrGorup: ArrayList<Group>;
-
-    constructor(arrGorup: ArrayList<Group>?) : super() {
-        this.arrGorup = arrGorup!!
-    }
-
+class GroupAdapter constructor(var arrGorup: ArrayList<Group>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         var groupViewHolder: GroupViewHolder = holder as GroupViewHolder;
-        groupViewHolder.bind(arrGorup[position]);
+        groupViewHolder.bind(arrGorup!![position]);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -35,7 +29,7 @@ class GroupAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return arrGorup.size;
+        return arrGorup!!.size;
     }
 
     class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,12 +40,12 @@ class GroupAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     fun addItem(group: Group) {
-        arrGorup.add(group);
-        notifyItemInserted(arrGorup.size - 1);
+        arrGorup!!.add(group);
+        notifyItemInserted(arrGorup!!.size - 1);
     }
 
     fun removeItem(position: Int) {
-        arrGorup.removeAt(position);
+        arrGorup!!.removeAt(position);
         notifyItemRemoved(position);
     }
 }
