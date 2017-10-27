@@ -8,5 +8,4 @@ import vn.phuongcong.fchat.ui.base.BaseView
  */
 interface ChatView :BaseView{
     fun getListMessageSuccess(messages: MutableList<Message>)
-    fun getListMessageReceiverSuccess(messages: MutableList<Message>)
 }

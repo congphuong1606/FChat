@@ -11,6 +11,7 @@
 
 
     <LinearLayout
+        android:gravity="right"
         android:id="@+id/ll_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,23 +24,16 @@
 
         <TextView
             android:id="@+id/txt_message_send"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:text="Thanh Nam"
             android:textSize="20sp" />
 
 
         <TextView
             android:id="@+id/txt_time_send"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="right"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:text="2:38"
             android:textSize="10sp" />
 

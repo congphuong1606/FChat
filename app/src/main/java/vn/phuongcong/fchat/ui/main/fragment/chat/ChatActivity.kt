@@ -18,7 +18,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener {
 
 
     var mMessages: MutableList<Message> = mutableListOf()
-    var mMessageReceiver:MutableList<Message> = mutableListOf()
+    var mMessageReceiver: MutableList<Message> = mutableListOf()
     lateinit var mChatAdapter: ChatApdapter
 
     @Inject
@@ -44,7 +44,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener {
             layoutManager = LinearLayoutManager(context)
         }
 
-        mChatItem= intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
+        mChatItem = intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
         mChatPresenter.getListChat(mChatItem)
 
         addEvent()
@@ -66,9 +66,9 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener {
 
 
     override fun onClick(view: View?) {
-        when(view!!.id){
-            R.id.btn_send_message->sendMessagetext(mChatItem)
-            R.id.btn_send_image->sendImage()
+        when (view!!.id) {
+            R.id.btn_send_message -> sendMessagetext(mChatItem)
+            R.id.btn_send_image -> sendImage()
         }
     }
 
@@ -77,24 +77,18 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener {
     }
 
     private fun sendMessagetext(mChatItem: Chat) {
-        var messagetext=edt_input_message.text.toString().trim()
-        mChatPresenter.sendMessagetext(messagetext,mChatItem)
-        edt_input_message.text=null
+        var messagetext = edt_input_message.text.toString().trim()
+        mChatPresenter.sendMessagetext(messagetext, mChatItem)
+        edt_input_message.text = null
     }
 
 
     override fun getListMessageSuccess(messages: MutableList<Message>) {
-        mChatAdapter.mMessage=messages
-        mChatAdapter.type=1
+        mChatAdapter.mMessage = messages
         mChatAdapter.notifyDataSetChanged()
         rc_chat.smoothScrollToPosition(messages.size)
     }
 
-    override fun getListMessageReceiverSuccess(messages: MutableList<Message>) {
-        mChatAdapter.mMessageReceiver=messages
-        mChatAdapter.type=0
-        mChatAdapter.notifyDataSetChanged()
-        rc_chat.smoothScrollToPosition(messages.size)
-    }
+
 
 }

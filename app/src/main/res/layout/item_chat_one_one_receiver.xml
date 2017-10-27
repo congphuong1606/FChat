@@ -17,7 +17,7 @@
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
-        android:id="@+id/ll_message"
+        android:id="@+id/ll_messagess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
