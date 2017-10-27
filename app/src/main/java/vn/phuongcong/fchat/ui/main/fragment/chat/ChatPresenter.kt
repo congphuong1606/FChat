@@ -6,6 +6,7 @@ import com.google.firebase.database.*
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.Message
+import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.utils.DateTimeUltil
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
         if (uid != "" && mChatItem != null) {
 
-            databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).addChildEventListener(object :ChildEventListener {
+            databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).addChildEventListener(object : ChildEventListener {
                 override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -34,8 +35,8 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot?, p1: String?) {
 
-                    var message :Message = dataSnapshot!!.getValue(Message::class.java)!!
-                    message.mType=0
+                    var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
+                    message.mType = 0
                     messages.add(message)
                     chatView.getListMessageSuccess(messages)
                 }
@@ -46,7 +47,6 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
                 override fun onCancelled(dataError: DatabaseError?) {
                 }
-
 
 
             })
@@ -65,8 +65,8 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 }
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot?, p1: String?) {
-                    var message :Message = dataSnapshot!!.getValue(Message::class.java)!!
-                    message.mType=1
+                    var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
+                    message.mType = 1
                     messages.add(message)
                     chatView.getListMessageSuccess(messages)
                 }
@@ -82,6 +82,8 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
         var message = Message(uid, messagetext, "", DateTimeUltil.getTimeCurrent())
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext)
+        databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
+        databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
 }

@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.main.fragment.listmsg
 
+import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.ui.base.BaseView
 
@@ -9,4 +10,5 @@ import vn.phuongcong.fchat.ui.base.BaseView
 interface ListMsgView :BaseView{
 
     fun OnLoadListChatSuccess(listChat: MutableList<User>)
+    fun onLoadListMessagelast(listMessagelast: MutableList<Messagelast>) {}
 }
