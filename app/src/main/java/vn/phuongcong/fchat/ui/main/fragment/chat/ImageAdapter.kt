@@ -23,6 +23,7 @@ class ImageAdapter(var mListImage: MutableList<String>, var mContext: Context) :
     }
 
     override fun getItemCount(): Int {
+
         return mListImage.size
     }
 
