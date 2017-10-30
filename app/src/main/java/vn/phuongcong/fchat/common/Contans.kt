@@ -29,5 +29,8 @@ object Contans {
     val TIME_SEND_LAST:String?="timeLastSend"
     val MESSAGE_LASTS: String?="MESSAGELASTS"
     val MESSAGE: String?="MESSAGE"
+    val CAMERA_PERMISSION_REQUEST: Int=1
+    val CAMERA_PIC_REQUEST: Int=2
+    val EXTERNAL_PERMISSION_REQUEST: Int=0
 
 }

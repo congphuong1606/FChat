@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.model.User
 
@@ -18,7 +19,8 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                                            var databaseReference: DatabaseReference,
                                            var listMsgView: ListMsgView,
                                            var sPref: SharedPreferences) {
-    var uid = sPref.getString(Contans.PRE_USER_ID, "")
+    // = sPref.getString(Contans.PRE_USER_ID, "")
+    var uid= mAuth.currentUser!!.uid
     fun loadListChat() {
         databaseReference.child(Contans.CHAT).child(uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError?) {

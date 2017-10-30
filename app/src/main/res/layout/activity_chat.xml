@@ -42,11 +42,10 @@
                 android:weightSum="1">
 
                 <ImageView
-                    android:id="@+id/btn_send_image"
+                    android:id="@+id/btn_send_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingRight="10dp"
                     android:src="@drawable/ic_voice" />
 
                 <ImageView
@@ -58,7 +57,7 @@
                     android:src="@drawable/ic_emoticon" />
 
                 <ImageView
-                    android:id="@+id/img_image"
+                    android:id="@+id/btn_send_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -89,9 +88,9 @@
             </LinearLayout>
 
             <include
+                android:id="@+id/list_image"
                 layout="@layout/item_list_image"
-                android:visibility="gone"
-                android:id="@+id/list_image"></include>
+                android:visibility="gone"></include>
 
         </LinearLayout>
 
