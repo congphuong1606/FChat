@@ -4,7 +4,6 @@ import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.fragment_friend.*
 
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
@@ -13,13 +12,18 @@ import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
 import vn.phuongcong.fchat.ui.base.BaseFragment
-import vn.phuongcong.fchat.ui.chat.ChatActivity
 import javax.inject.Inject
 import android.os.Bundle
-import vn.phuongcong.fchat.ui.main.MainActivity
+import android.support.design.widget.FloatingActionButton
+import android.text.InputType
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog
+import kotlinx.android.synthetic.main.fragment_friend.*
+import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
+import java.util.regex.Pattern
 
 
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
+
 
 
     lateinit var friends: MutableList<User>
@@ -38,7 +42,33 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
+        var fab=v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
+        fab.setOnClickListener{showAddFrienđiaglog()}
     }
+
+    private fun showAddFrienđiaglog() {
+        LovelyTextInputDialog(context, R.style.EditTextTintTheme)
+                .setTopColorRes(R.color.colorPrimary)
+                .setTitle("Thêm bạn")
+                .setMessage("nhập email")
+                .setIcon(R.drawable.ic_add)
+                .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+                .setInputFilter("email không đúng", object : LovelyTextInputDialog.TextFilter {
+                    override fun check(text: String): Boolean {
+                        val VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
+                        val matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(text)
+                        return matcher.find()
+                    }
+                })
+                .setConfirmButton(android.R.string.ok, object : LovelyTextInputDialog.OnTextInputConfirmListener{
+                    override fun onTextInputConfirmed(text: String) {
+                        mPresenter.findIDEmail(text)
+
+                    }
+                })
+                .show()
+    }
+
 
     private fun setAdapter(v: View) {
         var rcvListFriend = v.findViewById<RecyclerView>(R.id.rcvListFriend)
@@ -82,7 +112,11 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun showToast(msg: String) {
+    }
+
+    override fun onAddFriendSuccessful() {
 
     }
+
 }
 

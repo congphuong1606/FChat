@@ -9,10 +9,15 @@ import java.util.*
 class DateTimeUltil {
     companion object {
         var mTimeFormat: String = "hh : mm"
-        var mCalendar: Calendar = Calendar.getInstance()
+
         fun getTimeCurrent(): String {
-            var sdf: SimpleDateFormat = SimpleDateFormat(mTimeFormat)
-            return sdf.format(mCalendar.time)
+            var mCalendar: Calendar = Calendar.getInstance()
+            return mCalendar.timeInMillis.toString()
+        }
+
+        fun fotmatTime(timeMili: Long, strFormat: String): String {
+            var sdf = SimpleDateFormat(strFormat)
+            return sdf.format(timeMili)
         }
     }
 }

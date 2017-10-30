@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_msg.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Chat
+import vn.phuongcong.fchat.model.Messagelast
+import vn.phuongcong.fchat.utils.DateTimeUltil
 
 /**
  * Created by Ominext on 10/20/2017.
  */
 class ListMessageAdapter(var mListMessage: MutableList<Chat>, var mIChat:
-IChat) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+IChat,var mListMessageLast :MutableList<Messagelast>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface IChat{
         fun chat(chat :Chat)
@@ -24,9 +26,11 @@ IChat) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ChatHolder) {
-            if (mListMessage != null && mListMessage.size > 0) {
+            if (mListMessage != null && mListMessage.size > 0 && mListMessageLast.size>0) {
                 var chat: Chat = mListMessage.get(position)
-                holder.bin(chat,mIChat)
+                var messagelast =mListMessageLast.get(position)
+               holder.bin(chat,mIChat,messagelast)
+
             }
 
         }
@@ -37,9 +41,10 @@ IChat) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class ChatHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        fun bin(chat: Chat, mIChat: IChat) {
+        fun bin(chat: Chat, mIChat: IChat, messagelast: Messagelast) {
             itemView.txt_name_friend.text = chat.mFriend
-            itemView.txt_message_last.text = chat.mLastMessage
+            itemView.txt_message_last.text = messagelast.messageLast
+            itemView.txt_time.text=DateTimeUltil.fotmatTime(messagelast.timeLastSend.toLong(),DateTimeUltil.mTimeFormat)
             itemView.setOnClickListener {
                 mIChat.chat(chat)
             }

@@ -25,5 +25,10 @@ object Contans {
     val NOT_HAVE_FRIEND="bạn hãy thử tính năng thêm bạn bè của chúng tôi"
     val CHAT: String?="CHAT"
     val CHAT_ITEM: String?="chat_item"
+    val MESSAGE_LAST: String?="message_last"
+    val TIME_SEND_LAST:String?="timeLastSend"
+    val MESSAGE_LASTS: String?="MESSAGELASTS"
+    val MESSAGE: String?="MESSAGE"
+    val EMAIL_PATH="email"
 
 }

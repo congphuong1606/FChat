@@ -28,6 +28,6 @@ interface SubComponent {
     fun injectTo(friendFragment: FriendFragment)
     fun injectTo(msgFragment: MsgFragment)
     fun injectTo(profileActivity: ProfileActivity)
-    fun injectTo(chatActivity: ChatActivity) {}
     fun injectTo(splashActivity: SplashActivity)
+    fun injectTo(chatActivity: ChatActivity)
 }

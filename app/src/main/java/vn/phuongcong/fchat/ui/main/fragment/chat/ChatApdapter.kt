@@ -2,7 +2,6 @@ package vn.phuongcong.fchat.ui.main.fragment.chat
 
 
 import android.support.v7.widget.RecyclerView
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,12 @@ import kotlinx.android.synthetic.main.item_chat_one_one_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_one_one_send.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Message
+import vn.phuongcong.fchat.utils.DateTimeUltil
 
 /**
  * Created by Ominext on 10/20/2017.
  */
-class ChatApdapter(var mMessage: MutableList<Message>, var mMessageReceiver: MutableList<Message>, var type: Int?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatApdapter(var mMessage: MutableList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         var LEFT = 1
@@ -22,10 +22,10 @@ class ChatApdapter(var mMessage: MutableList<Message>, var mMessageReceiver: Mut
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        var viewHolder: RecyclerView.ViewHolder?=null
+        var viewHolder: RecyclerView.ViewHolder? = null
         if (viewType == RIGHT)
-             viewHolder = ChatItemViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_one_one_send, parent, false))
-        if(viewType== LEFT)
+            viewHolder = ChatItemViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_one_one_send, parent, false))
+        if (viewType == LEFT)
             viewHolder = ChatItemViewHolderReceiver(LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_one_one_receiver, parent, false))
 
         return viewHolder!!
@@ -38,7 +38,7 @@ class ChatApdapter(var mMessage: MutableList<Message>, var mMessageReceiver: Mut
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ChatItemViewHolder) {
             if (mMessage != null && mMessage.size > 0) {
-                mMessage.sortBy { message: Message -> message.timeCreate }
+                mMessage.sortBy { message: Message -> message.timeCreate.toLong() }
 
                 var message: Message = mMessage.get(position)
                 holder.bind(message)
@@ -47,7 +47,7 @@ class ChatApdapter(var mMessage: MutableList<Message>, var mMessageReceiver: Mut
 
         if (holder is ChatItemViewHolderReceiver) {
             if (mMessage != null && mMessage.size > 0) {
-                mMessage.sortBy { message: Message -> message.timeCreate }
+                mMessage.sortBy { message: Message -> message.timeCreate.toLong() }
                 var messageReceiver = mMessage.get(position)
                 holder.bindReceiver(messageReceiver)
 
@@ -58,7 +58,7 @@ class ChatApdapter(var mMessage: MutableList<Message>, var mMessageReceiver: Mut
     class ChatItemViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bind(message: Message) {
             itemView.txt_message_send.text = message.content
-            itemView.txt_time_send.text = message.timeCreate
+            itemView.txt_time_send.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
         }
     }
 
@@ -66,7 +66,7 @@ class ChatApdapter(var mMessage: MutableList<Message>, var mMessageReceiver: Mut
 
         fun bindReceiver(message: Message) {
             itemView.txt_message_receiver.text = message.content
-            itemView.txt_time_receicver.text = message.timeCreate
+            itemView.txt_time_receicver.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
         }
     }
 
