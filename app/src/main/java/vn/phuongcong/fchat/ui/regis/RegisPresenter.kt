@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 
 
 /**
@@ -44,7 +44,7 @@ class RegisPresenter @Inject constructor(var regisView: RegisView,
         val userName = (email.split("@".toRegex()))[0]
         val currentUser = User(id, userName, email, "")
         databaseReference.child(Contans.USERS_PATH).child(id).setValue(currentUser).addOnSuccessListener {
-            regisView.onCreateUserSuccessful();
+            regisView.onCreateUserSuccessful()
         }
 
     }

@@ -1,6 +1,6 @@
 package vn.phuongcong.fchat.event
 
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 
 /**
  * Created by Ominext on 10/19/2017.

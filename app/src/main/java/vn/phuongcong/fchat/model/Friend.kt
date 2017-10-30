@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.data
+package vn.phuongcong.fchat.model
 
 /**
  * Created by Ominext on 10/19/2017.

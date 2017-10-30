@@ -8,7 +8,7 @@ import vn.phuongcong.fchat.di.module.SharedPreference
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
 import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendFragment
-import vn.phuongcong.fchat.ui.chat.ChatActivity
+import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment

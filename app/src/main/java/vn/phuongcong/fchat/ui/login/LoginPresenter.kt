@@ -1,7 +1,7 @@
 package vn.phuongcong.fchat
 
 import com.google.firebase.auth.FirebaseAuth
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 
 import vn.phuongcong.fchat.ui.login.LoginView
 import javax.inject.Inject

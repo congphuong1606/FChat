@@ -4,12 +4,11 @@ import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.google.common.primitives.Ints
 import kotlinx.android.synthetic.main.fragment_friend.*
 
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter

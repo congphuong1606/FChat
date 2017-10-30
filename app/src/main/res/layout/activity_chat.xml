@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chat.ChatActivity">
+    tools:context="vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:windowSoftInputMode="adjustPan|adjustResize">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcvChat"
+            android:id="@+id/rc_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/rl1"
@@ -35,14 +35,14 @@
             android:paddingLeft="10dp"
             android:weightSum="1">
             <Button
-                android:id="@+id/btnAddImage"
+                android:id="@+id/btn_send_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_image" />
             <EditText
                 android:paddingLeft="5dp"
-                android:id="@+id/edtInputMsg"
+                android:id="@+id/edt_input_message"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
@@ -55,7 +55,7 @@
                 android:windowSoftInputMode="stateAlwaysVisible" />
 
             <Button
-                android:id="@+id/btnSendChat"
+                android:id="@+id/btn_send_message"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"

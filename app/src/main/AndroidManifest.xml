@@ -24,9 +24,8 @@
         </activity>
         <activity android:name=".ui.profile.ProfileActivity">
 
-
         </activity>
-        <activity android:name=".ui.chat.ChatActivity"></activity>
+        <activity android:name=".ui.main.fragment.chat.ChatActivity"></activity>
     </application>
 
 </manifest>
