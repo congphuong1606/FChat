@@ -29,57 +29,72 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#E1E1E1"
-            android:orientation="horizontal"
-            android:padding="7dp"
-            android:paddingLeft="10dp"
-            android:weightSum="1">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/btn_send_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingRight="10dp"
-                android:src="@drawable/ic_voice" />
+            <LinearLayout
 
-            <ImageView
-                android:id="@+id/img_emoticon"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:background="#E1E1E1"
+                android:orientation="horizontal"
+                android:padding="7dp"
                 android:paddingLeft="10dp"
-                android:src="@drawable/ic_emoticon" />
-            <ImageView
-                android:id="@+id/img_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:src="@drawable/ic_image" />
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/btn_send_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_voice" />
+
+                <ImageView
+                    android:id="@+id/img_emoticon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/ic_emoticon" />
+
+                <ImageView
+                    android:id="@+id/img_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:src="@drawable/ic_image" />
 
 
-            <EditText
-                android:id="@+id/edt_input_message"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.98"
-                android:background="@drawable/rounded_edittext"
-                android:hint="nhập nội dung tin nhắn"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:windowSoftInputMode="stateAlwaysVisible" />
+                <EditText
+                    android:id="@+id/edt_input_message"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.98"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="nhập nội dung tin nhắn"
+                    android:maxLines="2"
+                    android:paddingLeft="5dp"
+                    android:windowSoftInputMode="stateAlwaysVisible" />
 
-            <Button
-                android:id="@+id/btn_send_message"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_send" />
+                <Button
+                    android:id="@+id/btn_send_message"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_send" />
+            </LinearLayout>
+
+            <include
+                layout="@layout/item_list_image"
+                android:visibility="gone"
+                android:id="@+id/list_image"></include>
+
         </LinearLayout>
+
     </RelativeLayout>
 
 </FrameLayout>
