@@ -1,18 +1,14 @@
 package vn.phuongcong.fchat.ui.regis
 
-import android.support.annotation.NonNull
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import javax.inject.Inject
 
-import kotlin.reflect.jvm.internal.impl.load.java.lazy.ContextKt.child
-import android.R.attr.name
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 
 
 /**
@@ -33,7 +29,7 @@ class RegisPresenter @Inject constructor(var regisView: RegisView,
                     }
                 }
                 .addOnFailureListener{exception ->
-                    regisView.onError(exception.toString())
+                    regisView.onRequestFailure(exception.toString())
                 }
     }
 
@@ -43,12 +39,12 @@ class RegisPresenter @Inject constructor(var regisView: RegisView,
         }
     }
 
-    fun onCreatUserDatabase(email: String, avatar: String) {
+    fun onCreatUserDatabase(email: String, pass: String) {
         val id = firebaseAuth.currentUser!!.uid
         val userName = (email.split("@".toRegex()))[0]
-        val currentUser = User(id, userName, email,avatar)
+        val currentUser = User(id, userName, email, "")
         databaseReference.child(Contans.USERS_PATH).child(id).setValue(currentUser).addOnSuccessListener {
-            regisView.onCreateUserSuccessful();
+            regisView.onCreateUserSuccessful()
         }
 
     }

@@ -1,31 +1,22 @@
 package vn.phuongcong.fchat.ui.main
 
-import android.support.v4.app.Fragment
+
 import android.text.Editable
-import android.view.MenuItem
-import android.view.View
+
 import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_main.*
-import vn.phuongcong.adpater.ViewPagerAdapter
-import vn.phuongcong.fchat.App
+
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.R.id.*
-import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.di.module.ViewModule
-import vn.phuongcong.fchat.ui.main.fragment.addfriend.NewChatFragment
-import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
-import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
-import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
-import vn.phuongcong.fchat.ui.main.fragment.profile.ProfileFragment
+import vn.phuongcong.fchat.ui.adapter.ViewPagerAdapter
+import vn.phuongcong.fchat.ui.profile.ProfileActivity
+
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import java.util.*
-import javax.inject.Inject
 
 
-class MainActivity : BaseActivity(), MainView {
 
-    @Inject
-    lateinit var mainPresenter: MainPresenter
+class MainActivity : BaseActivity(){
+
     private var timer = Timer()
     private val DELAY: Long = 2000
     private var curentFragment: Int? = null;
@@ -33,7 +24,7 @@ class MainActivity : BaseActivity(), MainView {
         get() = R.layout.activity_main
 
     override fun injectDependence() {
-        (application as App).component.plus(ViewModule(this)).injectTo(this)
+
 
     }
 
@@ -57,9 +48,7 @@ class MainActivity : BaseActivity(), MainView {
         timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
-                when (curentFragment) {
-                    Contans.ADDFRAGMENT -> mainPresenter.onSearchUser(text.toString())
-                }
+               //hàm tìm kiếm user
             }
 
 
@@ -69,25 +58,9 @@ class MainActivity : BaseActivity(), MainView {
 
 
     override fun onClick() {
-
+        profileAction.setOnClickListener {onStartActivity(ProfileActivity::class.java)}
     }
 
-//    private fun openFragment(fragment: Fragment) {
-//        if (fragment != null) {
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.add(R.id.framlayout, fragment)
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//    }
-
-    override fun onError(string: String) {
-
-    }
-
-    override fun showToast(msg: String) {
-
-    }
 }
 
 

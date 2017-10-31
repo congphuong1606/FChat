@@ -7,7 +7,7 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
-import vn.phuongcong.fchat.ui.main.fragment.profile.ProfileFragment
+
 
 /**
  * Created by Ominext on 10/17/2017.

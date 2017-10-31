@@ -7,13 +7,14 @@ import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.utils.CheckInput
 import vn.phuongcong.fchat.utils.DialogUtils
 
 import javax.inject.Inject
+
 
 class LoginActivity : BaseActivity(), LoginView {
 
@@ -41,24 +42,23 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun initData() {
-        mPresenter.oncurentLogin()
         dialogUtils = DialogUtils(dialog, this)
         onGetIntent()
     }
 
     private fun onGetIntent() {
-        email = getIntent().getStringExtra("email")
-        pass = getIntent().getStringExtra("pass")
+        email = getIntent().getStringExtra(Contans.KEY_EMAIL)
+        pass = getIntent().getStringExtra(Contans.KEY_PASS)
         edtLoginEmail.setText(email)
         edtLoginPass.setText(pass)
-        var fromActivity = getIntent().getStringExtra("fromActivity")
+        var fromActivity = getIntent().getStringExtra(Contans.KEY_FROM_ACTIVTY)
         fromActivity?.let {
             if (fromActivity.equals(Contans.REGIS_ACTIVITY)) {
                 DialogUtils.showErorr(this, Contans.REQUEST_CHECK_EMAIL)
             }else {
-                if(pass!!.length>0)
+                if(pass!!.length>0){
                     Remember.isChecked=true
-                else Remember.isChecked=false
+                }else Remember.isChecked=false
             }
         }
 
@@ -87,6 +87,7 @@ class LoginActivity : BaseActivity(), LoginView {
                 prefsEditor.putString(Contans.LOGIN_EMAIL,email)
                         .putString(Contans.LOGIN_PASS, pass)
                         .commit()
+
             }else{
                 prefsEditor.clear().commit()
             }
@@ -95,9 +96,12 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
 
-    override fun onError(string: String) {
+    override fun onRequestFailure(string: String) {
         dialogUtils.hideLoading()
-        DialogUtils.showErorr(this, string)
+        if (!isFinishing) {
+            DialogUtils.showErorr(this, string)
+        }
+
 
     }
 
@@ -113,12 +117,10 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onVerified(user: User?) {
         dialogUtils.hideLoading()
-       prefsEditor.putString(Contans.PRE_USER_ID, user?.id)
-                .putString(Contans.PRE_USER_EMAIL, user?.email)
-                .putString(Contans.PRE_USER_NAME, user?.name)
-                .putString(Contans.PRE_USER_AVATAR, user?.avatar)
-                .putString(Contans.PRE_USER_TOKEN, user?.id)
-                .commit()
+        App().UID=user!!.id
+        App().UEMAIL=user!!.email
+        App().UNAME=user!!.name
+        App().UAVATAR=user!!.avatar
         onStartActivity(MainActivity::class.java)
         finish()
     }

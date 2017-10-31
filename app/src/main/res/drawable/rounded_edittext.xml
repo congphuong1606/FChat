@@ -8,7 +8,7 @@
     <gradient
         android:angle="225"
         android:startColor="#ddffffff"
-        android:endColor="#dddedede"/>
+        android:endColor="#ddffffff"/>
     <corners
         android:bottomLeftRadius="10dp"
         android:bottomRightRadius="10dp"

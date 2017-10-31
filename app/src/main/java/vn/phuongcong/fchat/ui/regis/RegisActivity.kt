@@ -59,7 +59,7 @@ class RegisActivity : BaseActivity(), RegisView {
         }
     }
 
-    override fun onError(string: String) {
+    override fun onRequestFailure(string: String) {
         dialogUtils.hideLoading()
         if(string.equals(Contans.ERROR_ACOUNT_EXISTED)){
             DialogUtils.showErorr(this, Contans.ACOUNT_EXISTED)
@@ -76,12 +76,13 @@ class RegisActivity : BaseActivity(), RegisView {
     override fun onSignUpSuccessful() {
         regisPresenter.onCreatUserDatabase(email, "")
     }
+
     override fun onCreateUserSuccessful() {
         dialogUtils.hideLoading()
         intent= Intent(this,LoginActivity::class.java)
-        intent.putExtra("email",email)
-        intent.putExtra("pass",pass)
-        intent.putExtra("fromActivity",Contans.REGIS_ACTIVITY)
+        intent.putExtra(Contans.KEY_EMAIL,email)
+        intent.putExtra(Contans.KEY_PASS,pass)
+        intent.putExtra(Contans.KEY_FROM_ACTIVTY,Contans.REGIS_ACTIVITY)
         startActivity(intent)
         finish()
     }

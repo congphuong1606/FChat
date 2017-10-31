@@ -10,9 +10,10 @@ class NewChatFragment : BaseFragment() {
 
     override fun injectDependence() {
 
+
     }
 
-    override fun initData() {
+    override fun initData(v: View) {
 
     }
 

@@ -11,31 +11,6 @@ import vn.phuongcong.fchat.R
  */
 class DialogUtils(internal var dialog: ProgressDialog?, internal var activity: Activity) {
 
-    //    public static void showDialogGetPhotoMenu(Context context, final UserManagerclickListener mListener) {
-    //        CharSequence[] items = {"Chọn hình", "Chụp hình"};
-    //        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    //        builder.setTitle(context.getResources().getString(R.string.replayavatar));
-    //        builder.setIcon(R.drawable.ic_noavatar);
-    //        builder.setItems(items, new DialogInterface.OnClickListener() {
-    //            @Override
-    //            public void onClick(DialogInterface dialogInterface, int i) {
-    //                if (items[i].equals("Chọn hình")) {
-    //                    mListener.eventChoosePhoto();
-    //                } else if (items[i].equals("Chụp hình")) {
-    //                    mListener.eventTakePicture();
-    //                }
-    //            }
-    //        });
-    //        builder.setCancelable(true);
-    //        final AlertDialog dialog = builder.create();
-    //        builder.setNegativeButton("hủy", new DialogInterface.OnClickListener() {
-    //            @Override
-    //            public void onClick(DialogInterface dialogInterface, int i) {
-    //                dialog.dismiss();
-    //            }
-    //        });
-    //        dialog.show();
-    //    }
 
     fun showLoading() {
         if (dialog != null) {
@@ -54,25 +29,15 @@ class DialogUtils(internal var dialog: ProgressDialog?, internal var activity: A
     }
 
     companion object {
-
         fun showErorr(mContext: Context, msg: String) {
-            if (msg != mContext.resources.getString(R.string.isempity)) {
-                var error = msg
-                if (msg == mContext.resources.getString(R.string.nointernet)) {
-                    error = mContext.resources.getString(R.string.chedokhonginternet)
-                } else if (msg.split("/".toRegex()).dropLastWhile({
-                    it.isEmpty() }).toTypedArray()[0] == mContext.resources.getString(R.string.loiketnoi)) {
-                    error = mContext.resources.getString(R.string.connectfail)
-                }
-                val builder = AlertDialog.Builder(mContext)
-                builder.setTitle("lỗi")
-                builder.setMessage(error)
-                builder.setIcon(R.drawable.logo_app)
-                builder.setCancelable(true)
-                val dialog = builder.create()
-                builder.setNegativeButton("ok") { dialogInterface, i -> dialog.dismiss() }
-                dialog.show()
-            }
+            val builder = AlertDialog.Builder(mContext)
+            builder.setTitle("Thông báo")
+            builder.setMessage(msg)
+            builder.setIcon(R.drawable.logo_app)
+            builder.setCancelable(true)
+            val dialog = builder.create()
+            builder.setNegativeButton("ok") { dialogInterface, i -> dialog.dismiss() }
+            dialog.show()
         }
     }
 
