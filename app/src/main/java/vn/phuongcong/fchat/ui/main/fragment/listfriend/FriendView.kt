@@ -10,5 +10,6 @@ import vn.phuongcong.fchat.ui.base.BaseView
 interface FriendView :BaseView{
     fun onLoadFriendsSuccess(friend: User)
     fun onAddFriendSuccessful()
+    fun onDeleteFriendSuccess()
 
 }

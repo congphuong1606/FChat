@@ -15,9 +15,12 @@ import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AlertDialog
 import android.text.InputType
+import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
+import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import java.util.regex.Pattern
 
@@ -42,8 +45,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
-        var fab=v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
-        fab.setOnClickListener{showAddFrienđiaglog()}
+        var fab = v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
+        fab.setOnClickListener { showAddFrienđiaglog() }
     }
 
     private fun showAddFrienđiaglog() {
@@ -60,7 +63,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
                         return matcher.find()
                     }
                 })
-                .setConfirmButton(android.R.string.ok, object : LovelyTextInputDialog.OnTextInputConfirmListener{
+                .setConfirmButton(android.R.string.ok, object : LovelyTextInputDialog.OnTextInputConfirmListener {
                     override fun onTextInputConfirmed(text: String) {
                         mPresenter.findIDEmail(text)
 
@@ -102,7 +105,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
         var intent: Intent = Intent(activity, ChatActivity::class.java)
         val bundle = Bundle()
         bundle.putSerializable("friend", friend)
-        intent.putExtra("b",bundle)
+        intent.putExtra("b", bundle)
         activity.startActivity(intent)
 
     }
@@ -115,6 +118,25 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun onAddFriendSuccessful() {
+
+    }
+    override fun onDeleteFriendSuccess() {
+        Toast.makeText(context,"xóa thành công",Toast.LENGTH_LONG).show()
+    }
+
+    override fun onLongItemClick(friend: User, position: Int) {
+        val friendName = friend.name
+        AlertDialog.Builder(context)
+                .setTitle("Xóa bạn")
+                .setMessage("bạn có muốn xóa $friendName ?")
+                .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    mPresenter.deleteFriend(friend.id)
+                    friends.remove(friend)
+                    mAdapter.notifyDataSetChanged()
+
+                }
+                .setNegativeButton(android.R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }.show()
 
     }
 

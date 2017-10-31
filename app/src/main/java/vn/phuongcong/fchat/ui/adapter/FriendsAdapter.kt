@@ -14,7 +14,7 @@ import vn.phuongcong.fchat.event.OnFriendClick
 /**
  * Created by Ominext on 10/19/2017.
  */
-class FriendsAdapter(var friends: MutableList<User>,var listener: OnFriendClick)
+class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick)
     : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 //    lateinit var listener: OnFriendClick
 //    fun onListener(onFriendClick: OnFriendClick) {
@@ -28,7 +28,7 @@ class FriendsAdapter(var friends: MutableList<User>,var listener: OnFriendClick)
     }
 
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
-        holder.bindItems(friends[position],listener)
+        holder.bindItems(friends[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -46,8 +46,13 @@ class FriendsAdapter(var friends: MutableList<User>,var listener: OnFriendClick)
             friendName.text = friend.name
 
             itemView.setOnClickListener {
-                  listener.onItemClick(friend)
+                listener.onItemClick(friend)
             }
+            itemView.setOnLongClickListener {
+                listener.onLongItemClick(friend,adapterPosition)
+                return@setOnLongClickListener true
+            }
+
         }
     }
 }

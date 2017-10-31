@@ -30,5 +30,10 @@ object Contans {
     val MESSAGE_LASTS: String?="MESSAGELASTS"
     val MESSAGE: String?="MESSAGE"
     val EMAIL_PATH="email"
+    val PIC_CHOOSE_CODE: Int=1000
+    val PIC_TAKE_CODE: Int=2000
+    val IMAGE_PATH: String="IMAGE"
+    val ATATAR_PATH: String="avatar"
+    val NAME_PATH: String="name"
 
 }

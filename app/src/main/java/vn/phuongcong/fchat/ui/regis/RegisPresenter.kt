@@ -9,6 +9,12 @@ import javax.inject.Inject
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.User
+import android.widget.Toast
+import android.support.annotation.NonNull
+import android.util.Log
+import com.google.android.gms.tasks.OnCompleteListener
+import vn.phuongcong.fchat.R
+import vn.phuongcong.fchat.R.string.user
 
 
 /**
@@ -16,28 +22,37 @@ import vn.phuongcong.fchat.model.User
  */
 class RegisPresenter @Inject constructor(var regisView: RegisView,
                                          var firebaseAuth: FirebaseAuth,
-                                         var databaseReference: DatabaseReference){
-    fun onSignUp(email:String,pass:String ){
-        firebaseAuth.createUserWithEmailAndPassword(email,pass)
-                .addOnCompleteListener{task: Task<AuthResult> ->
-                    if(task.isSuccessful){
-                        val firebaseUser:FirebaseUser=task.result.user
-                       firebaseUser?.let { firebaseUser ->
-                           sendVeriEmail(firebaseUser)
+                                         var databaseReference: DatabaseReference) {
+    fun onSignUp(email: String, pass: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener { task: Task<AuthResult> ->
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result.user
+                        firebaseUser?.let { firebaseUser ->
+                            sendVeriEmail(firebaseUser)
 
-                       }
+                        }
                     }
                 }
-                .addOnFailureListener{exception ->
+                .addOnFailureListener { exception ->
                     regisView.onRequestFailure(exception.toString())
                 }
     }
 
     private fun sendVeriEmail(firebaseUser: FirebaseUser) {
-        firebaseUser.sendEmailVerification().addOnSuccessListener {
-            regisView.onSignUpSuccessful()
+
+        val user = firebaseAuth.getCurrentUser()
+        if (user != null) {
+            user.sendEmailVerification().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    regisView.onSignUpSuccessful()
+                } else {
+                    regisView.onRequestFailure("lỗi")
+                }
+            }
         }
     }
+
 
     fun onCreatUserDatabase(email: String, pass: String) {
         val id = firebaseAuth.currentUser!!.uid

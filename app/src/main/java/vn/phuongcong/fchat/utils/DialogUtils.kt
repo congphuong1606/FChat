@@ -3,8 +3,10 @@ package vn.phuongcong.fchat.utils
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import vn.phuongcong.fchat.R
+import vn.phuongcong.fchat.event.OnPhotoListener
 
 /**
  * Created by Ominext on 10/13/2017.
@@ -39,7 +41,27 @@ class DialogUtils(internal var dialog: ProgressDialog?, internal var activity: A
             builder.setNegativeButton("ok") { dialogInterface, i -> dialog.dismiss() }
             dialog.show()
         }
+
+        fun showDialogGetPhotoMenu(context: Context, mListener: OnPhotoListener) {
+            val items = arrayOf<CharSequence>("Chọn hình", "Chụp hình")
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle(context.resources.getString(R.string.replayavatar))
+            builder.setIcon(R.drawable.ic_no_image)
+            builder.setItems(items) { dialogInterface, i ->
+                if (items[i] == "Chọn hình") {
+                    mListener.onChoosePhoto()
+                } else if (items[i] == "Chụp hình") {
+                    mListener.onTakePhoto()
+                }
+            }
+            builder.setCancelable(true)
+            val dialog = builder.create()
+            builder.setNegativeButton("hủy") { dialogInterface, i -> dialog.dismiss() }
+            dialog.show()
+        }
     }
+
+
 
 
     //    public static void showDialogConfim(Context context, final UserManagerclickListener mListener, int typeUpdate) {
