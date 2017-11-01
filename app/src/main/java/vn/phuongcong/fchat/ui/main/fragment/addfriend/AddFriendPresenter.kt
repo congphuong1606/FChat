@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.ui.login.LoginView
 import javax.inject.Inject
 

@@ -8,27 +8,44 @@ import com.google.firebase.database.DatabaseReference
  */
 class DatabaseRef {
     companion object {
+        // Group
         val GROUP = "GROUP"
         val GROUP_BASIC_INFO = "GROUP_BASIC_INFO"
         val GROUP_MEMBER = "GROUP_MEMBER"
         val GROUP_CHAT_CONTENT = "GROUP_CHAT_CONTENT"
+        val USER = "USER"
+        val OWN = "OWN"
+        val OTHERS = "OTHERS"
+        var databaseRef: DatabaseReference = FirebaseDatabase.getInstance().reference
 
-        var databaseRef: DatabaseReference = FirebaseDatabase.getInstance().reference;
-
+        //
         fun groupRef(): DatabaseReference {
             return databaseRef.child(GROUP)
         }
 
-        fun groupInfoRef(): DatabaseReference {
-            return groupRef().child(GROUP_BASIC_INFO)
+        fun groupInfoRef(uid: String): DatabaseReference {
+            return groupRef().child(GROUP_BASIC_INFO).child(uid)
+        }
+        fun ownGroupInfoRef(uid: String): DatabaseReference {
+            return groupRef().child(GROUP_BASIC_INFO).child(uid).child(OWN)
+        }
+        fun otheresGroupInfoRef(uid: String): DatabaseReference {
+            return groupRef().child(GROUP_BASIC_INFO).child(uid).child(OTHERS)
+        }
+        fun groupContentRef(uid: String): DatabaseReference {
+            return groupRef().child(GROUP_CHAT_CONTENT).child(uid)
         }
 
-        fun groupContentRef(): DatabaseReference {
-            return groupRef().child(GROUP_CHAT_CONTENT)
+        fun groupMemberRef(uid: String): DatabaseReference {
+            return groupRef().child(GROUP_MEMBER).child(uid)
         }
 
-        fun groupMemberRef(): DatabaseReference {
-            return groupRef().child(GROUP_MEMBER);
+        fun userRef(): DatabaseReference {
+            return databaseRef.child(USER)
+        }
+
+        fun userInfoRef(uid: String): DatabaseReference {
+            return userRef().child(uid)
         }
     }
 }

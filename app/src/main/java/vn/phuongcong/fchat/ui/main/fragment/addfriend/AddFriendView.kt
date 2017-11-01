@@ -1,6 +1,6 @@
 package vn.phuongcong.fchat.ui.main.fragment.addfriend
 
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.ui.base.BaseView
 
 /**

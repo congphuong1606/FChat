@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.data
+package vn.phuongcong.fchat.model
 
 /**
  * Created by vietcoscc on 10/20/2017.
