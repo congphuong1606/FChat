@@ -22,7 +22,7 @@ class MainActivity : BaseActivity() {
 
     private var timer = Timer()
     private val DELAY: Long = 2000
-    private var curentFragment: Int? = null;
+    private var curentFragment: Int? = null
     override val contentLayoutID: Int
         get() = R.layout.activity_main
 

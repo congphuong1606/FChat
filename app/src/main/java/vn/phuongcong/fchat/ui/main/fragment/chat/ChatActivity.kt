@@ -18,6 +18,8 @@ import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 import android.support.v4.content.ContextCompat
+import android.util.Log
+import android.widget.ImageView
 import vn.phuongcong.fchat.event.IitemClick
 
 
@@ -29,6 +31,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick 
     lateinit var mChatAdapter: ChatApdapter
     lateinit var mImageAdapter: ImageAdapter
     var count = 0
+    var mListPathCurrent: MutableList<String> = mutableListOf()
 
 
     @Inject
@@ -178,10 +181,28 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick 
         mImageAdapter.notifyDataSetChanged()
     }
 
-    override fun iClick(strPath: Any) {
+    override fun iClick(strPath: Any, txt_count: ImageView) {
 
-        count++
+        rl_send.visibility = View.VISIBLE
+        if (mListPathCurrent.size > 0 && mListPathCurrent.contains(strPath)) {
+            mListPathCurrent.remove(strPath)
+            count--
+
+            Log.d("count-----", count.toString())
+            if (count > 0)
+                txt_count_send.text = "(" + count.toString() + ")"
+            else
+                txt_count_send.text = ""
+            txt_count.visibility = View.INVISIBLE
+
+        } else {
+            mListPathCurrent.add(strPath as String)
+            count++
+            Log.d("count-----", count.toString())
+            txt_count_send.text = "(" + count.toString() + ")"
+            txt_count.visibility = View.VISIBLE
+        }
+
 
     }
-
 }

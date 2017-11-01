@@ -39,7 +39,7 @@ class ImageAdapter(var mListImage: MutableList<String>, var mContext: Context,va
         fun bin(pathImage: String, mContext: Context, itemClick: IitemClick) {
             Glide.with(mContext).load(pathImage).into(itemView.img_image)
             itemView.setOnClickListener{
-                itemClick.iClick(pathImage)
+                itemClick.iClick(pathImage,itemView.txt_count)
             }
         }
     }
