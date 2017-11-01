@@ -40,6 +40,7 @@ class LoginPresenter @Inject constructor(var fAuth: FirebaseAuth,
             } else {
                 fAuth.signOut()
                 loginView.onViriFail()
+
             }
         }
 

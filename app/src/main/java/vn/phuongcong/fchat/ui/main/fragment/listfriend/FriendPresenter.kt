@@ -61,11 +61,11 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.getValue() == null) {
-                    friendView.onRequestFailure("không tìm thấy email này")
+                    friendView.onRequestFailure(Contans.EMAIL_NOT_FOUND)
                 } else {
                     val id = (dataSnapshot.value as HashMap<*, *>).keys.iterator().next().toString()
                     if (id.equals(sPref.getString(Contans.PRE_USER_ID, ""))) {
-                        friendView.onRequestFailure("email này là của bạn")
+                        friendView.onRequestFailure(Contans.EMAIL_OF_ME)
                     } else {
                         dbReference.child(Contans.FRIEND_PATH).child(sPref.getString(Contans.PRE_USER_ID, "")).child(id).setValue(id)
                                 .addOnCompleteListener { task ->
@@ -75,7 +75,7 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                                     }
                                 }
                                 .addOnFailureListener {
-                                    friendView.onRequestFailure("thêm bạn không thành công")
+                                    friendView.onRequestFailure(Contans.ADD_FRIEND_NOT_FOUND)
                                 }
                     }
                 }
@@ -92,7 +92,7 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                     if (task.isSuccessful)
                         friendView.onDeleteFriendSuccess()
                 }.addOnFailureListener { exception ->
-            friendView.onRequestFailure("xóa bạn không thành công")
+            friendView.onRequestFailure(Contans.DELETE_FRIEND_NOT_FOUND)
         }
     }
 }

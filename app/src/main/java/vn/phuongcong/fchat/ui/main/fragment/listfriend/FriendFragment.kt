@@ -21,6 +21,7 @@ import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
 import vn.phuongcong.fchat.R.string.user
+import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import java.util.regex.Pattern
 
@@ -52,14 +53,13 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     private fun showAddFrienđiaglog() {
         LovelyTextInputDialog(context, R.style.EditTextTintTheme)
                 .setTopColorRes(R.color.colorPrimary)
-                .setTitle("Thêm bạn")
-                .setMessage("nhập email")
+                .setTitle(Contans.TITLE_ADD_FRIEND)
+                .setMessage(Contans.REQUEST_INPUT_EMAIL)
                 .setIcon(R.drawable.ic_add)
                 .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                .setInputFilter("email không đúng", object : LovelyTextInputDialog.TextFilter {
+                .setInputFilter(Contans.EMAIL_FAIL, object : LovelyTextInputDialog.TextFilter {
                     override fun check(text: String): Boolean {
-                        val VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
-                        val matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(text)
+                        val matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(text)
                         return matcher.find()
                     }
                 })
@@ -121,14 +121,14 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
     }
     override fun onDeleteFriendSuccess() {
-        Toast.makeText(context,"xóa thành công",Toast.LENGTH_LONG).show()
+        Toast.makeText(context,Contans.NOTI_DELETE_FRIEND_SUCCESS,Toast.LENGTH_LONG).show()
     }
 
     override fun onLongItemClick(friend: User, position: Int) {
         val friendName = friend.name
         AlertDialog.Builder(context)
-                .setTitle("Xóa bạn")
-                .setMessage("bạn có muốn xóa $friendName ?")
+                .setTitle(Contans.TITLE_DELE_FRIEND)
+                .setMessage(Contans.REQUEST_DELE_FRIEND+" $friendName ?")
                 .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
                     dialogInterface.dismiss()
                     mPresenter.deleteFriend(friend.id)

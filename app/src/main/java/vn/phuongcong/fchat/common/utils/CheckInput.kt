@@ -1,7 +1,6 @@
-package vn.phuongcong.fchat.utils
+package vn.phuongcong.fchat.common.utils
 
 import android.app.Activity
-import android.content.Context
 import android.widget.EditText
 import vn.phuongcong.fchat.R
 import java.util.regex.Pattern

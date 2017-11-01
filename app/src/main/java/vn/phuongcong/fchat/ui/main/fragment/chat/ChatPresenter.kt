@@ -10,7 +10,7 @@ import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.model.Messagelast
-import vn.phuongcong.fchat.utils.DateTimeUltil
+import vn.phuongcong.fchat.common.utils.DateTimeUltil
 import javax.inject.Inject
 import android.provider.MediaStore
 import android.provider.MediaStore.MediaColumns

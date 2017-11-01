@@ -1,5 +1,7 @@
 package vn.phuongcong.fchat.common
 
+import android.content.Context
+
 /**
  * Created by Ominext on 10/13/2017.
  */
@@ -22,7 +24,7 @@ object Contans {
     val  PRE_USER_ID="prefs_id"
     val FRIEND_PATH ="FRIEND"
     val USERS_PATH  = "USER"
-    val NOT_HAVE_FRIEND="bạn hãy thử tính năng thêm bạn bè của chúng tôi"
+    val NOT_HAVE_FRIEND="Bạn hãy thử tính năng thêm bạn bè của chúng tôi"
     val CHAT: String?="CHAT"
     val CHAT_ITEM: String?="chat_item"
     val MESSAGE_LAST: String?="message_last"
@@ -35,5 +37,25 @@ object Contans {
     val IMAGE_PATH: String="IMAGE"
     val ATATAR_PATH: String="avatar"
     val NAME_PATH: String="name"
-
+    val TITLE_ADD_FRIEND="Thêm bạn"
+    val REQUEST_INPUT_EMAIL="Nhập email"
+    val EMAIL_FAIL="Email không đúng định dạng"
+    val NOTI_DELETE_FRIEND_SUCCESS="Xóa bạn thành công!"
+    val TITLE_DELE_FRIEND="Xóa bạn"
+    val REQUEST_DELE_FRIEND="Bạn có muốn xóa"
+    val EMAIL_NOT_FOUND="Không tìm thấy email này"
+    val EMAIL_OF_ME="Email này là của bạn"
+    val ADD_FRIEND_NOT_FOUND: String="Thêm bạn không thành công!"
+    val DELETE_FRIEND_NOT_FOUND: String="Xóa bạn không thành công"
+    val TITLE_PASS="Mật khẩu"
+    val REQUEST_INPUT_NEW_ACCOUNT="Nhập tài khoản mới"
+    val TITLE_RENAME="Đổi tên"
+    val PLEASE_INPUT_PSS="Nhập mật khẩu"
+    val REPEAT_OLD_PASS="Phải khác mật khẩu cũ"
+    val REPEATPASS_NOT_FOUND="Không trùng mật khẩu mới"
+    val CHANG_PASS_NOT_FOUND="Thay đổi mật khẩu không thành công"
+    val CONFIRM_CHANGE_PASS="Mật khẩu của bạn sẽ được thay đổi"
+    val CHANGE_PASS_SUCCESS="Thay đổi mật khẩu thành công"
+    val NAME_NOT_NULL="Tên tài khoản không được để trống"
+    val OLD_NAME="Trùng với tài khoản cũ"
 }
