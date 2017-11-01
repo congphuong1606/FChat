@@ -1,9 +1,9 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.fragment_friend.*
 
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
@@ -13,12 +13,23 @@ import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
+import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AlertDialog
+import android.text.InputType
+import android.widget.Toast
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog
+import kotlinx.android.synthetic.main.fragment_friend.*
+import vn.phuongcong.fchat.R.string.user
+import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
+import java.util.regex.Pattern
 
 
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
 
-    lateinit var friends: ArrayList<User>
+
+    lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
     @Inject
     lateinit var mPresenter: FriendPresenter
@@ -34,13 +45,39 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
+        var fab = v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
+        fab.setOnClickListener { showAddFrienđiaglog() }
     }
+
+    private fun showAddFrienđiaglog() {
+        LovelyTextInputDialog(context, R.style.EditTextTintTheme)
+                .setTopColorRes(R.color.colorPrimary)
+                .setTitle("Thêm bạn")
+                .setMessage("nhập email")
+                .setIcon(R.drawable.ic_add)
+                .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+                .setInputFilter("email không đúng", object : LovelyTextInputDialog.TextFilter {
+                    override fun check(text: String): Boolean {
+                        val VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
+                        val matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(text)
+                        return matcher.find()
+                    }
+                })
+                .setConfirmButton(android.R.string.ok, object : LovelyTextInputDialog.OnTextInputConfirmListener {
+                    override fun onTextInputConfirmed(text: String) {
+                        mPresenter.findIDEmail(text)
+
+                    }
+                })
+                .show()
+    }
+
 
     private fun setAdapter(v: View) {
         var rcvListFriend = v.findViewById<RecyclerView>(R.id.rcvListFriend)
         rcvListFriend.layoutManager = LinearLayoutManager(context)
         rcvListFriend.setHasFixedSize(true)
-        friends = ArrayList<User>()
+        friends = mutableListOf()
         mAdapter = FriendsAdapter(friends, this)
         rcvListFriend.adapter = mAdapter
     }
@@ -58,15 +95,18 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
             friends.add(friend)
         mAdapter.notifyDataSetChanged()
         rcvListFriend.smoothScrollToPosition(0)
-
-
     }
 
     override fun onDestroyComposi() {
 
     }
 
-    override fun onItemClick(user: User) {
+    override fun onItemClick(friend: User) {
+        var intent: Intent = Intent(activity, ChatActivity::class.java)
+        val bundle = Bundle()
+        bundle.putSerializable("friend", friend)
+        intent.putExtra("b", bundle)
+        activity.startActivity(intent)
 
     }
 
@@ -75,7 +115,30 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun showToast(msg: String) {
+    }
+
+    override fun onAddFriendSuccessful() {
 
     }
+    override fun onDeleteFriendSuccess() {
+        Toast.makeText(context,"xóa thành công",Toast.LENGTH_LONG).show()
+    }
+
+    override fun onLongItemClick(friend: User, position: Int) {
+        val friendName = friend.name
+        AlertDialog.Builder(context)
+                .setTitle("Xóa bạn")
+                .setMessage("bạn có muốn xóa $friendName ?")
+                .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    mPresenter.deleteFriend(friend.id)
+                    friends.remove(friend)
+                    mAdapter.notifyDataSetChanged()
+
+                }
+                .setNegativeButton(android.R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }.show()
+
+    }
+
 }
 

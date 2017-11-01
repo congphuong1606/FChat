@@ -7,4 +7,5 @@ import vn.phuongcong.fchat.model.User
  */
 interface OnFriendClick {
     fun onItemClick(user: User)
+    fun onLongItemClick(user: User, adapterPosition: Int)
 }

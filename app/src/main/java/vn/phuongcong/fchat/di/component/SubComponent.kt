@@ -32,4 +32,5 @@ interface SubComponent {
     fun injectTo(chatActivity: ChatActivity)
     fun injectTo(splashActivity: SplashActivity)
     fun injectTo(gridImageActivity : GridImageActivity)
+
 }
