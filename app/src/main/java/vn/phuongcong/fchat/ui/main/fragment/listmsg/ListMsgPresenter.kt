@@ -46,6 +46,7 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot?) {
+
                     listMessagelast.add(dataSnapshot!!.getValue(Messagelast::class.java)!!)
                     listMsgView.onLoadListMessagelast(listMessagelast)
                 }

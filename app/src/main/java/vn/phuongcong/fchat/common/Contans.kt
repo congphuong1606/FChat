@@ -58,4 +58,8 @@ object Contans {
     val CHANGE_PASS_SUCCESS="Thay đổi mật khẩu thành công"
     val NAME_NOT_NULL="Tên tài khoản không được để trống"
     val OLD_NAME="Trùng với tài khoản cũ"
+    val STATUS_PATH="status"
+    val ISONLINE: String="isOnline"
+    val TIME_STAMP: String="timeStamp"
+    val TIME_TO_SFRESH: Long=10*1000
 }

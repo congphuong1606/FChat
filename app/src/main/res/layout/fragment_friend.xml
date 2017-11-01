@@ -5,11 +5,15 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context="vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment">
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvListFriend"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_margin="20dp"

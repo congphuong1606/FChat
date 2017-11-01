@@ -15,11 +15,14 @@ import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.text.InputType
 import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
+import kotlinx.android.synthetic.main.fragment_friend.view.*
+import vn.phuongcong.fchat.R.id.rcvListFriend
 import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
@@ -46,8 +49,15 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
-        var fab = v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
-        fab.setOnClickListener { showAddFrienđiaglog() }
+//        var fab = v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
+//        var swipeRefreshLayout = v.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        v.fabAddFriend.setOnClickListener { showAddFrienđiaglog() }
+        v.swipeRefreshLayout.setOnRefreshListener {onRefresh() }
+    }
+
+    private fun onRefresh() {
+        friends.clear()
+        mPresenter.onLoadFriendIds()
     }
 
     private fun showAddFrienđiaglog() {
@@ -95,6 +105,9 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
             friends.add(friend)
         mAdapter.notifyDataSetChanged()
         rcvListFriend.smoothScrollToPosition(0)
+        if(swipeRefreshLayout.isRefreshing){
+            swipeRefreshLayout.isRefreshing=false
+        }
     }
 
     override fun onDestroyComposi() {
@@ -120,15 +133,16 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun onAddFriendSuccessful() {
 
     }
+
     override fun onDeleteFriendSuccess() {
-        Toast.makeText(context,Contans.NOTI_DELETE_FRIEND_SUCCESS,Toast.LENGTH_LONG).show()
+        Toast.makeText(context, Contans.NOTI_DELETE_FRIEND_SUCCESS, Toast.LENGTH_LONG).show()
     }
 
     override fun onLongItemClick(friend: User, position: Int) {
         val friendName = friend.name
         AlertDialog.Builder(context)
                 .setTitle(Contans.TITLE_DELE_FRIEND)
-                .setMessage(Contans.REQUEST_DELE_FRIEND+" $friendName ?")
+                .setMessage(Contans.REQUEST_DELE_FRIEND + " $friendName ?")
                 .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
                     dialogInterface.dismiss()
                     mPresenter.deleteFriend(friend.id)

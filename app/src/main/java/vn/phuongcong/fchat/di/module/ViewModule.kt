@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import vn.phuongcong.fchat.di.scope.ActivityScope
 import vn.phuongcong.fchat.ui.login.LoginView
+import vn.phuongcong.fchat.ui.main.MainActivity
+import vn.phuongcong.fchat.ui.main.MainView
 import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendView
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatView
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendView
@@ -28,6 +30,7 @@ class ViewModule {
     lateinit var listMsgView: ListMsgView
     lateinit var profileView: ProfileView
     lateinit var splashView: SplashView
+    lateinit var mainView: MainView
 
 
     @Provides
@@ -59,6 +62,9 @@ class ViewModule {
     @Provides
     @ActivityScope
     fun provideSplashView(): SplashView = splashView
+    @Provides
+    @ActivityScope
+    fun provideMainView(): MainView = mainView
 
     constructor(loginView: LoginView) {
         this.loginView = loginView
@@ -91,6 +97,10 @@ class ViewModule {
         this.splashView=splashView
     }
 
+    constructor(mainView: MainView){
+        this.mainView=mainView
+
+    }
 
 
 }
