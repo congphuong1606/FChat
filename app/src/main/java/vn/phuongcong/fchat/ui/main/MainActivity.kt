@@ -7,14 +7,11 @@ import android.text.Editable
 import com.bumptech.glide.Glide
 
 import com.pawegio.kandroid.textWatcher
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_profile.*
 import vn.phuongcong.fchat.App
 
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.common.utils.ServiceUtils
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.service.OnlineService
 import vn.phuongcong.fchat.ui.adapter.ViewPagerAdapter

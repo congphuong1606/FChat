@@ -62,4 +62,7 @@ object Contans {
     val ISONLINE: String="isOnline"
     val TIME_STAMP: String="timeStamp"
     val TIME_TO_SFRESH: Long=10*1000
+    val TIME_TO_OFFLINE:Long=60*1000
+    val STATUS_OFFLINE="Cách đây "
+    val STATUS_ONLINE="Đang hoạt động"
 }

@@ -44,9 +44,7 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                         if (user != null) {
                             friendView.onLoadFriendsSuccess(user)
                         }
-
                     }
-
                     override fun onCancelled(error: DatabaseError) {
                         friendView.onRequestFailure(error.toString())
                     }

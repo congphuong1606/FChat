@@ -17,4 +17,6 @@
     <color name="blue">#224070</color>
     <color name="textginho">#61758e</color>
     <color name="tablayout">#419ed4</color>
+    <color name="online">#10df1a</color>
+    <color name="offline">#959695</color>
 </resources>
