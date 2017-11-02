@@ -65,4 +65,5 @@ object Contans {
     val TIME_TO_OFFLINE:Long=60*1000
     val STATUS_OFFLINE="Cách đây "
     val STATUS_ONLINE="Đang hoạt động"
+    val CHAT_PATH: String="MESSAGE"
 }
