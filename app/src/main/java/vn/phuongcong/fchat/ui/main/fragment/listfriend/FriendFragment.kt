@@ -1,6 +1,7 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -25,6 +26,8 @@ import kotlinx.android.synthetic.main.fragment_friend.view.*
 import vn.phuongcong.fchat.R.id.rcvListFriend
 import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.common.utils.ChatUtils
+import vn.phuongcong.fchat.ui.chat.FChatActivity
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import java.util.regex.Pattern
 
@@ -32,11 +35,11 @@ import java.util.regex.Pattern
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
 
-
     lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
     @Inject
     lateinit var mPresenter: FriendPresenter
+
     override val LayoutId: Int
         get() = R.layout.fragment_friend
 
@@ -46,13 +49,14 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
                 .injectTo(this)
     }
 
+
+
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
-//        var fab = v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
-//        var swipeRefreshLayout = v.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+
         v.fabAddFriend.setOnClickListener { showAddFrienđiaglog() }
-        v.swipeRefreshLayout.setOnRefreshListener {onRefresh() }
+        v.swipeRefreshLayout.setOnRefreshListener { onRefresh() }
     }
 
     private fun onRefresh() {
@@ -105,8 +109,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
             friends.add(friend)
         mAdapter.notifyDataSetChanged()
         rcvListFriend.smoothScrollToPosition(0)
-        if(swipeRefreshLayout.isRefreshing){
-            swipeRefreshLayout.isRefreshing=false
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 
@@ -115,10 +119,10 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun onItemClick(friend: User) {
-        var intent: Intent = Intent(activity, ChatActivity::class.java)
+        var intent = Intent(activity, FChatActivity::class.java)
         val bundle = Bundle()
         bundle.putSerializable("friend", friend)
-        intent.putExtra("b", bundle)
+        intent.putExtra("bFrienfragment", bundle)
         activity.startActivity(intent)
 
     }
