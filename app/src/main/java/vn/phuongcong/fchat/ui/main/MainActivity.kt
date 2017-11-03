@@ -20,6 +20,10 @@ import vn.phuongcong.fchat.ui.profile.ProfileActivity
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import java.util.*
 import javax.inject.Inject
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.FloatingActionButton
+import android.view.View
+import vn.phuongcong.fchat.common.utils.ScrollAwareFABBehavior
 
 
 class MainActivity : BaseActivity(),MainView {
