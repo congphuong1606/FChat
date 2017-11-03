@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.ui.main.fragment.addFriend
+package vn.phuongcong.fchat.ui.main.fragment.addfriend
 
 import android.view.View
 import vn.phuongcong.fchat.R

@@ -10,13 +10,14 @@ import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
-import vn.phuongcong.fchat.utils.CheckInput
-import vn.phuongcong.fchat.utils.DialogUtils
+import vn.phuongcong.fchat.common.utils.CheckInput
+import vn.phuongcong.fchat.common.utils.DialogUtils
 
 import javax.inject.Inject
 
 
 class LoginActivity : BaseActivity(), LoginView {
+
 
 
     private var email: String? = null

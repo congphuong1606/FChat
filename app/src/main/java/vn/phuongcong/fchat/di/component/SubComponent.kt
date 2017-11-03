@@ -7,11 +7,14 @@ import vn.phuongcong.fchat.di.module.SharedPreference
 
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
+import vn.phuongcong.fchat.ui.chat.FChatActivity
+import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import vn.phuongcong.fchat.ui.main.fragment.chat.GridImageActivity
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
 import vn.phuongcong.fchat.ui.profile.ProfileActivity
 import vn.phuongcong.fchat.ui.splash.SplashActivity
@@ -20,7 +23,7 @@ import vn.phuongcong.fchat.ui.splash.SplashActivity
  * Created by Ominext on 10/12/2017.
  */
 @ActivityScope
-@Subcomponent(modules = arrayOf(ViewModule::class,SharedPreference::class))
+@Subcomponent(modules = arrayOf(ViewModule::class, SharedPreference::class))
 interface SubComponent {
     fun injectTo(loginActivity: LoginActivity)
     fun injectTo(regisActivity: RegisActivity)
@@ -29,8 +32,10 @@ interface SubComponent {
     fun injectTo(friendFragment: FriendFragment)
     fun injectTo(msgFragment: MsgFragment)
     fun injectTo(profileActivity: ProfileActivity)
-    fun injectTo(chatActivity: ChatActivity)
     fun injectTo(splashActivity: SplashActivity)
-    fun injectTo(gridImageActivity : GridImageActivity)
-
+    fun injectTo(chatActivity: ChatActivity)
+    fun injectTo(gridImageActivity: GridImageActivity)
+    fun injectTo(chatGroupActivity: ChatGroupActivity)
+    fun injectTo(mainActivity: MainActivity)
+    fun injectTo(fChatActivity: FChatActivity)
 }

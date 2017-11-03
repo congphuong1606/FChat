@@ -26,6 +26,7 @@ import vn.phuongcong.fchat.event.IitemClick
 class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick {
 
 
+
     var mMessages: MutableList<Message> = mutableListOf()
     var mListImage: MutableList<String> = mutableListOf()
     lateinit var mChatAdapter: ChatApdapter
@@ -181,7 +182,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick 
         mImageAdapter.notifyDataSetChanged()
     }
 
-    override fun iClick(strPath: Any, txt_count: ImageView) {
+    override fun iClick(strPath: Any, txt_count: ImageView?) {
 
         rl_send.visibility = View.VISIBLE
         if (mListPathCurrent.size > 0 && mListPathCurrent.contains(strPath)) {
@@ -193,14 +194,14 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick 
                 txt_count_send.text = "(" + count.toString() + ")"
             else
                 txt_count_send.text = ""
-            txt_count.visibility = View.INVISIBLE
+            txt_count?.visibility = View.INVISIBLE
 
         } else {
             mListPathCurrent.add(strPath as String)
             count++
             Log.d("count-----", count.toString())
             txt_count_send.text = "(" + count.toString() + ")"
-            txt_count.visibility = View.VISIBLE
+            txt_count?.visibility = View.VISIBLE
         }
 
 

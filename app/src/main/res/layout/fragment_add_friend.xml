@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#faf7f7"
-    tools:context="vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendFragment">
+    tools:context="vn.phuongcong.fchat.ui.main.fragment.addfriend.AddFriendFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvAddFriend"

@@ -2,15 +2,13 @@ package vn.phuongcong.fchat
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_regis.*
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.regis.RegisPresenter
 import vn.phuongcong.fchat.ui.regis.RegisView
-import vn.phuongcong.fchat.utils.CheckInput
-import vn.phuongcong.fchat.utils.DialogUtils
+import vn.phuongcong.fchat.common.utils.CheckInput
+import vn.phuongcong.fchat.common.utils.DialogUtils
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
@@ -74,7 +72,7 @@ class RegisActivity : BaseActivity(), RegisView {
     }
 
     override fun onSignUpSuccessful() {
-        regisPresenter.onCreatUserDatabase(email, pass)
+        regisPresenter.onCreatUserDatabase(email, "")
     }
 
     override fun onCreateUserSuccessful() {

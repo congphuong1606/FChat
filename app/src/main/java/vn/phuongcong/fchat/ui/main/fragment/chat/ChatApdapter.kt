@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_chat_one_one_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_one_one_send.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Message
-import vn.phuongcong.fchat.utils.DateTimeUltil
+import vn.phuongcong.fchat.common.utils.DateTimeUltil
 
 /**
  * Created by Ominext on 10/20/2017.

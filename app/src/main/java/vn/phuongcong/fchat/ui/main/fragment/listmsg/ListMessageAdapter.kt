@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.item_msg.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.Messagelast
-import vn.phuongcong.fchat.utils.DateTimeUltil
+import vn.phuongcong.fchat.common.utils.DateTimeUltil
 
 /**
  * Created by Ominext on 10/20/2017.

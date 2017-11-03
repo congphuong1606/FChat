@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "58660324526-ams6a88t6dp69grtbnjrsefvei8aiaa2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.phuongcong.fchat",
+            "certificate_hash": "883daa373d505ca21cc28a4f8772a38b69bb1add"
+          }
+        },
+        {
           "client_id": "58660324526-0qjj6cqoa1qvj3onbvtjna65t27evm90.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

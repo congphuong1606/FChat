@@ -1,9 +1,8 @@
-package vn.phuongcong.adpater
+package vn.phuongcong.fchat.adpater
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
