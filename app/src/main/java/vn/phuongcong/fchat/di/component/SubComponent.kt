@@ -23,7 +23,7 @@ import vn.phuongcong.fchat.ui.splash.SplashActivity
  * Created by Ominext on 10/12/2017.
  */
 @ActivityScope
-@Subcomponent(modules = arrayOf(ViewModule::class,SharedPreference::class))
+@Subcomponent(modules = arrayOf(ViewModule::class, SharedPreference::class))
 interface SubComponent {
     fun injectTo(loginActivity: LoginActivity)
     fun injectTo(regisActivity: RegisActivity)
@@ -32,10 +32,10 @@ interface SubComponent {
     fun injectTo(friendFragment: FriendFragment)
     fun injectTo(msgFragment: MsgFragment)
     fun injectTo(profileActivity: ProfileActivity)
+    fun injectTo(splashActivity: SplashActivity)
     fun injectTo(chatActivity: ChatActivity)
-    fun injectTo(gridImageActivity : GridImageActivity)
+    fun injectTo(gridImageActivity: GridImageActivity)
     fun injectTo(chatGroupActivity: ChatGroupActivity)
-
     fun injectTo(mainActivity: MainActivity)
     fun injectTo(fChatActivity: FChatActivity)
 }

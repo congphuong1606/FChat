@@ -53,7 +53,7 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
         lateinit var uid: String
         fun bind(group: Group, onItemClick: IitemClick) {
             itemView.setOnClickListener {
-                onItemClick.iClick(position)
+                onItemClick.iClick(position,null)
             }
             uid = FirebaseAuth.getInstance().currentUser!!.uid
             itemView.tvGroupName.text = group.groupName

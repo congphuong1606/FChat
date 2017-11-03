@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import com.github.clans.fab.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -52,7 +53,7 @@ class GroupFragment : BaseFragment, GroupView {
     constructor() : super() {
 
         groupAdapter = GroupAdapter(arrGroup, object : IitemClick {
-            override fun iClick(o: Any) {
+            override fun iClick(o: Any, txt_count: ImageView?) {
                 var position: Int = o as Int
                 var intent = Intent(context, ChatGroupActivity::class.java)
                 intent.putExtra(ADMIN_KEY, arrGroup[position].adminKey)
