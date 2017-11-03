@@ -38,7 +38,7 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         context = parent!!.context
-        var view = LayoutInflater.from(parent!!.context).inflate(R.layout.item_group, parent, false)
+        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_group, parent, false)
         return GroupViewHolder(view)
     }
 
@@ -53,11 +53,11 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
         lateinit var uid: String
         fun bind(group: Group, onItemClick: IitemClick) {
             itemView.setOnClickListener {
-                onItemClick?.iClick(position)
+                onItemClick.iClick(position)
             }
             uid = FirebaseAuth.getInstance().currentUser!!.uid
-            itemView.tvGroupName.setText(group.groupName)
-            itemView.tvTimeStamp.setText(group.timeStamp)
+            itemView.tvGroupName.text = group.groupName
+            itemView.tvTimeStamp.text = group.timeStamp
             itemView.ivAvatar.shape = MultiImageView.Shape.CIRCLE
             DatabaseRef.userInfoRef(group.adminKey).addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError?) {
@@ -66,16 +66,15 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
 
                 override fun onDataChange(p0: DataSnapshot?) {
                     var user: User = p0!!.getValue(User::class.java)!!
-                    itemView.tvMember.setText("" + itemView.tvMember.text + user.email + ", ")
-                    Log.e("TAG", user.avatar)
+                    itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
                     if (user.avatar == null) {
-                        Toast.makeText(itemView.context, "Null", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(itemView.context, "Null", Toast.LENGTH_SHORT).show()
                         return
                     }
                     Thread {
                         var bm: Bitmap = Picasso.with(itemView.context).load(user.avatar).get()
                         runOnUiThread {
-                            itemView.ivAvatar.addImage(bm!!)
+                            itemView.ivAvatar.addImage(bm)
                         }
                     }.start()
                 }
@@ -90,7 +89,7 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
 
                         override fun onDataChange(p0: DataSnapshot?) {
                             var user: User = p0!!.getValue(User::class.java)!!
-                            itemView.tvMember.setText("" + itemView.tvMember.text + user.email + ", ")
+                            itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
 
                         }
                     })
@@ -118,8 +117,8 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
     }
 
     fun addItem(group: Group) {
-        arrGorup!!.add(group);
-        notifyItemInserted(arrGorup!!.size - 1);
+        arrGorup!!.add(group)
+        notifyItemInserted(arrGorup!!.size - 1)
     }
 
     fun removeItem(position: Int) {

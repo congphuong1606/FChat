@@ -16,8 +16,9 @@ class DatabaseRef {
         val USER = "USER"
         val OWN = "OWN"
         val OTHERS = "OTHERS"
+        val ADMIN_KEY = "ADMIN_KEY"
+        val GROUP_KEY = "GROUP_KEY"
         var databaseRef: DatabaseReference = FirebaseDatabase.getInstance().reference
-
         //
         fun groupRef(): DatabaseReference {
             return databaseRef.child(GROUP)
@@ -26,12 +27,15 @@ class DatabaseRef {
         fun groupInfoRef(uid: String): DatabaseReference {
             return groupRef().child(GROUP_BASIC_INFO).child(uid)
         }
+
         fun ownGroupInfoRef(uid: String): DatabaseReference {
             return groupRef().child(GROUP_BASIC_INFO).child(uid).child(OWN)
         }
-        fun otheresGroupInfoRef(uid: String): DatabaseReference {
+
+        fun othersGroupInfoRef(uid: String): DatabaseReference {
             return groupRef().child(GROUP_BASIC_INFO).child(uid).child(OTHERS)
         }
+
         fun groupContentRef(uid: String): DatabaseReference {
             return groupRef().child(GROUP_CHAT_CONTENT).child(uid)
         }

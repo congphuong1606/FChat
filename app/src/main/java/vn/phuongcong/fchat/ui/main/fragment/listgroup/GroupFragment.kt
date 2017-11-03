@@ -23,6 +23,9 @@ import vn.phuongcong.fchat.model.Group
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
 import vn.phuongcong.fchat.utils.CalendarUtils
+import vn.phuongcong.fchat.utils.DatabaseRef.Companion.ADMIN_KEY
+import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP
+import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP_KEY
 import javax.inject.Inject
 
 
@@ -40,9 +43,9 @@ class GroupFragment : BaseFragment, GroupView {
     }
 
     var arrGroup: ArrayList<Group> = ArrayList()
-    var groupAdapter: GroupAdapter
-    lateinit var recylerView: RecyclerView
-    lateinit var fab: FloatingActionButton
+    private var groupAdapter: GroupAdapter
+    private lateinit var recylerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
     @Inject
     lateinit var mPresenter: GroupPresenter
 
@@ -50,7 +53,10 @@ class GroupFragment : BaseFragment, GroupView {
 
         groupAdapter = GroupAdapter(arrGroup, object : IitemClick {
             override fun iClick(o: Any) {
+                var position: Int = o as Int
                 var intent = Intent(context, ChatGroupActivity::class.java)
+                intent.putExtra(ADMIN_KEY, arrGroup[position].adminKey)
+                intent.putExtra(GROUP_KEY, arrGroup[position].groupKey)
                 startActivity(intent)
             }
         })
