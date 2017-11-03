@@ -8,7 +8,7 @@ import vn.phuongcong.fchat.ui.chat.FChatView
 import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.ui.main.MainView
-import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendView
+
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatView
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupView
@@ -28,7 +28,6 @@ class ViewModule {
     lateinit var regisView: RegisView
     lateinit var groupView: GroupView
     lateinit var chatView: ChatView
-    lateinit var addFriendView: AddFriendView
     lateinit var friendView: FriendView
     lateinit var listMsgView: ListMsgView
     lateinit var profileView: ProfileView
@@ -53,10 +52,6 @@ class ViewModule {
     @Provides
     @ActivityScope
     fun provideChatView(): ChatView = chatView
-
-    @Provides
-    @ActivityScope
-    fun provideAddFriendView(): AddFriendView = addFriendView
 
     @Provides
     @ActivityScope
@@ -104,9 +99,6 @@ class ViewModule {
         this.friendView = friendView
     }
 
-    constructor(addFriendView: AddFriendView) {
-        this.addFriendView = addFriendView
-    }
 
     constructor(listMsgView: ListMsgView) {
         this.listMsgView = listMsgView

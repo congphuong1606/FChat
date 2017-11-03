@@ -22,13 +22,13 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                                         var databaseReference: DatabaseReference,
                                         var spf: SharedPreferences,
                                         var chatView: ChatView) {
-    var uid= mAuth.currentUser!!.uid
+    var uid = mAuth.currentUser!!.uid
 
     var messages: MutableList<Message> = mutableListOf()
+
     fun getListChat(mChatItem: Chat) {
 
         if (uid != "" && mChatItem != null) {
-
             databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).addChildEventListener(object : ChildEventListener {
                 override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -87,6 +87,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
         var message = Message(uid, messagetext, "", DateTimeUltil.getTimeCurrent())
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
+
         var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)

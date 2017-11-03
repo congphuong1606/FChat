@@ -27,6 +27,7 @@ import vn.phuongcong.fchat.R.id.rcvListFriend
 import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.common.utils.ChatUtils
+import vn.phuongcong.fchat.ui.adapter.FchatAdapter
 import vn.phuongcong.fchat.ui.chat.FChatActivity
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import java.util.regex.Pattern

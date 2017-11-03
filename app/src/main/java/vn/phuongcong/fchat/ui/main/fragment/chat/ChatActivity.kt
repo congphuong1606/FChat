@@ -204,6 +204,5 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick 
             txt_count?.visibility = View.VISIBLE
         }
 
-
     }
 }

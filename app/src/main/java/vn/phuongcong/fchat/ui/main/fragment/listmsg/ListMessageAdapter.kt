@@ -26,6 +26,7 @@ IChat,var mListMessageLast :MutableList<Messagelast>) : RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ChatHolder) {
+
             if (mListMessage != null && mListMessage.size > 0 && mListMessageLast.size>0) {
                 var chat: Chat = mListMessage.get(position)
                 var messagelast =mListMessageLast.get(position)

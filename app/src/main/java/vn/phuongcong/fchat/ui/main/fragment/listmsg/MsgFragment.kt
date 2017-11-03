@@ -79,6 +79,6 @@ class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat {
 
     override fun onResume() {
         super.onResume()
-        mPresenter.loadListChat()
+      //  mPresenter.loadListChat()
     }
 }

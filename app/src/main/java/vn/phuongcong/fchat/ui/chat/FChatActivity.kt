@@ -78,9 +78,12 @@ class FChatActivity : BaseActivity(), FChatView {
         }
     }
 
-    override fun onLoadChatsSuccess(chats: MutableList<FChat>) {
-        mAdapter.notifyDataSetChanged()
-        rcvChat.smoothScrollToPosition(chats.size - 1)
+    override fun onLoadChatsSuccess(chats: MutableList<FChat>){
+        if(chats.isNotEmpty()){
+            mAdapter.notifyDataSetChanged()
+            rcvChat.smoothScrollToPosition(chats.size - 1)
+        }
+
     }
 
     override fun onSendChatSuccessful(fchat: FChat) {
@@ -89,7 +92,6 @@ class FChatActivity : BaseActivity(), FChatView {
         stickChat = ""
         voiceChat = ""
         edtInputMsg.setText("")
-        chats.add(fchat)
         mAdapter.notifyItemChanged(chats.size)
         rcvChat.smoothScrollToPosition(chats.size-1)
 
