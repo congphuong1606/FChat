@@ -93,8 +93,6 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     fun getListImage(context: Context) {
-
-
         val listOfAllImages = mutableListOf<String>()
         val cursor: Cursor
         val column_index_data: Int

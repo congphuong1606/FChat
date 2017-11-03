@@ -32,5 +32,11 @@ object Contans {
     val CAMERA_PERMISSION_REQUEST: Int=1
     val CAMERA_PIC_REQUEST: Int=2
     val EXTERNAL_PERMISSION_REQUEST: Int=0
+    val EMAIL_PATH="email"
+    val PIC_CHOOSE_CODE: Int=1000
+    val PIC_TAKE_CODE: Int=2000
+    val IMAGE_PATH: String="IMAGE"
+    val ATATAR_PATH: String="avatar"
+    val NAME_PATH: String="name"
 
 }

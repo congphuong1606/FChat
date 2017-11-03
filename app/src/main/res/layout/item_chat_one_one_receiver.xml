@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="5dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="5dp"
+    android:paddingBottom="@dimen/dimen_5dp"
+    android:paddingLeft="@dimen/fab_margin"
+    android:paddingRight="@dimen/fab_margin"
+    android:paddingTop="@dimen/dimen_5dp"
     android:weightSum="10">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_receiver"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
         android:layout_weight="1"
         android:src="@mipmap/ic_launcher" />
 
@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
         android:layout_weight="8"
         android:orientation="vertical">
 
@@ -31,20 +31,20 @@
             android:id="@+id/txt_message_receiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Thanh Nam"
-            android:textSize="20sp" />
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:text="@string/app_name"
+            android:textSize="@dimen/dimen_20sp" />
 
 
         <TextView
             android:id="@+id/txt_time_receicver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="2:38"
-            android:textSize="10sp" />
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:text="@string/time"
+            android:textSize="@dimen/dimen_10sp" />
 
     </LinearLayout>
 

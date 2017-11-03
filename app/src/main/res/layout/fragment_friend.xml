@@ -1,13 +1,23 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context="vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvListFriend"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_margin="20dp"
+        android:layout_gravity="bottom|right"
+        android:id="@+id/fabAddFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        app:fabSize="mini" />
 
 </FrameLayout>

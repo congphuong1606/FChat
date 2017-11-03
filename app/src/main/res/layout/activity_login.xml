@@ -92,7 +92,7 @@
                 android:layout_x="23dp"
                 android:layout_y="200dp"
                 android:text="@string/rememberpass"
-                android:textColor="@color/red" />
+                android:textColor="@color/redd" />
 
             <Button
                 android:windowSoftInputMode="stateAlwaysVisible"
