@@ -7,6 +7,8 @@ import vn.phuongcong.fchat.di.module.SharedPreference
 
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
+import vn.phuongcong.fchat.ui.chat.FChatActivity
+import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import vn.phuongcong.fchat.ui.main.fragment.chat.GridImageActivity
@@ -31,8 +33,9 @@ interface SubComponent {
     fun injectTo(msgFragment: MsgFragment)
     fun injectTo(profileActivity: ProfileActivity)
     fun injectTo(chatActivity: ChatActivity)
-    fun injectTo(splashActivity: SplashActivity)
     fun injectTo(gridImageActivity : GridImageActivity)
     fun injectTo(chatGroupActivity: ChatGroupActivity)
 
+    fun injectTo(mainActivity: MainActivity)
+    fun injectTo(fChatActivity: FChatActivity)
 }

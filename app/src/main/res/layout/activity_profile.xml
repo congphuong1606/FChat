@@ -41,7 +41,8 @@
                     android:paddingTop="60dp">
 
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/imvAvatar"
                         android:layout_width="160dp"
                         android:layout_height="160dp"

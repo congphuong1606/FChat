@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.adapter
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
 import vn.phuongcong.fchat.R
+import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.common.utils.DateTimeUltil
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.event.OnFriendClick
 
@@ -40,6 +44,24 @@ class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick
         fun bindItems(friend: User, listener: OnFriendClick) {
             var friendAvatar = itemView.findViewById<ImageView>(R.id.friendAvatar)
             var friendName = itemView.findViewById<TextView>(R.id.tvFriendName)
+            var imvLight = itemView.findViewById<ImageView>(R.id.imvlight)
+            var tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
+            var timeStamp=friend.timeStamp
+            if(timeStamp!=0L ){
+                if(((System.currentTimeMillis() - timeStamp) > Contans.TIME_TO_OFFLINE)){
+                    var timeOffLine=DateTimeUltil.convertLongToTime((System.currentTimeMillis() - timeStamp as Long))
+//                    Glide.with(itemView.context).load(R.drawable.offline)
+//                            .into(imvLight)
+                    imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.offline))
+                    tvStatus.setText(Contans.STATUS_OFFLINE+timeOffLine)
+                }else{
+//                    Glide.with(itemView.context).load(R.drawable.online)
+//                            .into(imvLight)
+                    imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.online))
+                    tvStatus.setText(Contans.STATUS_ONLINE)
+                }
+
+            }
             Glide.with(itemView.context).load(friend.avatar)
                     .error(R.drawable.ic_no_image)
                     .into(friendAvatar)

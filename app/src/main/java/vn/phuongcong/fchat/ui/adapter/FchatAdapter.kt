@@ -1,5 +1,4 @@
-package vn.phuongcong.fchat.ui.main.fragment.chat
-
+package vn.phuongcong.fchat.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,13 +7,13 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_chat_one_one_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_one_one_send.view.*
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
+import vn.phuongcong.fchat.model.FChat
 
 /**
- * Created by Ominext on 10/20/2017.
+ * Created by Ominext on 11/2/2017.
  */
-class ChatApdapter(var mMessage: MutableList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FchatAdapter(var uId:String,var chats: MutableList<FChat>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         var LEFT = 1
@@ -32,23 +31,21 @@ class ChatApdapter(var mMessage: MutableList<Message>) : RecyclerView.Adapter<Re
     }
 
     override fun getItemCount(): Int {
-        return mMessage.size
+        return chats.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ChatItemViewHolder) {
-            if (mMessage != null && mMessage.size > 0) {
-                mMessage.sortBy { message: Message -> message.timeCreate.toLong() }
+            if (chats != null && chats.size > 0) {
 
-                var message: Message = mMessage.get(position)
-                holder.bind(message)
+                var chat: FChat = chats.get(position)
+                holder.bind(chat)
             }
         }
 
         if (holder is ChatItemViewHolderReceiver) {
-            if (mMessage != null && mMessage.size > 0) {
-                mMessage.sortBy { message: Message -> message.timeCreate.toLong() }
-                var messageReceiver = mMessage.get(position)
+            if (chats != null && chats.size > 0) {
+                var messageReceiver = chats.get(position)
                 holder.bindReceiver(messageReceiver)
 
             }
@@ -56,22 +53,22 @@ class ChatApdapter(var mMessage: MutableList<Message>) : RecyclerView.Adapter<Re
     }
 
     class ChatItemViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        fun bind(message: Message) {
-            itemView.txt_message_send.text = message.content
-            itemView.txt_time_send.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+        fun bind(message: FChat) {
+            itemView.txt_message_send.text = message.contentChat
+
         }
     }
 
     class ChatItemViewHolderReceiver(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindReceiver(message: Message) {
-            itemView.txt_message_receiver.text = message.content
-            itemView.txt_time_receicver.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+        fun bindReceiver(message: FChat) {
+            itemView.txt_message_receiver.text = message.contentChat
+
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (mMessage.get(position).mType == RIGHT)
+        if (chats.get(position).idSender.equals(uId))
             return RIGHT
         else
             return LEFT

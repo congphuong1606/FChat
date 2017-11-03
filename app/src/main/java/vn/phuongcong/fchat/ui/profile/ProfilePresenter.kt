@@ -1,19 +1,13 @@
 package vn.phuongcong.fchat.ui.profile
 
 import android.content.SharedPreferences
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import vn.phuongcong.fchat.common.Contans
 import javax.inject.Inject
 import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.AuthCredential
-import vn.phuongcong.fchat.R.string.user
 
 
 /**
@@ -72,17 +66,18 @@ class ProfilePresenter @Inject constructor(var fAuth: FirebaseAuth,
                 }
     }
 
-    fun resetPassword(email: String?) {
+    fun resetPassword(oldPass: String, newPass: String) {
         var user=fAuth.currentUser
-        val credential = EmailAuthProvider.getCredential(email!!, "coldboy69")
         if(user!=null){
+            var email=user.email
+            val credential = EmailAuthProvider.getCredential(email!!, oldPass)
             user.reauthenticate(credential).addOnCompleteListener { task: Task<Void> ->
                 if(task.isSuccessful){
-                    user.updatePassword("12345678").addOnCompleteListener { task ->
+                    user.updatePassword(newPass).addOnCompleteListener { task ->
                         if(task.isSuccessful){
                             profileView.onUpdatePassWordSuccessfull();
                         }else {
-                            profileView.onRequestFailure("password thay đổi không thành công")
+                            profileView.onRequestFailure(Contans.CHANG_PASS_NOT_FOUND)
                         }
                     }
                 }else{

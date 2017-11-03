@@ -1,6 +1,7 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -15,12 +16,18 @@ import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.text.InputType
 import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
+import kotlinx.android.synthetic.main.fragment_friend.view.*
+import vn.phuongcong.fchat.R.id.rcvListFriend
 import vn.phuongcong.fchat.R.string.user
+import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.common.utils.ChatUtils
+import vn.phuongcong.fchat.ui.chat.FChatActivity
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import java.util.regex.Pattern
 
@@ -28,11 +35,11 @@ import java.util.regex.Pattern
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
 
-
     lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
     @Inject
     lateinit var mPresenter: FriendPresenter
+
     override val LayoutId: Int
         get() = R.layout.fragment_friend
 
@@ -42,24 +49,31 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
                 .injectTo(this)
     }
 
+
+
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
-        var fab = v.findViewById<FloatingActionButton>(R.id.fabAddFriend)
-        fab.setOnClickListener { showAddFrienđiaglog() }
+
+        v.fabAddFriend.setOnClickListener { showAddFrienđiaglog() }
+        v.swipeRefreshLayout.setOnRefreshListener { onRefresh() }
+    }
+
+    private fun onRefresh() {
+        friends.clear()
+        mPresenter.onLoadFriendIds()
     }
 
     private fun showAddFrienđiaglog() {
         LovelyTextInputDialog(context, R.style.EditTextTintTheme)
                 .setTopColorRes(R.color.colorPrimary)
-                .setTitle("Thêm bạn")
-                .setMessage("nhập email")
+                .setTitle(Contans.TITLE_ADD_FRIEND)
+                .setMessage(Contans.REQUEST_INPUT_EMAIL)
                 .setIcon(R.drawable.ic_add)
                 .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                .setInputFilter("email không đúng", object : LovelyTextInputDialog.TextFilter {
+                .setInputFilter(Contans.EMAIL_FAIL, object : LovelyTextInputDialog.TextFilter {
                     override fun check(text: String): Boolean {
-                        val VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
-                        val matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(text)
+                        val matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(text)
                         return matcher.find()
                     }
                 })
@@ -95,6 +109,9 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
             friends.add(friend)
         mAdapter.notifyDataSetChanged()
         rcvListFriend.smoothScrollToPosition(0)
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onDestroyComposi() {
@@ -102,10 +119,10 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun onItemClick(friend: User) {
-        var intent: Intent = Intent(activity, ChatActivity::class.java)
+        var intent = Intent(activity, FChatActivity::class.java)
         val bundle = Bundle()
         bundle.putSerializable("friend", friend)
-        intent.putExtra("b", bundle)
+        intent.putExtra("bFrienfragment", bundle)
         activity.startActivity(intent)
 
     }
@@ -120,15 +137,16 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun onAddFriendSuccessful() {
 
     }
+
     override fun onDeleteFriendSuccess() {
-        Toast.makeText(context,"xóa thành công",Toast.LENGTH_LONG).show()
+        Toast.makeText(context, Contans.NOTI_DELETE_FRIEND_SUCCESS, Toast.LENGTH_LONG).show()
     }
 
     override fun onLongItemClick(friend: User, position: Int) {
         val friendName = friend.name
         AlertDialog.Builder(context)
-                .setTitle("Xóa bạn")
-                .setMessage("bạn có muốn xóa $friendName ?")
+                .setTitle(Contans.TITLE_DELE_FRIEND)
+                .setMessage(Contans.REQUEST_DELE_FRIEND + " $friendName ?")
                 .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
                     dialogInterface.dismiss()
                     mPresenter.deleteFriend(friend.id)
