@@ -26,8 +26,8 @@ import kotlinx.android.synthetic.main.fragment_friend.view.*
 import vn.phuongcong.fchat.R.id.rcvListFriend
 import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.common.utils.ChatUtils
-import vn.phuongcong.fchat.ui.chat.FChatActivity
+import vn.phuongcong.fchat.model.Chat
+
 import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
 import java.util.regex.Pattern
 
@@ -119,11 +119,10 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun onItemClick(friend: User) {
-        var intent = Intent(activity, FChatActivity::class.java)
-        val bundle = Bundle()
-        bundle.putSerializable("friend", friend)
-        intent.putExtra("bFrienfragment", bundle)
-        activity.startActivity(intent)
+        var chat= Chat(friend.id,friend.name,friend.avatar,null,null)
+        var intent = Intent(activity, ChatActivity::class.java)
+        intent.putExtra(Contans.CHAT_ITEM, chat)
+        startActivity(intent)
 
     }
 

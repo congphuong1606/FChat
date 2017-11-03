@@ -65,8 +65,10 @@ dependencies {
 
 //dialog
     implementation 'com.yarolegovich:lovely-dialog:1.0.4'
-
-
+//stick chat
+//    compile('vc908.stickers:stickerfactory:0.15.1@aar') {
+//        transitive = true;
+//    }
 
 
 

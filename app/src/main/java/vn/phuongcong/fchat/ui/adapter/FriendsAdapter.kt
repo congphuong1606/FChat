@@ -50,13 +50,9 @@ class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick
             if(timeStamp!=0L ){
                 if(((System.currentTimeMillis() - timeStamp) > Contans.TIME_TO_OFFLINE)){
                     var timeOffLine=DateTimeUltil.convertLongToTime((System.currentTimeMillis() - timeStamp as Long))
-//                    Glide.with(itemView.context).load(R.drawable.offline)
-//                            .into(imvLight)
                     imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.offline))
                     tvStatus.setText(Contans.STATUS_OFFLINE+timeOffLine)
                 }else{
-//                    Glide.with(itemView.context).load(R.drawable.online)
-//                            .into(imvLight)
                     imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.online))
                     tvStatus.setText(Contans.STATUS_ONLINE)
                 }
