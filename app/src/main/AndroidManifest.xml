@@ -2,13 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.phuongcong.fchat">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-feature android:name="android.hardware.camera"
         android:required="true" />
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -33,6 +30,10 @@
         <service android:name=".service.OnlineService" />
 
         <activity android:name=".ui.chat.FChatActivity"></activity>
+
+
+        <activity android:name=".ui.main.fragment.chat.GridImageActivity" />
+        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity"></activity>
     </application>
 
 </manifest>

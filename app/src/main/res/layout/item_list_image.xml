@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/fl_list_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/dimen_150dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_list_image"
@@ -21,8 +22,8 @@
             android:layout_gravity="bottom"
             android:orientation="horizontal"
             android:paddingBottom="5dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin">
 
             <ImageView
                 android:id="@+id/img_src_image"
@@ -45,5 +46,49 @@
 
         </LinearLayout>
     </FrameLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/rl_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimen_10dp"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingTop="@dimen/dimen_5dp">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_border"
+            android:padding="@dimen/dimen_5dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_5dp">
+
+            <TextView
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dimen_5dp"
+                android:text="@string/send"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/txt_count_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

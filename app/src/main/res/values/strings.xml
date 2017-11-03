@@ -56,4 +56,7 @@
     <string name="text_tinnhan">tin nhắn</string>
     <string name="text_banbe">bạn bè</string>
     <string name="text_chatnhom">nhóm</string>
+    <string name="cancel">Hủy</string>
+    <string name="send">gửi</string>
+    <string name="time">20p</string>
 </resources>

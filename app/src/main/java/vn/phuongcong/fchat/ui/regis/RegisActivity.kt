@@ -72,7 +72,7 @@ class RegisActivity : BaseActivity(), RegisView {
     }
 
     override fun onSignUpSuccessful() {
-        regisPresenter.onCreatUserDatabase(email, pass)
+        regisPresenter.onCreatUserDatabase(email, "")
     }
 
     override fun onCreateUserSuccessful() {
