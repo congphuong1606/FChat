@@ -37,10 +37,10 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
     class ChatGroupViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bindView(message: Message) {
             if (!TextUtils.isEmpty(message.msgImage)) {
-                itemView.visibility = View.VISIBLE
+                itemView.ivImage.visibility = View.VISIBLE
                 Glide.with(itemView.context).load(message.msgImage).into(itemView.ivImage)
             } else {
-                itemView.visibility = View.INVISIBLE
+                itemView.ivImage.visibility = View.GONE
             }
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate

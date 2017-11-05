@@ -8,4 +8,5 @@ import vn.phuongcong.fchat.ui.base.BaseView
  */
 interface ChatGroupView :BaseView {
     fun showChatItem(message: Message)
+    fun getListImageSuccess(absolutePathOfImage: MutableList<String>)
 }

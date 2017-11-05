@@ -1,28 +1,35 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup.chat
 
-import android.os.Bundle
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import android.view.View
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.item_list_image.*
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.R.id.rc_chat
+import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.ViewModule
+import vn.phuongcong.fchat.event.IitemClick
 import vn.phuongcong.fchat.model.Message
-import vn.phuongcong.fchat.utils.CalendarUtils
-import vn.phuongcong.fchat.utils.DatabaseRef
+import vn.phuongcong.fchat.ui.main.fragment.chat.ImageAdapter
 import vn.phuongcong.fchat.utils.DatabaseRef.Companion.ADMIN_KEY
 import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP_KEY
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
-class ChatGroupActivity : BaseActivity(), ChatGroupView {
+class ChatGroupActivity : BaseActivity(), ChatGroupView, View.OnClickListener {
+    override fun getListImageSuccess(absolutePathOfImage: MutableList<String>) {
 
+    }
 
+    lateinit var mImageAdapter: ImageAdapter
     private var arrMessage = ArrayList<Message>()
+    var mListImage: MutableList<String> = mutableListOf()
     private lateinit var adminKey: String
     private lateinit var groupKey: String
     private lateinit var chatGroupAdapter: ChatGroupAdapter
@@ -44,14 +51,21 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView {
     override fun initData() {
         adminKey = intent.getStringExtra(ADMIN_KEY)
         groupKey = intent.getStringExtra(GROUP_KEY)
+        initViews()
+        btn_send_image.setOnClickListener(this)
+        mPresenter.receiveChatData(adminKey, groupKey)
+
+
+        mImageAdapter = ImageAdapter(mListImage, this, object : IitemClick {
+            override fun iClick(o: Any, txt_count: ImageView?) {
+
+            }
+
+        })
+
+//        rc_chat.setHasFixedSize(true)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
-        initViews()
-        mPresenter.receiveChatData(adminKey,groupKey)
-    }
 
     private fun initViews() {
         rc_chat.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -68,7 +82,7 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView {
 
     override fun showChatItem(message: Message) {
         chatGroupAdapter.addItem(message)
-        rc_chat.smoothScrollToPosition(arrMessage.size-1)
+//        rc_chat.smoothScrollToPosition(arrMessage.size-1)
     }
 
     override fun onRequestFailure(string: String) {
@@ -78,4 +92,30 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView {
     override fun showToast(msg: String) {
 
     }
-}
+
+    override fun onClick(view: View?) {
+        when (view!!.id) {
+
+            R.id.btn_send_image -> sendImage()
+
+        }
+    }
+
+    private fun sendImage() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), Contans.EXTERNAL_PERMISSION_REQUEST)
+            }
+        }
+        val permissionExternal = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (permissionExternal == PackageManager.PERMISSION_GRANTED) {
+            mPresenter.getListImage(this)
+            list_image.visibility = View.VISIBLE
+            rc_list_image.apply {
+                adapter = mImageAdapter
+                layoutManager = LinearLayoutManager(this@ChatGroupActivity, LinearLayoutManager.HORIZONTAL, false)
+        }
+
+    }
+}}

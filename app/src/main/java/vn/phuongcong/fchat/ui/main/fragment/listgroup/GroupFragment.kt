@@ -25,7 +25,6 @@ import vn.phuongcong.fchat.ui.base.BaseFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
 import vn.phuongcong.fchat.utils.CalendarUtils
 import vn.phuongcong.fchat.utils.DatabaseRef.Companion.ADMIN_KEY
-import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP
 import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP_KEY
 import javax.inject.Inject
 
@@ -105,7 +104,7 @@ class GroupFragment : BaseFragment, GroupView {
         builder.setView(edtGroupName)
         builder.setPositiveButton("OK", { dialogInterface: DialogInterface, i: Int ->
             if (!TextUtils.isEmpty(edtGroupName.text)) {
-                var group: Group = Group("", FirebaseAuth.getInstance().currentUser!!.uid,
+                var group = Group("", FirebaseAuth.getInstance().currentUser!!.uid,
                         edtGroupName.text.toString(),
                         CalendarUtils.currentTime() + " " + CalendarUtils.currentDate())
                 mPresenter.createGroup(group)
