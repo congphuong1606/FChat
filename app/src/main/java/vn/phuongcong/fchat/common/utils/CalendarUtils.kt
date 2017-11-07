@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.utils
+package vn.phuongcong.fchat.common.utils
 
 import java.util.*
 

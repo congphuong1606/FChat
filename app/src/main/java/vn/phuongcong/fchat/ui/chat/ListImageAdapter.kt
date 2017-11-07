@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.ui.main.fragment.chat
+package vn.phuongcong.fchat.ui.chat
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -13,20 +13,15 @@ import vn.phuongcong.fchat.event.IitemClick
 /**
  * Created by Ominext on 10/30/2017.
  */
-class ImageAdapter(var mListImage: MutableList<String>, var mContext: Context,var itemClick:IitemClick) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-
-
-
+class ListImageAdapter(var mListImage: MutableList<String>, var mContext: Context, var itemClick: IitemClick, var checkVisibleImageCheck: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ImageViewHolder) {
             var pathImage = mListImage.get(position)
-            holder.bin(pathImage, mContext,itemClick)
+            holder.bin(pathImage, mContext, itemClick, checkVisibleImageCheck)
         }
     }
 
     override fun getItemCount(): Int {
-
         return mListImage.size
     }
 
@@ -35,12 +30,13 @@ class ImageAdapter(var mListImage: MutableList<String>, var mContext: Context,va
     }
 
     class ImageViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-
-        fun bin(pathImage: String, mContext: Context, itemClick: IitemClick) {
+        fun bin(pathImage: String, mContext: Context, itemClick: IitemClick, checkVisibleImageCheck: Boolean) {
             Glide.with(mContext).load(pathImage).into(itemView.img_image)
-            itemView.setOnClickListener{
-                itemClick.iClick(pathImage,itemView.txt_count)
+            itemView.setOnClickListener {
+                itemClick.iClick(pathImage, itemView.img_check)
             }
+            if (checkVisibleImageCheck)
+                itemView.img_check.visibility = View.GONE
         }
     }
 }

@@ -3,7 +3,6 @@ package vn.phuongcong.fchat.ui.main.fragment.listgroup
 import android.content.Context
 import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,9 @@ import com.stfalcon.multiimageview.MultiImageView
 import kotlinx.android.synthetic.main.item_group.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.event.IitemClick
-import vn.phuongcong.fchat.model.Group
-import vn.phuongcong.fchat.model.User
-import vn.phuongcong.fchat.utils.DatabaseRef
+import vn.phuongcong.fchat.data.model.Group
+import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.common.utils.DatabaseRef
 
 /**
  * Created by vietcoscc on 10/20/2017.

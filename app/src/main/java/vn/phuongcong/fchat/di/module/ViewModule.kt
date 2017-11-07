@@ -3,20 +3,16 @@ package vn.phuongcong.fchat.di.module
 import dagger.Module
 import dagger.Provides
 import vn.phuongcong.fchat.di.scope.ActivityScope
-import vn.phuongcong.fchat.ui.chat.FChatActivity
-import vn.phuongcong.fchat.ui.chat.FChatView
 import vn.phuongcong.fchat.ui.login.LoginView
-import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.ui.main.MainView
 
-import vn.phuongcong.fchat.ui.main.fragment.chat.ChatView
+import vn.phuongcong.fchat.ui.chat.ChatView
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupView
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.ListMsgView
 import vn.phuongcong.fchat.ui.profile.ProfileView
 import vn.phuongcong.fchat.ui.regis.RegisView
-import vn.phuongcong.fchat.ui.splash.SplashActivity
 import vn.phuongcong.fchat.ui.splash.SplashView
 
 /**
@@ -34,7 +30,7 @@ class ViewModule {
     lateinit var splashView: SplashView
     lateinit var chatGroupView: ChatGroupView
     lateinit var mainView: MainView
-    lateinit var fChatView: FChatView
+
 
 
     @Provides
@@ -71,9 +67,7 @@ class ViewModule {
     @Provides
     @ActivityScope
     fun provideMainView(): MainView = mainView
-    @Provides
-    @ActivityScope
-    fun provideFChatView(): FChatView = fChatView
+
 
     @Provides
     @ActivityScope
@@ -120,9 +114,7 @@ class ViewModule {
 
     }
 
-    constructor(fChatView: FChatView){
-        this.fChatView=fChatView
-    }
+
 
 
 }

@@ -1,6 +1,6 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup
 
-import vn.phuongcong.fchat.model.Group
+import vn.phuongcong.fchat.data.model.Group
 import vn.phuongcong.fchat.ui.base.BaseView
 
 /**

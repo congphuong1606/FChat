@@ -8,9 +8,8 @@ import android.content.SharedPreferences
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import vn.phuongcong.fchat.App
-import vn.phuongcong.fchat.model.Messagelast
-import vn.phuongcong.fchat.model.User
+import vn.phuongcong.fchat.data.model.Messagelast
+import vn.phuongcong.fchat.data.model.User
 
 /**
  * Created by Ominext on 10/18/2017.

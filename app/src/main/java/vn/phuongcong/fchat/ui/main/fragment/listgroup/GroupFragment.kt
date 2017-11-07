@@ -20,13 +20,12 @@ import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.IitemClick
-import vn.phuongcong.fchat.model.Group
+import vn.phuongcong.fchat.data.model.Group
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
-import vn.phuongcong.fchat.utils.CalendarUtils
-import vn.phuongcong.fchat.utils.DatabaseRef.Companion.ADMIN_KEY
-import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP
-import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP_KEY
+import vn.phuongcong.fchat.common.utils.CalendarUtils
+import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.ADMIN_KEY
+import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.GROUP_KEY
 import javax.inject.Inject
 
 
@@ -53,6 +52,10 @@ class GroupFragment : BaseFragment, GroupView {
     constructor() : super() {
 
         groupAdapter = GroupAdapter(arrGroup, object : IitemClick {
+            override fun iClick(o: Any) {
+
+            }
+
             override fun iClick(o: Any, txt_count: ImageView?) {
                 var position: Int = o as Int
                 var intent = Intent(context, ChatGroupActivity::class.java)

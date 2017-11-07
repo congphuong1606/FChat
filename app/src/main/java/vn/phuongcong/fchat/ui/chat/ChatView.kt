@@ -1,6 +1,6 @@
-package vn.phuongcong.fchat.ui.main.fragment.chat
+package vn.phuongcong.fchat.ui.chat
 
-import vn.phuongcong.fchat.model.Message
+import vn.phuongcong.fchat.data.model.Message
 import vn.phuongcong.fchat.ui.base.BaseView
 
 /**
@@ -9,4 +9,7 @@ import vn.phuongcong.fchat.ui.base.BaseView
 interface ChatView :BaseView{
     fun getListMessageSuccess(messages: MutableList<Message>)
     fun getListImageSuccess(absolutePathOfImage: MutableList<String>)
+    fun sendImageSuccess(linkImage: MutableList<String>)
+    fun sendImageCamereSuccess(downloadUrl: String?)
+
 }

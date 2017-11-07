@@ -4,9 +4,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import vn.phuongcong.fchat.model.Message
-import vn.phuongcong.fchat.utils.CalendarUtils
-import vn.phuongcong.fchat.utils.DatabaseRef
+import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.common.utils.CalendarUtils
+import vn.phuongcong.fchat.common.utils.DatabaseRef
 import javax.inject.Inject
 
 /**
@@ -16,7 +16,7 @@ class ChatGroupPresenter @Inject constructor(var chatGroupView: ChatGroupView) {
     var mAuth = FirebaseAuth.getInstance().currentUser
     fun onChat(content: String, msgImage: String, adminKey: String, groupKey: String) {
         var currentTime = CalendarUtils.currentTime() + " " + CalendarUtils.currentDate()
-        var message = Message(mAuth!!.uid, content, "", currentTime)
+        var message = Message(mAuth!!.uid, content, mutableListOf(), currentTime)
         DatabaseRef.groupContentRef(adminKey).child(groupKey).push().setValue(message)
     }
 

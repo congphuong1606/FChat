@@ -8,13 +8,7 @@ import javax.inject.Inject
 
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.model.User
-import android.widget.Toast
-import android.support.annotation.NonNull
-import android.util.Log
-import com.google.android.gms.tasks.OnCompleteListener
-import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.R.string.user
+import vn.phuongcong.fchat.data.model.User
 
 
 /**

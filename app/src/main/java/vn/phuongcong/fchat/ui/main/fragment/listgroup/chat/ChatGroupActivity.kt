@@ -2,20 +2,14 @@ package vn.phuongcong.fchat.ui.main.fragment.listgroup.chat
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_chat.*
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.R.id.rc_chat
 import vn.phuongcong.fchat.di.module.ViewModule
-import vn.phuongcong.fchat.model.Message
-import vn.phuongcong.fchat.utils.CalendarUtils
-import vn.phuongcong.fchat.utils.DatabaseRef
-import vn.phuongcong.fchat.utils.DatabaseRef.Companion.ADMIN_KEY
-import vn.phuongcong.fchat.utils.DatabaseRef.Companion.GROUP_KEY
+import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.ADMIN_KEY
+import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.GROUP_KEY
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
