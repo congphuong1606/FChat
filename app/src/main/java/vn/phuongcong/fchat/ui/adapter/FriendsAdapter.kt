@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.event.OnFriendClick
 
 /**

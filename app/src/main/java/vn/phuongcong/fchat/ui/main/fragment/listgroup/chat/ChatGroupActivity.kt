@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_chat.*
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.di.module.ViewModule
-import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.ADMIN_KEY
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.GROUP_KEY
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity

@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.data.model
+package vn.phuongcong.fchat.model
 
 import java.io.Serializable
 

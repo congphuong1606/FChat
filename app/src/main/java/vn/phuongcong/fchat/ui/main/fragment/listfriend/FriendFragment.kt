@@ -8,6 +8,8 @@ import android.view.View
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 
+import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
@@ -19,9 +21,7 @@ import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
 import kotlinx.android.synthetic.main.fragment_friend.view.*
-import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.model.Chat
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.Chat
 
 
 import vn.phuongcong.fchat.ui.chat.ChatActivity

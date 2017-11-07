@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.User
 
 
 /**

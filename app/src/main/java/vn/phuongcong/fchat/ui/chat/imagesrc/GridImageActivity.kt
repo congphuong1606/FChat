@@ -11,8 +11,8 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.IitemClick
-import vn.phuongcong.fchat.data.model.Chat
-import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.model.Chat
+import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.ui.chat.ChatActivity
 import vn.phuongcong.fchat.ui.chat.ChatPresenter
 import vn.phuongcong.fchat.ui.chat.ChatView

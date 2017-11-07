@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_msg.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.model.Chat
-import vn.phuongcong.fchat.data.model.Messagelast
+import vn.phuongcong.fchat.model.Chat
+import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
 
 /**

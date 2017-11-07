@@ -21,10 +21,10 @@ import vc908.stickerfactory.ui.view.StickersKeyboardLayout
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.model.Chat
-import vn.phuongcong.fchat.data.model.Message
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.IitemClick
+import vn.phuongcong.fchat.model.Chat
+import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity
 import vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
@@ -34,7 +34,7 @@ import javax.inject.Inject
 class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
 
 
-
+    @Inject
     lateinit var mChatPresenter: ChatPresenter
     private var mMessages: MutableList<Message> = mutableListOf()
     private var mListImage: MutableList<String> = mutableListOf()
@@ -52,7 +52,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     override fun injectDependence() {
-
+        App().get(this).plus(ViewModule(this)).injectTo(this)
     }
 
     override fun initData() {
@@ -69,9 +69,9 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
         rc_chat.setHasFixedSize(true)
-       // mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this)
+        mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this)
         rc_chat.apply {
-        //    adapter = mChatAdapter
+            adapter = mChatAdapter
             layoutManager = LinearLayoutManager(context)
         }
         if (intent.getSerializableExtra(Contans.CHAT_ITEM) != null) {
@@ -256,8 +256,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     override fun getListMessageSuccess(messages: MutableList<Message>) {
         mMessages=messages
-        //mChatAdapter.mMessage = messages
-        //mChatAdapter.notifyDataSetChanged()
+        mChatAdapter.mMessage = messages
+        mChatAdapter.notifyDataSetChanged()
         rc_chat.smoothScrollToPosition(messages.size)
     }
 
@@ -307,12 +307,12 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         mListPathCurrent.clear()
     }
 
-    /*override fun sendDataImage(linkMessage: MutableList<String>, rcList: GridView) {
+    override fun sendDataImage(linkMessage: MutableList<String>, rcList: GridView) {
         mLinkImageAdapter = LinkImageAdapter(linkMessage, this)
         rcList.apply {
             adapter = mLinkImageAdapter
         }
-    }*/
+    }
 
     override fun iClick(o: Any) {
         var intent = Intent(this, ShowImageActivity::class.java)

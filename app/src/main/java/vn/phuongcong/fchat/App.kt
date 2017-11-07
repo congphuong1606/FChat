@@ -2,9 +2,7 @@ package vn.phuongcong.fchat
 
 import android.app.Application
 import android.content.Context
-import android.provider.Contacts.SettingsColumns.KEY
-
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.User
 
 
 import vn.phuongcong.fchat.di.component.AppComponent
