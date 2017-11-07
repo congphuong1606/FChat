@@ -72,4 +72,5 @@ object Contans {
     val IMAGE_MESSAGE: String="Image_Message"
     val HINH_ANH: String="[Hình Ảnh]"
     val SUM_MESSAGE: String?="sum message"
+    val LINK_IMAGE_CURRENT: String?="link_image_current"
 }

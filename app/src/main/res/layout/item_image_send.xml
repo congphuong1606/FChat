@@ -17,8 +17,8 @@
 
         <GridView
             android:id="@+id/gr_list_image_send"
-            android:layout_width="@dimen/dimen_110dp"
-            android:layout_height="@dimen/dimen_110dp"
+            android:layout_width="@dimen/dimen_100dp"
+            android:layout_height="@dimen/dimen_100dp"
             android:layout_marginRight="@dimen/dimen_10dp"
             android:numColumns="2"
             android:paddingBottom="@dimen/dimen_10dp"></GridView>
@@ -32,6 +32,7 @@
     </LinearLayout>
 
     <TextView
+
         android:id="@+id/txt_time_send_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

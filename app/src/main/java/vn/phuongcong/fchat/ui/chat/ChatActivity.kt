@@ -265,7 +265,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         var intent = Intent(this, ShowImageActivity::class.java)
         intent.putExtra(Contans.CHAT_ITEM, mChatItem)
         intent.putExtra(Contans.SUM_MESSAGE,mMessages.size)
-        //intent.putExtra(Contans)
+        intent.putExtra(Contans.LINK_IMAGE_CURRENT,o.toString())
         startActivity(intent)
     }
 

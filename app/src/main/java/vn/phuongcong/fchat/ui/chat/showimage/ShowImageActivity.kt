@@ -19,6 +19,7 @@ class ShowImageActivity : BaseActivity(), ChatView {
     private lateinit var mShowImageAdapter: ShowImageAdapter
     private var listPath: MutableList<String> = mutableListOf()
     private var mSizeMessage = 0
+    private var mLinkImageCurrent:String=""
 
     override fun injectDependence() {
         App().get(this).plus(ViewModule(this)).injectTo(this)
@@ -27,6 +28,7 @@ class ShowImageActivity : BaseActivity(), ChatView {
     override fun initData() {
         mChatItem = intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
         mSizeMessage = intent.getIntExtra(Contans.SUM_MESSAGE, 0)
+        mLinkImageCurrent=intent.getStringExtra(Contans.LINK_IMAGE_CURRENT)
         mShowImageAdapter = ShowImageAdapter(listPath)
         pager.adapter = mShowImageAdapter
         indicator.setViewPager(pager)
@@ -58,7 +60,13 @@ class ShowImageActivity : BaseActivity(), ChatView {
                         listPath.add(message.msgImage!!.get(i))
                 }
             }
-            mShowImageAdapter.image = listPath
+            for(link in listPath){
+                if(link==mLinkImageCurrent)
+                    listPath.remove(link)
+                break
+            }
+            listPath.add(0,mLinkImageCurrent)
+            mShowImageAdapter.mLinkImage = listPath
             mShowImageAdapter.notifyDataSetChanged()
         }
     }
