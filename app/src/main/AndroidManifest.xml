@@ -29,11 +29,18 @@
 
         <service android:name=".service.OnlineService" />
 
-        <activity android:name=".ui.chat.FChatActivity"></activity>
+
 
 
         <activity android:name=".ui.main.fragment.chat.GridImageActivity" />
         <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity"></activity>
+
+
+
+        <provider
+            android:name="vc908.stickerfactory.provider.StickersProvider"
+            android:authorities="vn.phuongcong.fchat.stickersProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

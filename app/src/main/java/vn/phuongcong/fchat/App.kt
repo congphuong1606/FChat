@@ -2,15 +2,19 @@ package vn.phuongcong.fchat
 
 import android.app.Application
 import android.content.Context
+import android.provider.Contacts.SettingsColumns.KEY
 import vn.phuongcong.fchat.model.User
 
 
 import vn.phuongcong.fchat.di.component.AppComponent
 import vn.phuongcong.fchat.di.component.DaggerAppComponent
 import vn.phuongcong.fchat.di.module.AppModule
+import android.support.multidex.MultiDex
+import android.support.multidex.MultiDexApplication
+import vc908.stickerfactory.StickersManager
 
 
-class App : Application() {
+class App : MultiDexApplication () {
     var UID: String? = null
     var UEMAIL: String? = null
     var UNAME: String? = null
@@ -29,6 +33,16 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         component.inject(this)
+        MultiDex.install(this)
+
+
+
+
+
+
+        //sticker
+        StickersManager.initialize("3bcd2ccb8f81e730fdd8c4b6d0f6da1a", this);
+
     }
 
     fun get(context: Context): AppComponent {
