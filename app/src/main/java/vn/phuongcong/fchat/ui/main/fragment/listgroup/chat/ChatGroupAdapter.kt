@@ -12,8 +12,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.item_chat_group.view.*
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.data.model.Message
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.Message
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.common.utils.DatabaseRef
 
 /**

@@ -20,7 +20,7 @@ import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.IitemClick
-import vn.phuongcong.fchat.data.model.Group
+import vn.phuongcong.fchat.model.Group
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
 import vn.phuongcong.fchat.common.utils.CalendarUtils

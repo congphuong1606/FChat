@@ -10,9 +10,9 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
-import vn.phuongcong.fchat.data.model.Chat
-import vn.phuongcong.fchat.data.model.Message
-import vn.phuongcong.fchat.data.model.Messagelast
+import vn.phuongcong.fchat.model.Chat
+import vn.phuongcong.fchat.model.Message
+import vn.phuongcong.fchat.model.Messagelast
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import java.io.File

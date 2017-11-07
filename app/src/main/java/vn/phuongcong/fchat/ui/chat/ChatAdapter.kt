@@ -12,13 +12,13 @@ import kotlinx.android.synthetic.main.item_chat_one_one_send.view.*
 import kotlinx.android.synthetic.main.item_image_receiver.view.*
 import kotlinx.android.synthetic.main.item_image_send.view.*
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
 
 /**
  * Created by Ominext on 10/20/2017.
  */
-class ChatApdapter(var mMessage: MutableList<Message>,var mContext:Context,var isend:Isend) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatAdapter(var mMessage: MutableList<Message>, var mContext:Context, var isend:Isend) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         var LEFT_TEXT = 1

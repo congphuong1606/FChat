@@ -1,7 +1,7 @@
 package vn.phuongcong.fchat.ui.main.fragment.listmsg
 
-import vn.phuongcong.fchat.data.model.Messagelast
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.Messagelast
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.ui.base.BaseView
 
 /**

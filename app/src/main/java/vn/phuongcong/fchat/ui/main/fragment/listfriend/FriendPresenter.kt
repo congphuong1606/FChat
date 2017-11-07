@@ -3,7 +3,7 @@ package vn.phuongcong.fchat.ui.main.fragment.listfriend
 import android.content.SharedPreferences
 import com.google.firebase.database.*
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.model.User
+import vn.phuongcong.fchat.model.User
 import java.util.HashMap
 import javax.inject.Inject
 

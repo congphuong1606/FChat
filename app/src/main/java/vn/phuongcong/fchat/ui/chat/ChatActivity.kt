@@ -19,15 +19,15 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.IitemClick
-import vn.phuongcong.fchat.data.model.Chat
-import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.model.Chat
+import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity
 import vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 
-class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatApdapter.Isend {
+class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
 
 
     @Inject
@@ -35,7 +35,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private var mMessages: MutableList<Message> = mutableListOf()
     private var mListImage: MutableList<String> = mutableListOf()
     private var mListPathCurrent: MutableList<String> = mutableListOf()
-    private lateinit var mChatAdapter: ChatApdapter
+    private lateinit var mChatAdapter: ChatAdapter
     private lateinit var mImageAdapter: ListImageAdapter
     private lateinit var mLinkImageAdapter: LinkImageAdapter
     private var count = 0
@@ -65,7 +65,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
         rc_chat.setHasFixedSize(true)
-        mChatAdapter = ChatApdapter(mMessage = mMessages, mContext = this, isend = this)
+        mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this)
         rc_chat.apply {
             adapter = mChatAdapter
             layoutManager = LinearLayoutManager(context)

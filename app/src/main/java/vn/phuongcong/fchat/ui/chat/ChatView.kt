@@ -1,6 +1,6 @@
 package vn.phuongcong.fchat.ui.chat
 
-import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.ui.base.BaseView
 
 /**
