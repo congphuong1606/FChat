@@ -34,7 +34,7 @@ import javax.inject.Inject
 class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
 
 
-    @Inject
+
     lateinit var mChatPresenter: ChatPresenter
     private var mMessages: MutableList<Message> = mutableListOf()
     private var mListImage: MutableList<String> = mutableListOf()
@@ -52,7 +52,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     override fun injectDependence() {
-        App().get(this).plus(ViewModule(this)).injectTo(this)
+
     }
 
     override fun initData() {
