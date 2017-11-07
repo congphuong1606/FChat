@@ -1,4 +1,4 @@
-package vn.phuongcong.fchat.ui.main.fragment.chat.sticker
+package vn.phuongcong.fchat.ui.chat.sticker
 
 import android.app.AlertDialog
 import android.support.v4.content.ContextCompat

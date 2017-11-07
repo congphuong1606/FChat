@@ -14,20 +14,24 @@ import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.item_list_image.*
+import vc908.stickerfactory.StickersKeyboardController
+import vc908.stickerfactory.ui.OnStickerSelectedListener
+import vc908.stickerfactory.ui.fragment.StickersFragment
+import vc908.stickerfactory.ui.view.StickersKeyboardLayout
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.di.module.ViewModule
-import vn.phuongcong.fchat.event.IitemClick
 import vn.phuongcong.fchat.data.model.Chat
 import vn.phuongcong.fchat.data.model.Message
+import vn.phuongcong.fchat.di.module.ViewModule
+import vn.phuongcong.fchat.event.IitemClick
 import vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity
 import vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 
-class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatApdapter.Isend {
+class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
 
 
     @Inject
@@ -35,7 +39,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private var mMessages: MutableList<Message> = mutableListOf()
     private var mListImage: MutableList<String> = mutableListOf()
     private var mListPathCurrent: MutableList<String> = mutableListOf()
-    private lateinit var mChatAdapter: ChatApdapter
+    private lateinit var mChatAdapter: ChatAdapter
     private lateinit var mImageAdapter: ListImageAdapter
     private lateinit var mLinkImageAdapter: LinkImageAdapter
     private var count = 0
@@ -65,9 +69,9 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
         rc_chat.setHasFixedSize(true)
-        mChatAdapter = ChatApdapter(mMessage = mMessages, mContext = this, isend = this)
+       // mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this)
         rc_chat.apply {
-            adapter = mChatAdapter
+        //    adapter = mChatAdapter
             layoutManager = LinearLayoutManager(context)
         }
         if (intent.getSerializableExtra(Contans.CHAT_ITEM) != null) {
@@ -75,6 +79,55 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
         mChatPresenter.getListChat(mChatItem)
         addEvent()
+        sticker()
+
+    }
+
+    private var stickersKeyboardController: StickersKeyboardController? = null
+
+    private fun sticker() {
+        var stickersFragment: StickersFragment? = null//supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
+        if (stickersFragment == null) {
+            stickersFragment = StickersFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.sticker_frame, stickersFragment).commit()
+        }
+        stickersFragment.setOnStickerSelectedListener(object : OnStickerSelectedListener {
+            override fun onStickerSelected(code: String) {
+                addStickerMessage(code, false, System.currentTimeMillis())
+            }
+            override fun onEmojiSelected(emoji: String) {
+                edt_input_message.append(emoji)
+            }
+        })
+        val stickersLayout = findViewById<StickersKeyboardLayout>(R.id.sizeNotifierLayout)
+        stickersKeyboardController = StickersKeyboardController.Builder(this)
+                .setStickersKeyboardLayout(stickersLayout)
+                .setStickersFragment(stickersFragment)
+                .setStickersFrame(sticker_frame)
+                .setContentContainer(chat_content)
+                .setStickersButton(btn_stickers)
+                .setChatEdit(edt_input_message)
+                .setSuggestContainer(rc_chat)
+                .build()
+
+        stickersKeyboardController!!.setKeyboardVisibilityChangeListener(object :
+                StickersKeyboardController.KeyboardVisibilityChangeListener {
+            override fun onTextKeyboardVisibilityChanged(isVisible: Boolean) {
+                if(mMessages.isNotEmpty()){
+                    rc_chat.smoothScrollToPosition(mMessages.size)
+                }
+            }
+
+            override fun onStickersKeyboardVisibilityChanged(isVisible: Boolean) {
+
+            }
+        })
+    }
+
+
+
+    private fun addStickerMessage(code: String, b: Boolean, currentTimeMillis: Long) {
+
     }
 
     private fun addEvent() {
@@ -203,8 +256,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     override fun getListMessageSuccess(messages: MutableList<Message>) {
         mMessages=messages
-        mChatAdapter.mMessage = messages
-        mChatAdapter.notifyDataSetChanged()
+        //mChatAdapter.mMessage = messages
+        //mChatAdapter.notifyDataSetChanged()
         rc_chat.smoothScrollToPosition(messages.size)
     }
 
@@ -254,12 +307,12 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         mListPathCurrent.clear()
     }
 
-    override fun sendDataImage(linkMessage: MutableList<String>, rcList: GridView) {
+    /*override fun sendDataImage(linkMessage: MutableList<String>, rcList: GridView) {
         mLinkImageAdapter = LinkImageAdapter(linkMessage, this)
         rcList.apply {
             adapter = mLinkImageAdapter
         }
-    }
+    }*/
 
     override fun iClick(o: Any) {
         var intent = Intent(this, ShowImageActivity::class.java)

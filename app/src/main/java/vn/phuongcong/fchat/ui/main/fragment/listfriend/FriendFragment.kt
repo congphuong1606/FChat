@@ -1,7 +1,6 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -14,22 +13,16 @@ import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
-import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.text.InputType
 import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
 import kotlinx.android.synthetic.main.fragment_friend.view.*
-import vn.phuongcong.fchat.R.id.rcvListFriend
-import vn.phuongcong.fchat.R.string.user
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.Chat
 
-import vn.phuongcong.fchat.ui.main.fragment.chat.ChatActivity
-import java.util.regex.Pattern
+import vn.phuongcong.fchat.ui.chat.ChatActivity
 
 
 class FriendFragment : BaseFragment(), FriendView, OnFriendClick {

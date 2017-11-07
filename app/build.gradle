@@ -57,7 +57,7 @@ afterEvaluate {
         dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
     }
 }
-def stickerpipeSdkVersion = '0.15.1'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -90,13 +90,13 @@ dependencies {
     implementation 'com.yarolegovich:lovely-dialog:1.0.4'
     implementation 'com.github.stfalcon:multiimageview:0.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'me.relex:circleindicator:1.2.2@aar'
+//stick chat
+    def stickerpipeSdkVersion = '0.14.5'
+    implementation("vc908.stickers:stickerfactory:$stickerpipeSdkVersion") {
 
-    compile 'me.relex:circleindicator:1.2.2@aar'
-
-    implementation('vc908.stickers:stickerfactory:0.11.3@aar') {
         transitive = true;
     }
-
 
 
     testImplementation 'junit:junit:4.12'
@@ -105,6 +105,7 @@ dependencies {
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
 }
 repositories {
     mavenCentral()

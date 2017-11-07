@@ -35,7 +35,7 @@
 
 
 
-        <activity android:name=".ui.main.fragment.chat.GridImageActivity" />
+        <activity android:name="vn.phuongcong.fchat.ui.chat.GridImageActivity" />
         <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity"></activity>
 
 

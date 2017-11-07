@@ -20,14 +20,14 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                 friendView.onRequestFailure(error.toString())
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-               /* if (dataSnapshot.getValue() != null) {
-                    val mapRecord = dataSnapshot.value as HashMap<*, *>?
+                if (dataSnapshot.getValue() != null) {
+                    val mapRecord : HashMap<*, *>? = dataSnapshot.value as HashMap<*, *>?
                     val listKey = mapRecord!!.keys.iterator()
                     while (listKey.hasNext()) {
                         val key = listKey.next().toString()
                         loadFriends(mapRecord[key].toString())
                     }
-                }*/
+                }
             }
         })
 
