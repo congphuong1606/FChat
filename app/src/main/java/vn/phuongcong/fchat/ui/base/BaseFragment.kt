@@ -17,7 +17,7 @@ abstract class BaseFragment : Fragment() {
         var v: View = inflater.inflate(LayoutId, container, false)
         injectDependence()
         initData(v)
-        return v;
+        return v
     }
 
 

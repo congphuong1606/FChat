@@ -91,8 +91,7 @@ dependencies {
     implementation 'com.github.stfalcon:multiimageview:0.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-
-//stick chat
+    compile 'me.relex:circleindicator:1.2.2@aar'
 
     implementation('vc908.stickers:stickerfactory:0.11.3@aar') {
         transitive = true;
