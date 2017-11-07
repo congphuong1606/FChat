@@ -15,4 +15,5 @@ class ChatPresenter {
     fun sendMessagetext(messagetext: String, mChatItem: Chat) {}
     fun sendMessageImage(linkImage: MutableList<String>, mChatItem: Chat) {}
     fun sendMessageImageCamera(downloadUrl: String?, mChatItem: Chat) {}
+
 }
