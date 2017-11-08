@@ -73,4 +73,21 @@ object Contans {
     val HINH_ANH: String="[Hình Ảnh]"
     val SUM_MESSAGE: String?="sum message"
     val LINK_IMAGE_CURRENT: String?="link_image_current"
+    val REQUEST_WRITE_STORAGE: Int=3000
+    val LOADING="Vui lòng đợi..."
+
+    val CONFRIM_CHANGE_AVATAR =" ssss"
+
+    val CF_CHANGE_PASS =1
+    val CF_CHANGE_NAME =2
+    val CF_CHANGE_AVATAR =3
+    val REQUEST_CONFRIM_CHANGE_ACOUNT: String="Tên tài khoản của bạn sẽ được thay đổi"
+    val REQUEST_CONFRIM_CHANGE_AVATAR: String="bạn chắc chắn muốn thay đổi ảnh đại diện"
+    val REQUEST_CONFRIM_CHANGE_PASS: String="Mật khẩu của bạn sẽ được thay đổi"
+    val REQUEST_PERMISION_WRITE_STORAGE: String="Oops you just denied the permission"
+    val CHANGE_AVATAR_SUCCESS: String="thay đổi ảnh dại diện thành công"
+    val CHANGE_NAME_SUCCESS: String="Thay đổi tên thành công"
+    val GROUP_FRAGMENT: Int=2
+    val MSG_FRAGMENT: Int=0
+    val FRIEND_FRAGMENT: Int=1
 }

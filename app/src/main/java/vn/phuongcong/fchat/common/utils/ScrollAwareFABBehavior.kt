@@ -10,7 +10,9 @@ import android.view.animation.LinearInterpolator
 
 
 
-
+/**
+ * Created by Congphuong on 10/23/2017.
+ */
 
 class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>() {
 
@@ -20,11 +22,11 @@ class ScrollAwareFABBehavior(context: Context, attrs: AttributeSet) : Coordinato
 
     override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: FloatingActionButton, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type)
-        if (dyConsumed  == 0 ) {
+        if (dyUnconsumed  > 0 ) {
             val layoutParams = child.layoutParams as CoordinatorLayout.LayoutParams
             val fab_bottomMargin = layoutParams.bottomMargin
             child.animate().translationY((child.height + fab_bottomMargin).toFloat()).setInterpolator(LinearInterpolator()).start()
-        } else if (dyConsumed !=0) {
+        } else {
             child.animate().translationY(0f).setInterpolator(LinearInterpolator()).start()
         }
     }

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Created by Ominext on 10/23/2017.
+ * Created by Congphuong on 10/23/2017.
  */
 class DateTimeUltil {
     companion object {

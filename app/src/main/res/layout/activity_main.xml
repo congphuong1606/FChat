@@ -103,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:fabSize="mini"
+        android:clickable="true"
         app:layout_behavior="vn.phuongcong.fchat.common.utils.ScrollAwareFABBehavior"
         android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_anchor="@id/viewPager"

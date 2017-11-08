@@ -21,14 +21,15 @@ import android.widget.Toast
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 import kotlinx.android.synthetic.main.fragment_friend.*
 import kotlinx.android.synthetic.main.fragment_friend.view.*
+import vn.phuongcong.fchat.event.OnFabClick
 import vn.phuongcong.fchat.model.Chat
 
 
 import vn.phuongcong.fchat.ui.chat.ChatActivity
+import vn.phuongcong.fchat.ui.main.MainActivity
 
 
-class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
-
+class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
 
     lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
@@ -49,9 +50,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
-
-        v.fabAddFriend.setOnClickListener { showAddFrienđiaglog() }
         v.swipeRefreshLayout.setOnRefreshListener { onRefresh() }
+        MainActivity.setOnFabClickListenner(this)
     }
 
     private fun onRefresh() {
@@ -61,10 +61,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
     private fun showAddFrienđiaglog() {
         LovelyTextInputDialog(context, R.style.EditTextTintTheme)
-                .setTopColorRes(R.color.colorPrimary)
                 .setTitle(Contans.TITLE_ADD_FRIEND)
                 .setMessage(Contans.REQUEST_INPUT_EMAIL)
-                .setIcon(R.drawable.ic_add)
                 .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
                 .setInputFilter(Contans.EMAIL_FAIL, object : LovelyTextInputDialog.TextFilter {
                     override fun check(text: String): Boolean {
@@ -119,6 +117,9 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
         intent.putExtra(Contans.CHAT_ITEM, chat)
         startActivity(intent)
 
+    }
+    override fun onFabClickListener() {
+        showAddFrienđiaglog()
     }
 
     override fun onRequestFailure(string: String) {

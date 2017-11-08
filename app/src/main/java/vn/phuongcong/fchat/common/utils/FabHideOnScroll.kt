@@ -10,7 +10,7 @@ import android.support.v4.view.ViewCompat
 
 
 /**
- * Created by Ominext on 11/3/2017.
+ * Created by Congphuong on 10/23/2017.
  */
 class FabHideOnScroll(var context: Context,attrs: AttributeSet): FloatingActionButton.Behavior() {
     override fun onNestedScroll(coordinatorLayout: CoordinatorLayout,

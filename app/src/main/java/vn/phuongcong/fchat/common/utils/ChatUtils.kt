@@ -1,7 +1,7 @@
 package vn.phuongcong.fchat.common.utils
 
 /**
- * Created by Ominext on 11/2/2017.
+ * Created by Congphuong on 10/23/2017.
  */
 object ChatUtils{
 

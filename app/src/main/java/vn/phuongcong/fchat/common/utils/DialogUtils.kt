@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.support.v7.app.AlertDialog
 import vn.phuongcong.fchat.R
+import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.event.OnPhotoListener
 
 /**
@@ -20,13 +21,22 @@ class DialogUtils(internal var dialog: ProgressDialog?, internal var activity: A
             return
         }
         dialog = ProgressDialog
-                .show(activity, "", "Loading. Please wait...", true)
+                .show(activity, "", Contans.LOADING, true)
     }
 
 
     fun hideLoading() {
         if (dialog != null && dialog!!.isShowing)
             dialog!!.dismiss()
+    }
+    fun showInfor(context: Context, infor: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setMessage(infor)
+        builder.setIcon(R.drawable.logo_app)
+        builder.setCancelable(true)
+        val dialog = builder.create()
+        builder.setNegativeButton("ok") { dialogInterface, i -> dialog.dismiss() }
+        dialog.show()
     }
 
     companion object {

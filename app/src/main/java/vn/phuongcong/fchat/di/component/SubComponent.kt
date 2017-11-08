@@ -6,6 +6,7 @@ import vn.phuongcong.fchat.RegisActivity
 import vn.phuongcong.fchat.di.module.SharedPreference
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
+import vn.phuongcong.fchat.ui.chat.ChatActivity
 import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
@@ -29,5 +30,6 @@ interface SubComponent {
     fun injectTo(splashActivity: SplashActivity)
     fun injectTo(chatGroupActivity: ChatGroupActivity)
     fun injectTo(mainActivity: MainActivity)
+    fun injectTo(chatActivity: ChatActivity)
 
 }

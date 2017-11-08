@@ -6,7 +6,7 @@ import vn.phuongcong.fchat.R
 import java.util.regex.Pattern
 
 /**
- * Created by Ominext on 10/13/2017.
+ * Created by Congphuong on 10/23/2017.
  */
 object CheckInput{
     fun isEmpty(etText: EditText?): Boolean {
