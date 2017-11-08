@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FChat.iml" filepath="$PROJECT_DIR$/FChat.iml" />
       <module fileurl="file://E:\andorid-me\fchat\FChat.iml" filepath="E:\andorid-me\fchat\FChat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fchat.iml" filepath="$PROJECT_DIR$/Fchat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://E:\andorid-me\fchat\app\app.iml" filepath="E:\andorid-me\fchat\app\app.iml" />
       <module fileurl="file://E:\github-android\fchat\app\app.iml" filepath="E:\github-android\fchat\app\app.iml" />
       <module fileurl="file://E:\github-android\fchat\fchat.iml" filepath="E:\github-android\fchat\fchat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fchat.iml" filepath="$PROJECT_DIR$/fchat.iml" />
     </modules>
   </component>
 </project>
