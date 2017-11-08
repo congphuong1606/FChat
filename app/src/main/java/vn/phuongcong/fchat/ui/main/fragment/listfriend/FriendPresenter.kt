@@ -2,7 +2,6 @@ package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
 import android.content.SharedPreferences
 import com.google.firebase.database.*
-import com.pawegio.kandroid.i
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.User
 import java.util.HashMap
@@ -21,14 +20,14 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                 friendView.onRequestFailure(error.toString())
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
+               /* if (dataSnapshot.getValue() != null) {
                     val mapRecord = dataSnapshot.value as HashMap<*, *>?
                     val listKey = mapRecord!!.keys.iterator()
                     while (listKey.hasNext()) {
                         val key = listKey.next().toString()
                         loadFriends(mapRecord[key].toString())
                     }
-                }
+                }*/
             }
         })
 

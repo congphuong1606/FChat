@@ -1,6 +1,5 @@
 package vn.phuongcong.fchat.model
 
-import android.os.Parcelable
 import java.io.Serializable
 
 /**

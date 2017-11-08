@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.model.User
 
@@ -21,6 +20,8 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                                            var sPref: SharedPreferences) {
     // = sPref.getString(Contans.PRE_USER_ID, "")
     var uid= mAuth.currentUser!!.uid
+    var listUserChat = mutableListOf<User>()
+
     fun loadListChat() {
         databaseReference.child(Contans.CHAT).child(uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError?) {
@@ -58,7 +59,7 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
 
     private fun getProfileByUid(listUid: MutableList<String>) {
-        var listUserChat = mutableListOf<User>()
+
         databaseReference.child(Contans.USERS_PATH).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
 
@@ -68,7 +69,15 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 for (uid in listUid) {
                     for (user in data!!.children) {
                         if (user.key == uid) {
-                            listUserChat.add(user.getValue(User::class.java)!!)
+                            if(listUserChat.size>0){
+                                if(listUserChat.contains(user.getValue(User::class.java)!!)){
+                                    listUserChat.add(user.getValue(User::class.java)!!)
+                                }
+
+                            }else{
+                                listUserChat.add(user.getValue(User::class.java)!!)
+                            }
+
                         }
                     }
                 }

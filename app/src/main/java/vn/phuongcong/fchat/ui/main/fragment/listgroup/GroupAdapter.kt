@@ -20,7 +20,7 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.event.IitemClick
 import vn.phuongcong.fchat.model.Group
 import vn.phuongcong.fchat.model.User
-import vn.phuongcong.fchat.utils.DatabaseRef
+import vn.phuongcong.fchat.common.utils.DatabaseRef
 
 /**
  * Created by vietcoscc on 10/20/2017.

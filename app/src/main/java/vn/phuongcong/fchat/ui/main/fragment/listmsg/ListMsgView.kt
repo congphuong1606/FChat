@@ -10,5 +10,5 @@ import vn.phuongcong.fchat.ui.base.BaseView
 interface ListMsgView :BaseView{
 
     fun OnLoadListChatSuccess(listChat: MutableList<User>)
-    fun onLoadListMessagelast(listMessagelast: MutableList<Messagelast>) {}
+    fun onLoadListMessagelast(listMessagelast: MutableList<Messagelast>)
 }

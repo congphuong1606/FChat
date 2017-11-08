@@ -6,7 +6,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.model.Group
-import vn.phuongcong.fchat.utils.DatabaseRef
+import vn.phuongcong.fchat.common.utils.DatabaseRef
 import javax.inject.Inject
 
 /**

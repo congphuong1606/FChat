@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_chat_group.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.model.User
-import vn.phuongcong.fchat.utils.DatabaseRef
+import vn.phuongcong.fchat.common.utils.DatabaseRef
 
 /**
  * Created by vietcoscc on 01/11/2017.
@@ -36,12 +36,12 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
 
     class ChatGroupViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bindView(message: Message) {
-            if (!TextUtils.isEmpty(message.msgImage)) {
-                itemView.ivImage.visibility = View.VISIBLE
+           /* if (!TextUtils.isEmpty(message.msgImage)) {
+                itemView.visibility = View.VISIBLE
                 Glide.with(itemView.context).load(message.msgImage).into(itemView.ivImage)
             } else {
-                itemView.ivImage.visibility = View.GONE
-            }
+                itemView.visibility = View.INVISIBLE
+            }*/
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate
             DatabaseRef.userInfoRef(FirebaseAuth.getInstance().currentUser!!.uid)
