@@ -15,6 +15,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.item_list_image.*
 import vc908.stickerfactory.StickersKeyboardController
+import vc908.stickerfactory.StickersManager
 import vc908.stickerfactory.ui.OnStickerSelectedListener
 import vc908.stickerfactory.ui.fragment.StickersFragment
 import vc908.stickerfactory.ui.view.StickersKeyboardLayout
@@ -32,8 +33,8 @@ import javax.inject.Inject
 
 
 class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
-
-
+    private var stickersKeyboardController: StickersKeyboardController? = null
+    private var isNullStickerFragment:Boolean = false
     @Inject
     lateinit var mChatPresenter: ChatPresenter
     private var mMessages: MutableList<Message> = mutableListOf()
@@ -83,11 +84,12 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     }
 
-    private var stickersKeyboardController: StickersKeyboardController? = null
 
     private fun sticker() {
-        var stickersFragment: StickersFragment? = null//supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
-        if (stickersFragment == null) {
+        var stickersFragment: StickersFragment? = null
+
+        //supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
+        if (stickersFragment==null) {
             stickersFragment = StickersFragment()
             supportFragmentManager.beginTransaction().replace(R.id.sticker_frame, stickersFragment).commit()
         }
@@ -95,6 +97,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
             override fun onStickerSelected(code: String) {
                 addStickerMessage(code, false, System.currentTimeMillis())
             }
+
             override fun onEmojiSelected(emoji: String) {
                 edt_input_message.append(emoji)
             }
@@ -113,7 +116,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         stickersKeyboardController!!.setKeyboardVisibilityChangeListener(object :
                 StickersKeyboardController.KeyboardVisibilityChangeListener {
             override fun onTextKeyboardVisibilityChanged(isVisible: Boolean) {
-                if(mMessages.isNotEmpty()){
+                if (mMessages.isNotEmpty()) {
                     rc_chat.smoothScrollToPosition(mMessages.size)
                 }
             }
@@ -125,9 +128,16 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
 
-
     private fun addStickerMessage(code: String, b: Boolean, currentTimeMillis: Long) {
+        if (code.isNullOrEmpty()) {
+            return
+        }
+        if (StickersManager.isSticker(code)) {
+            mChatPresenter.sendsticker(code,mChatItem)
+            StickersManager.onUserMessageSent(true)
+        } else {
 
+        }
     }
 
     private fun addEvent() {
@@ -255,7 +265,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
 
     override fun getListMessageSuccess(messages: MutableList<Message>) {
-        mMessages=messages
+        mMessages = messages
         mChatAdapter.mMessage = messages
         mChatAdapter.notifyDataSetChanged()
         rc_chat.smoothScrollToPosition(messages.size)
@@ -317,8 +327,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     override fun iClick(o: Any) {
         var intent = Intent(this, ShowImageActivity::class.java)
         intent.putExtra(Contans.CHAT_ITEM, mChatItem)
-        intent.putExtra(Contans.SUM_MESSAGE,mMessages.size)
-        intent.putExtra(Contans.LINK_IMAGE_CURRENT,o.toString())
+        intent.putExtra(Contans.SUM_MESSAGE, mMessages.size)
+        intent.putExtra(Contans.LINK_IMAGE_CURRENT, o.toString())
         startActivity(intent)
     }
 

@@ -203,4 +203,9 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
         })
         return mMessage
     }
+
+    fun sendsticker(code: String, mChatItem: Chat) {
+        var message = Message(uid, null, mutableListOf(), DateTimeUltil.getTimeCurrent(),code)
+        databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
+    }
 }
