@@ -1,5 +1,7 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup.chat
 
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -36,16 +38,24 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
 
     class ChatGroupViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bindView(message: Message) {
-           /* if (!TextUtils.isEmpty(message.msgImage)) {
-                itemView.visibility = View.VISIBLE
-                Glide.with(itemView.context).load(message.msgImage).into(itemView.ivImage)
+
+            if (message.msgImage!!.size > 0) {
+                itemView.recyclerViewImage.visibility = View.VISIBLE
+                if (message.msgImage!!.size == 1) {
+                    itemView.recyclerViewImage.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
+                } else {
+                    itemView.recyclerViewImage.layoutManager = GridLayoutManager(itemView.context, 2)
+                }
+
+                var list = message.msgImage
+                itemView.recyclerViewImage.adapter = ImageAdapter(list!!)
             } else {
-                itemView.visibility = View.INVISIBLE
-            }*/
+                itemView.recyclerViewImage.visibility = View.INVISIBLE
+            }
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate
             DatabaseRef.userInfoRef(FirebaseAuth.getInstance().currentUser!!.uid)
-                    .addValueEventListener(object : ValueEventListener {
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError?) {
 
                         }
@@ -53,10 +63,10 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
                         override fun onDataChange(p0: DataSnapshot?) {
                             if (p0!!.exists()) {
                                 var user: User = p0!!.getValue(User::class.java)!!
-                                if (TextUtils.isEmpty(user.avatar)) {
+                                if (!TextUtils.isEmpty(user.avatar)) {
                                     Glide.with(itemView.context).load(user.avatar).into(itemView.ivAvatar)
                                 }
-                                if (TextUtils.isEmpty(user.name)) {
+                                if (!TextUtils.isEmpty(user.name)) {
                                     itemView.tvDisplayName.text = user.name
                                 }
                             }

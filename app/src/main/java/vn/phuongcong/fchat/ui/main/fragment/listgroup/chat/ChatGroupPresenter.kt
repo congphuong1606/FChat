@@ -48,20 +48,24 @@ class ChatGroupPresenter @Inject constructor(var chatGroupView: ChatGroupView) {
 
         })
     }
+
     fun getListImage(context: Context) {
         val listOfAllImages = mutableListOf<String>()
         val cursor: Cursor
         val column_index_data: Int
         var absolutePathOfImage: String? = null
         val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(MediaStore.Images.Media.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+        val projection = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
         cursor = context.contentResolver.query(uri, projection, null, null, null)
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
         while (cursor.moveToNext()) {
             absolutePathOfImage = cursor.getString(column_index_data)
-
             listOfAllImages.add(absolutePathOfImage)
         }
         chatGroupView.getListImageSuccess(listOfAllImages)
+    }
+
+    fun sendImageFromStorage(mListPathCurrent: MutableList<String>) {
+
     }
 }
