@@ -35,4 +35,19 @@ class ImageAdapter(var arrImage: MutableList<String>) : RecyclerView.Adapter<Rec
             }
         }
     }
+
+    fun addItem(image: String) {
+        arrImage.add(image)
+        notifyItemInserted(arrImage.size - 1)
+    }
+
+    fun removeItem(position: Int) {
+        arrImage.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun clearItem() {
+        arrImage.clear()
+        notifyDataSetChanged()
+    }
 }

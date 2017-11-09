@@ -24,6 +24,7 @@ import vn.phuongcong.fchat.event.IitemClick
 import vn.phuongcong.fchat.ui.chat.LinkImageAdapter
 import vn.phuongcong.fchat.ui.chat.ListImageAdapter
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
+import java.text.CollationKey
 import javax.inject.Inject
 
 class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
@@ -77,6 +78,7 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
 
 
     private var arrMessage = ArrayList<Message>()
+    private var arrMessageKey = ArrayList<String>()
     private lateinit var adminKey: String
     private lateinit var groupKey: String
     private lateinit var chatGroupAdapter: ChatGroupAdapter
@@ -115,16 +117,16 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
 
     private fun initViews() {
         rc_chat.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        chatGroupAdapter = ChatGroupAdapter(arrMessage)
+        chatGroupAdapter = ChatGroupAdapter(arrMessage, arrMessageKey, adminKey, groupKey)
         rc_chat.adapter = chatGroupAdapter
         btn_send_message.setOnClickListener {
             var content = edt_input_message.text.toString()
             if (!TextUtils.isEmpty(content)) {
-                mPresenter.onChat(edt_input_message.text.toString(), "", adminKey, groupKey)
+                mPresenter.onChat(edt_input_message.text.toString(), mListPathCurrent, adminKey, groupKey)
                 edt_input_message.setText("")
             }
         }
-        btn_send_image.setOnClickListener{
+        btn_send_image.setOnClickListener {
             chooseImage()
         }
         btn_cancel.setOnClickListener {
@@ -132,8 +134,8 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
         }
     }
 
-    override fun showChatItem(message: Message) {
-        chatGroupAdapter.addItem(message)
+    override fun showChatItem(message: Message, messageKey: String) {
+        chatGroupAdapter.addItem(message, messageKey)
         rc_chat.smoothScrollToPosition(arrMessage.size - 1)
     }
 
@@ -153,13 +155,15 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
             layoutManager = LinearLayoutManager(this@ChatGroupActivity, LinearLayoutManager.HORIZONTAL, false)
         }
     }
+
     private fun sendImageFromStorage(mListPathCurrent: MutableList<String>) {
-        mPresenter.sendImageFromStorage(mListPathCurrent)
+
         mImageAdapter.checkVisibleImageCheck = true
         mImageAdapter.notifyDataSetChanged()
         txt_count_send.text = ""
         count = 0
     }
+
     private fun cancelChooseImage() {
         mImageAdapter.checkVisibleImageCheck = true
         mImageAdapter.notifyDataSetChanged()

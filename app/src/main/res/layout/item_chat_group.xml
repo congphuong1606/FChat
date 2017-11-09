@@ -14,7 +14,8 @@
             android:id="@+id/ivAvatar"
             android:layout_width="0dp"
             android:src="@mipmap/ic_launcher"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:maxHeight="@dimen/dimen_100dp"
             android:layout_weight="2"/>
 
         <LinearLayout

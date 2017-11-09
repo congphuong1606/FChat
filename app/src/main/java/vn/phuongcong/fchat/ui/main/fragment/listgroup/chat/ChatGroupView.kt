@@ -7,6 +7,6 @@ import vn.phuongcong.fchat.ui.base.BaseView
  * Created by vietcoscc on 01/11/2017.
  */
 interface ChatGroupView :BaseView {
-    fun showChatItem(message: Message)
+    fun showChatItem(message: Message,messageKey:String)
     fun getListImageSuccess(absolutePathOfImage: MutableList<String>)
 }

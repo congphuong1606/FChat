@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -17,11 +18,12 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.common.utils.DatabaseRef
+import java.util.*
 
 /**
  * Created by vietcoscc on 01/11/2017.
  */
-class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatGroupAdapter(var arrMessage: ArrayList<Message>, var arrMessageKey: ArrayList<String>, var adminKey: String, var groupKey: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         var v = LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_group, parent, false)
         return ChatGroupViewHolder(v)
@@ -33,11 +35,13 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         var chatGroupViewHolder: ChatGroupViewHolder = holder as ChatGroupViewHolder
-        chatGroupViewHolder.bindView(arrMessage[position])
+        chatGroupViewHolder.bindView(arrMessage[position], arrMessageKey[position], adminKey, groupKey)
     }
 
     class ChatGroupViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(message: Message) {
+        var arrImage = arrayListOf<String>()
+        lateinit var imageAdapter: ImageAdapter
+        fun bindView(message: Message, messageKey: String, adminKey: String, groupKey: String) {
 
             if (message.msgImage!!.size > 0) {
                 itemView.recyclerViewImage.visibility = View.VISIBLE
@@ -46,12 +50,38 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
                 } else {
                     itemView.recyclerViewImage.layoutManager = GridLayoutManager(itemView.context, 2)
                 }
-
-                var list = message.msgImage
-                itemView.recyclerViewImage.adapter = ImageAdapter(list!!)
+                itemView.recyclerViewImage.adapter = ImageAdapter(arrImage)
             } else {
                 itemView.recyclerViewImage.visibility = View.INVISIBLE
             }
+            imageAdapter = ImageAdapter(arrImage)
+            itemView.recyclerViewImage.adapter = imageAdapter
+            imageAdapter.clearItem()
+            var childEvent = object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                    var image = p0!!.getValue(String::class.java)
+                    imageAdapter.addItem(image!!)
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+            }
+            DatabaseRef.groupContentRef(adminKey).child(groupKey).child(messageKey).child("msgImage").removeEventListener(childEvent)
+            DatabaseRef.groupContentRef(adminKey).child(groupKey).child(messageKey).child("msgImage").addChildEventListener(childEvent)
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate
             DatabaseRef.userInfoRef(FirebaseAuth.getInstance().currentUser!!.uid)
@@ -75,13 +105,15 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
         }
     }
 
-    fun addItem(message: Message) {
+    fun addItem(message: Message, key: String) {
         arrMessage.add(message)
+        arrMessageKey.add(key)
         notifyItemInserted(arrMessage.size - 1)
     }
 
     fun removeItem(position: Int) {
         arrMessage.removeAt(position)
+        arrMessageKey.removeAt(position)
         notifyItemRemoved(position)
     }
 }
