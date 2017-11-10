@@ -14,6 +14,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.item_list_image.*
+import vc908.stickerfactory.StickersKeyboardController
+import vc908.stickerfactory.StickersManager
+import vc908.stickerfactory.ui.OnStickerSelectedListener
+import vc908.stickerfactory.ui.fragment.StickersFragment
+import vc908.stickerfactory.ui.view.StickersKeyboardLayout
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
@@ -28,8 +33,8 @@ import javax.inject.Inject
 
 
 class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
-
-
+    private var stickersKeyboardController: StickersKeyboardController? = null
+    private var isNullStickerFragment:Boolean = false
     @Inject
     lateinit var mChatPresenter: ChatPresenter
     private var mMessages: MutableList<Message> = mutableListOf()
@@ -87,6 +92,64 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
         mChatPresenter.getListChat(mChatItem)
         addEvent()
+        sticker()
+
+    }
+
+
+    private fun sticker() {
+        var stickersFragment: StickersFragment? = null
+
+        //supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
+        if (stickersFragment==null) {
+            stickersFragment = StickersFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.sticker_frame, stickersFragment).commit()
+        }
+        stickersFragment.setOnStickerSelectedListener(object : OnStickerSelectedListener {
+            override fun onStickerSelected(code: String) {
+                addStickerMessage(code, false, System.currentTimeMillis())
+            }
+
+            override fun onEmojiSelected(emoji: String) {
+                edt_input_message.append(emoji)
+            }
+        })
+        val stickersLayout = findViewById<StickersKeyboardLayout>(R.id.sizeNotifierLayout)
+        stickersKeyboardController = StickersKeyboardController.Builder(this)
+                .setStickersKeyboardLayout(stickersLayout)
+                .setStickersFragment(stickersFragment)
+                .setStickersFrame(sticker_frame)
+                .setContentContainer(chat_content)
+                .setStickersButton(btn_stickers)
+                .setChatEdit(edt_input_message)
+                .setSuggestContainer(rc_chat)
+                .build()
+
+        stickersKeyboardController!!.setKeyboardVisibilityChangeListener(object :
+                StickersKeyboardController.KeyboardVisibilityChangeListener {
+            override fun onTextKeyboardVisibilityChanged(isVisible: Boolean) {
+                if (mMessages.isNotEmpty()) {
+                    rc_chat.smoothScrollToPosition(mMessages.size)
+                }
+            }
+
+            override fun onStickersKeyboardVisibilityChanged(isVisible: Boolean) {
+
+            }
+        })
+    }
+
+
+    private fun addStickerMessage(code: String, b: Boolean, currentTimeMillis: Long) {
+        if (code.isNullOrEmpty()) {
+            return
+        }
+        if (StickersManager.isSticker(code)) {
+            mChatPresenter.sendsticker(code,mChatItem)
+            StickersManager.onUserMessageSent(true)
+        } else {
+
+        }
     }
 
     private fun addEvent() {
@@ -203,7 +266,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
 
     override fun getListMessageSuccess(messages: MutableList<Message>) {
-        mMessages=messages
+        mMessages = messages
         mChatAdapter.mMessage = messages
         mChatAdapter.notifyDataSetChanged()
         rc_chat.smoothScrollToPosition(messages.size)
@@ -265,8 +328,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     override fun iClick(o: Any) {
         var intent = Intent(this, ShowImageActivity::class.java)
         intent.putExtra(Contans.CHAT_ITEM, mChatItem)
-        intent.putExtra(Contans.SUM_MESSAGE,mMessages.size)
-        intent.putExtra(Contans.LINK_IMAGE_CURRENT,o.toString())
+        intent.putExtra(Contans.SUM_MESSAGE, mMessages.size)
+        intent.putExtra(Contans.LINK_IMAGE_CURRENT, o.toString())
         startActivity(intent)
     }
 

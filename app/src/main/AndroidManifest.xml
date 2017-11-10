@@ -32,6 +32,18 @@
 
         <service android:name=".service.OnlineService" />
 
+
+
+
+        <activity android:name="vn.phuongcong.fchat.ui.chat.GridImageActivity" />
+        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity"></activity>
+
+
+
+        <provider
+            android:name="vc908.stickerfactory.provider.StickersProvider"
+            android:authorities="vn.phuongcong.fchat.stickersProvider"
+            android:exported="false" />
         <activity android:name=".ui.chat.FChatActivity" />
         <activity android:name="vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity" />
         <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" />

@@ -49,7 +49,7 @@ class LoginPresenter @Inject constructor(var fAuth: FirebaseAuth,
     private fun getUserDatabase(uid: String) {
         val databaseUser: DatabaseReference =
                 dbReference.child(Contans.USERS_PATH).child(uid)
-        databaseUser.addValueEventListener(object : ValueEventListener {
+        databaseUser.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user = dataSnapshot.getValue(User::class.java)
                 loginView.onVerified(user)

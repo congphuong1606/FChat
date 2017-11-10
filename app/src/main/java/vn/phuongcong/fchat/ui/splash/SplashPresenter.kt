@@ -39,13 +39,9 @@ class SplashPresenter @Inject constructor(var fAuth: FirebaseAuth,
                 val user= dataSnapshot.getValue(User::class.java)
                 if(user!=null){
                     setValue(user)
-                    App().setInforUser(user)
                     splashView.onLognInEd()
                 }
-//
-//                App().UEMAIL=user.email
-//                App().UNAME=user.name
-//                App().UAVATAR=user.avatar
+
 
 
             }

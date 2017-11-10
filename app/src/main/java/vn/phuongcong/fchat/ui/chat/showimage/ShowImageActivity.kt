@@ -13,7 +13,7 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 class ShowImageActivity : BaseActivity(), ChatView {
-    @Inject
+
     lateinit var mChatPresenter: ChatPresenter
     private lateinit var mChatItem: Chat
     private lateinit var mShowImageAdapter: ShowImageAdapter
@@ -22,7 +22,7 @@ class ShowImageActivity : BaseActivity(), ChatView {
     private var mLinkImageCurrent:String=""
 
     override fun injectDependence() {
-        App().get(this).plus(ViewModule(this)).injectTo(this)
+//        App().get(this).plus(ViewModule(this)).injectTo(this)
     }
 
     override fun initData() {

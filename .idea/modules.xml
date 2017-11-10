@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FChat.iml" filepath="$PROJECT_DIR$/FChat.iml" />
+      <module fileurl="file://E:\andorid-me\fchat\FChat.iml" filepath="E:\andorid-me\fchat\FChat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\andorid-me\fchat\app\app.iml" filepath="E:\andorid-me\fchat\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fabscrollanimations/fabscrollanimations.iml" filepath="$PROJECT_DIR$/fabscrollanimations/fabscrollanimations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fchat.iml" filepath="$PROJECT_DIR$/fchat.iml" />
     </modules>
   </component>
 </project>

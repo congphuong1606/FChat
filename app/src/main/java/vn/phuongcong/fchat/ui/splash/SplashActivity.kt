@@ -44,7 +44,6 @@ class SplashActivity : BaseActivity(), SplashView {
     }
 
     override fun initData() {
-
         mPresenter.checkLogined()
     }
 

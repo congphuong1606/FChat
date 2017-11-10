@@ -118,10 +118,11 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onVerified(user: User?) {
         dialogUtils.hideLoading()
-        App().UID=user!!.id
-        App().UEMAIL=user!!.email
-        App().UNAME=user!!.name
-        App().UAVATAR=user!!.avatar
+        prefsEditor.putString(Contans.PRE_USER_ID,user!!.id)
+                .putString(Contans.PRE_USER_EMAIL,user.email)
+                .putString(Contans.PRE_USER_NAME,user.name)
+                .putString(Contans.PRE_USER_AVATAR,user.avatar)
+                .commit()
         onStartActivity(MainActivity::class.java)
         finish()
     }

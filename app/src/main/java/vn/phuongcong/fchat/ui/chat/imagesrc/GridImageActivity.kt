@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickListener {
 
-    @Inject
+
     lateinit var mChatPresenter: ChatPresenter
     private var mListImage: MutableList<String> = mutableListOf()
     private lateinit var mImageAdapter: GridImageAdapter
@@ -32,7 +32,7 @@ class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickList
         get() = R.layout.activity_grid_image
 
     override fun injectDependence() {
-        App().get(this).plus(ViewModule(this)).injectTo(this)
+//        App().get(this).plus(ViewModule(this)).injectTo(this)
     }
 
     override fun initData() {
@@ -43,7 +43,7 @@ class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickList
         gr_image.apply {
             adapter = mImageAdapter
         }
-        mChatPresenter.getListImage(this)
+//        mChatPresenter.getListImage(this)
         addEvent()
     }
 

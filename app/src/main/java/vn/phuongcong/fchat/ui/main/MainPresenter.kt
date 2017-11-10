@@ -17,8 +17,6 @@ class MainPresenter @Inject constructor(var fAuth: FirebaseAuth,
                                         var sPref: SharedPreferences,
                                         var dbReference: DatabaseReference) {
     fun updateUserStatus() {
-        var Uid=sPref.getString(Contans.PRE_USER_ID,"")
-        dbReference.child(Contans.USERS_PATH).child(Uid).child(Contans.STATUS_PATH).child(Contans.ISONLINE).setValue(true);
-        dbReference.child(Contans.USERS_PATH).child(Uid).child(Contans.STATUS_PATH).child(Contans.TIME_STAMP).setValue(System.currentTimeMillis());
+
     }
 }
