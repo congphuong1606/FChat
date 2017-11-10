@@ -18,8 +18,8 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                                            var databaseReference: DatabaseReference,
                                            var listMsgView: ListMsgView,
                                            var sPref: SharedPreferences) {
-    // = sPref.getString(Contans.PRE_USER_ID, "")
-    var uid= mAuth.currentUser!!.uid
+//    var uid= sPref.getString(Contans.PRE_USER_ID, "")
+  var uid  = mAuth.currentUser!!.uid
     var listUserChat = mutableListOf<User>()
 
     fun loadListChat() {

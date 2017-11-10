@@ -53,6 +53,18 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     override fun initData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(
+                        Manifest.permission.CAMERA)) {
+
+                } else {
+
+                }
+                requestPermissions(arrayOf(Manifest.permission.CAMERA), Contans.CAMERA_PERMISSION_REQUEST)
+
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(
                         Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -127,25 +139,14 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     private fun getImageFromCamera() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                if (shouldShowRequestPermissionRationale(
-                        Manifest.permission.CAMERA)) {
 
-                } else {
-
-                }
-                requestPermissions(arrayOf(Manifest.permission.CAMERA), Contans.CAMERA_PERMISSION_REQUEST)
-
-            }
-        }
         val permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-        if (permissionCamera == PackageManager.PERMISSION_GRANTED) {
+       // if (permissionCamera == PackageManager.PERMISSION_GRANTED) {
             /*val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, Contans.CAMERA_PIC_REQUEST)*/
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, Contans.CAMERA_PIC_REQUEST)
-        }
+       // }
 
 
     }
