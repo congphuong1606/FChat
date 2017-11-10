@@ -94,9 +94,10 @@ dependencies {
 //stick chat
     def stickerpipeSdkVersion = '0.14.5'
     implementation("vc908.stickers:stickerfactory:$stickerpipeSdkVersion") {
-
-        transitive = true;
+        transitive = true
     }
+    //Audio
+    implementation 'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
 
 
     testImplementation 'junit:junit:4.12'
@@ -109,6 +110,9 @@ dependencies {
 }
 repositories {
     mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 apply plugin: 'kotlin-android-extensions'

@@ -13,6 +13,9 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 class ShowImageActivity : BaseActivity(), ChatView {
+    override fun sendAudioSuccess(downloadUrl: String) {
+
+    }
 
     lateinit var mChatPresenter: ChatPresenter
     private lateinit var mChatItem: Chat

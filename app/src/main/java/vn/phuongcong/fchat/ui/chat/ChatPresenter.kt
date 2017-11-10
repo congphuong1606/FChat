@@ -108,10 +108,10 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
     fun sendMessagetext(messagetext: String, mChatItem: Chat) {
 
-        var message = Message(uid, messagetext, mutableListOf(), DateTimeUltil.getTimeCurrent())
+        var message = Message(uid, messagetext, mutableListOf(), DateTimeUltil.getTimeCurrent(),null,null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
 
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext,null,null)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -133,7 +133,6 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     fun sendImageCamera(image: Bitmap) {
-        var linkImageCamera: MutableList<String> = mutableListOf()
         val baos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val data = baos.toByteArray()
@@ -168,9 +167,9 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     fun sendMessageImage(linkImage: MutableList<String>, mChatItem: Chat) {
-        var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent())
+        var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent(),null,null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", linkImage)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", linkImage,null)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -180,9 +179,9 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     fun sendMessageImageCamera(downloadUrl: String?, mChatItem: Chat) {
         var linkImage:MutableList<String> = mutableListOf()
         linkImage.add(downloadUrl!!)
-        var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent())
+        var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent(),null,null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", linkImage)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", linkImage,null)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -205,7 +204,35 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     fun sendsticker(code: String, mChatItem: Chat) {
-        var message = Message(uid, null, mutableListOf(), DateTimeUltil.getTimeCurrent(),code)
+        var message = Message(uid, null, mutableListOf(), DateTimeUltil.getTimeCurrent(),code,null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
+    }
+
+    fun senAudio(audioPath: String, mChatItem: Chat) {
+
+
+            val stream = FileInputStream(File(audioPath))
+            val mountainImagesRef = storageReference.child(Contans.IMAGE_MESSAGE).child(DateTimeUltil.getTimeCurrent() + ".wav")
+            val uploadTask = mountainImagesRef.putStream(stream)
+            uploadTask.addOnFailureListener({
+                // Handle unsuccessful uploads
+            }).addOnSuccessListener({ taskSnapshot ->
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                val downloadUrl = taskSnapshot.downloadUrl
+                    chatView.sendAudioSuccess(downloadUrl.toString())
+
+
+            })
+
+
+
+    }
+
+    fun saveAudioFirebase(audio: String?, mChatItem: Chat) {
+        var message = Message(uid, null, null, DateTimeUltil.getTimeCurrent(),null,audio)
+        databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", null,audio)
+        databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
+        databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
 }

@@ -48,7 +48,12 @@ IChat,var mListMessageLast :MutableList<Messagelast>,var mContext:Context) : Rec
         fun bin(chat: Chat, mIChat: IChat, messagelast: Messagelast, mContext: Context) {
             itemView.txt_name_friend.text = chat.mFriend
             if(messagelast.messageLast.isNullOrEmpty()){
-                itemView.txt_message_last.text = Contans.HINH_ANH
+                if(!messagelast.messageLastAudio.isNullOrEmpty()){
+                    itemView.txt_message_last.text = Contans.AM_THANH
+                }else{
+                    itemView.txt_message_last.text = Contans.HINH_ANH
+                }
+
             }else{
                 itemView.txt_message_last.text = messagelast.messageLast
             }

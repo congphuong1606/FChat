@@ -18,8 +18,8 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                                            var databaseReference: DatabaseReference,
                                            var listMsgView: ListMsgView,
                                            var sPref: SharedPreferences) {
-//    var uid= sPref.getString(Contans.PRE_USER_ID, "")
-  var uid  = mAuth.currentUser!!.uid
+    //    var uid= sPref.getString(Contans.PRE_USER_ID, "")
+    var uid = mAuth.currentUser!!.uid
     var listUserChat = mutableListOf<User>()
 
     fun loadListChat() {
@@ -34,16 +34,19 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                     listUid.add(user.key.toString())
                 }
                 getProfileByUid(listUid)
-                getListMessageLastByUid(listUid)
+                   if(databaseReference.child(Contans.MESSAGE_LAST).child(uid)!=null){
+                       getListMessageLastByUid(listUid)
+                   }
+
             }
         })
     }
 
     private fun getListMessageLastByUid(listUid: MutableList<String>) {
-        var listMessagelast :MutableList<Messagelast> = mutableListOf()
+        var listMessagelast: MutableList<Messagelast> = mutableListOf()
 
-        for(idFriend in listUid){
-            databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(idFriend).child(Contans.MESSAGE_LAST).addValueEventListener(object : ValueEventListener{
+        for (idFriend in listUid) {
+            databaseReference.child(Contans.MESSAGE_LASTS)!!.child(uid).child(idFriend).child(Contans.MESSAGE_LAST)!!.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -59,35 +62,26 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
 
     private fun getProfileByUid(listUid: MutableList<String>) {
-
         databaseReference.child(Contans.USERS_PATH).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
-
             }
 
             override fun onDataChange(data: DataSnapshot?) {
                 for (uid in listUid) {
                     for (user in data!!.children) {
                         if (user.key == uid) {
-                            if(listUserChat.size>0){
-                                if(listUserChat.contains(user.getValue(User::class.java)!!)){
+                            if (listUserChat.size > 0) {
+                                if (listUserChat.contains(user.getValue(User::class.java)!!)) {
                                     listUserChat.add(user.getValue(User::class.java)!!)
                                 }
-
-                            }else{
+                            } else {
                                 listUserChat.add(user.getValue(User::class.java)!!)
                             }
-
                         }
                     }
                 }
                 listMsgView.OnLoadListChatSuccess(listUserChat)
             }
         })
-
     }
-
-
-
-
 }

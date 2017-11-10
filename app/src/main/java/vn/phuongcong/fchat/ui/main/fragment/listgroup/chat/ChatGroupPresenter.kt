@@ -16,7 +16,7 @@ class ChatGroupPresenter @Inject constructor(var chatGroupView: ChatGroupView) {
     var mAuth = FirebaseAuth.getInstance().currentUser
     fun onChat(content: String, msgImage: String, adminKey: String, groupKey: String) {
         var currentTime = CalendarUtils.currentTime() + " " + CalendarUtils.currentDate()
-        var message = Message(mAuth!!.uid, content, mutableListOf(), currentTime)
+        var message = Message(mAuth!!.uid, content, mutableListOf(), currentTime,null,null)
         DatabaseRef.groupContentRef(adminKey).child(groupKey).push().setValue(message)
     }
 

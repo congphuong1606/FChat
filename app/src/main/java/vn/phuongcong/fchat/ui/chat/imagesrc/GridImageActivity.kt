@@ -20,6 +20,9 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickListener {
+    override fun sendAudioSuccess(downloadUrl: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     lateinit var mChatPresenter: ChatPresenter

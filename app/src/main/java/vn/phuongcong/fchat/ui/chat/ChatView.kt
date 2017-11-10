@@ -11,5 +11,6 @@ interface ChatView :BaseView{
     fun getListImageSuccess(absolutePathOfImage: MutableList<String>)
     fun sendImageSuccess(linkImage: MutableList<String>)
     fun sendImageCamereSuccess(downloadUrl: String?)
+    fun sendAudioSuccess(downloadUrl: String)
 
 }

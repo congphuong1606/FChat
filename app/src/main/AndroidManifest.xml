@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -29,25 +31,17 @@
         </activity>
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name="vn.phuongcong.fchat.ui.chat.ChatActivity" />
+        <activity android:name="vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity" />
+        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" />
+        <activity android:name="vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity"></activity>
 
         <service android:name=".service.OnlineService" />
-
-
-
-
-        <activity android:name="vn.phuongcong.fchat.ui.chat.GridImageActivity" />
-        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity"></activity>
-
-
-
         <provider
             android:name="vc908.stickerfactory.provider.StickersProvider"
             android:authorities="vn.phuongcong.fchat.stickersProvider"
             android:exported="false" />
-        <activity android:name=".ui.chat.FChatActivity" />
-        <activity android:name="vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity" />
-        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" />
-        <activity android:name="vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity"></activity>
+
+
     </application>
 
 </manifest>
