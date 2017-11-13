@@ -11,7 +11,6 @@
 
 
     <LinearLayout
-        android:gravity="right"
         android:id="@+id/ll_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +18,7 @@
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_weight="8"
+        android:gravity="right"
         android:orientation="vertical">
 
 
@@ -34,8 +34,7 @@
             android:id="@+id/txt_time_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time"
-            android:textSize="@dimen/dimen_10sp" />
+            android:text="@string/time" />
 
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
@@ -18,7 +19,9 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
 import cafe.adriel.androidaudiorecorder.model.AudioSource
+
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.fragment_friend.*
 import kotlinx.android.synthetic.main.item_list_image.*
 import vc908.stickerfactory.StickersKeyboardController
 import vc908.stickerfactory.StickersManager
@@ -39,13 +42,12 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 
-class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend {
+class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend, SwipeRefreshLayout.OnRefreshListener {
 
 
-    private var stickersKeyboardController: StickersKeyboardController? = null
-    private var isNullStickerFragment: Boolean = false
     @Inject
     lateinit var mChatPresenter: ChatPresenter
+    private var stickersKeyboardController: StickersKeyboardController? = null
     private var mMessages: MutableList<Message> = mutableListOf()
     private var mListImage: MutableList<String> = mutableListOf()
     private var mListPathCurrent: MutableList<String> = mutableListOf()
@@ -54,6 +56,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private lateinit var mLinkImageAdapter: LinkImageAdapter
     private var count = 0
     private lateinit var mChatItem: Chat
+    private lateinit var mImgUserSend: String
 
     companion object {
         private val REQUEST_RECORD_AUDIO = 0
@@ -96,22 +99,32 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), Contans.EXTERNAL_PERMISSION_REQUEST)
             }
         }
-        mImageAdapter = ListImageAdapter(mListImage, this, this, false)
-        rc_chat.setHasFixedSize(true)
-        mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this)
-        rc_chat.apply {
-            adapter = mChatAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
+
+
         if (intent.getSerializableExtra(Contans.CHAT_ITEM) != null) {
             mChatItem = intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
         }
-        mChatPresenter.getListChat(mChatItem)
+        mImgUserSend = mChatPresenter.getAvatarUserSend()
+        mImageAdapter = ListImageAdapter(mListImage, this, this, false)
+        mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this, chatItem = mChatItem, mImgUserSend = mImgUserSend)
+        rc_chat.apply {
+            setHasFixedSize(true)
+            adapter = mChatAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
+
+        mChatPresenter.getListChat(mChatItem, 0,5)
         addEvent()
         sticker()
 
     }
 
+    override fun onRefresh() {
+        mMessages.clear()
+        mChatPresenter.getListChat(mChatItem, 6,5)
+        sr_load_more.isRefreshing = false
+    }
 
     private fun sticker() {
         var stickersFragment: StickersFragment? = null
@@ -135,10 +148,10 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
                 .setStickersKeyboardLayout(stickersLayout)
                 .setStickersFragment(stickersFragment)
                 .setStickersFrame(sticker_frame)
-                .setContentContainer(chat_content)
+                // .setContentContainer(chat_content)
                 .setStickersButton(btn_stickers)
                 .setChatEdit(edt_input_message)
-                .setSuggestContainer(rc_chat)
+                // .setSuggestContainer(rc_chat)
                 .build()
 
         stickersKeyboardController!!.setKeyboardVisibilityChangeListener(object :
@@ -169,6 +182,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     private fun addEvent() {
+        sr_load_more.setOnRefreshListener(this)
         btn_send_image.setOnClickListener(this)
         btn_send_message.setOnClickListener(this)
         edt_input_message.setOnClickListener(this)
@@ -203,22 +217,24 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     private fun chooseAudio() {
         PermissionUtil.requestPermission(this, Manifest.permission.RECORD_AUDIO)
+        PermissionUtil.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-            AndroidAudioRecorder.with(this)
-                    // Required
-                    .setFilePath(AUDIO_FILE_PATH)
-                    .setColor(ContextCompat.getColor(this, R.color.red))
-                    .setRequestCode(REQUEST_RECORD_AUDIO)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                AndroidAudioRecorder.with(this)
+                        // Required
+                        .setFilePath(AUDIO_FILE_PATH)
+                        .setColor(ContextCompat.getColor(this, R.color.red))
+                        .setRequestCode(REQUEST_RECORD_AUDIO)
 
-                    // Optional
-                    .setSource(AudioSource.MIC)
-                    .setChannel(AudioChannel.STEREO)
-                    .setSampleRate(AudioSampleRate.HZ_48000)
-                    .setAutoStart(false)
-                    .setKeepDisplayOn(true)
+                        // Optional
+                        .setSource(AudioSource.MIC)
+                        .setChannel(AudioChannel.STEREO)
+                        .setSampleRate(AudioSampleRate.HZ_48000)
+                        .setAutoStart(false)
+                        .setKeepDisplayOn(true)
 
-                    // Start recording
-                    .record()
+                        // Start recording
+                        .record()
         }
     }
 
@@ -254,26 +270,20 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-        }
-
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode === Contans.CAMERA_PIC_REQUEST) {
             if (data!!.getExtras() != null) {
                 val image = data!!.getExtras().get("data") as Bitmap
                 mChatPresenter.sendImageCamera(image)
+            } else {
+                return
             }
         }
-        if(requestCode== REQUEST_RECORD_AUDIO){
-            if(resultCode== Activity.RESULT_OK){
-                mChatPresenter.senAudio(AUDIO_FILE_PATH,mChatItem)
-            }else if(requestCode== Activity.RESULT_CANCELED){
+        if (requestCode == REQUEST_RECORD_AUDIO) {
+            if (resultCode == Activity.RESULT_OK) {
+                mChatPresenter.senAudio(AUDIO_FILE_PATH, mChatItem)
+            } else if (requestCode == Activity.RESULT_CANCELED) {
 
             }
         }
@@ -314,6 +324,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     override fun getListMessageSuccess(messages: MutableList<Message>) {
         mMessages = messages
         mChatAdapter.mMessage = messages
+
+
         mChatAdapter.notifyDataSetChanged()
         rc_chat.smoothScrollToPosition(messages.size)
     }
@@ -384,6 +396,18 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     override fun sendAudioSuccess(downloadUrl: String) {
-        mChatPresenter.saveAudioFirebase(downloadUrl,mChatItem)
+        mChatPresenter.saveAudioFirebase(downloadUrl, mChatItem)
+    }
+
+    override fun sendDataAudio(linkAudio: String, imgPlayPause: ImageView) {
+        mChatPresenter.playAudio(linkAudio, imgPlayPause)
+    }
+
+    override fun isPlaying(imgPlayPause: ImageView) {
+        imgPlayPause.setImageResource(R.drawable.ic_play)
+    }
+
+    override fun isStop(imgPlayPause: ImageView) {
+        imgPlayPause.setImageResource(R.drawable.ic_stop)
     }
 }

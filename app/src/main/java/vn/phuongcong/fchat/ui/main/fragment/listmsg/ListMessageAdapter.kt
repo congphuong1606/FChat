@@ -53,19 +53,15 @@ IChat,var mListMessageLast :MutableList<Messagelast>,var mContext:Context) : Rec
                 }else{
                     itemView.txt_message_last.text = Contans.HINH_ANH
                 }
-
             }else{
                 itemView.txt_message_last.text = messagelast.messageLast
             }
-
-            itemView.txt_time.text=DateTimeUltil.fotmatTime(messagelast.timeLastSend.toLong(),DateTimeUltil.mTimeFormat)
+       //     itemView.txt_time.text=DateTimeUltil.fotmatTime(messagelast.timeLastSend.toLong(),DateTimeUltil.mTimeFormat)
             Glide.with(mContext).load(chat.mImageFriend).into(itemView.img_image_friend)
             itemView.img_image_friend
             itemView.setOnClickListener {
                 mIChat.chat(chat)
             }
-
         }
     }
-
 }

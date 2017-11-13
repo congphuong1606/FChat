@@ -7,7 +7,7 @@ import java.io.Serializable
  */
 class Message(var senderId: String = "", val content: String? = "",
               var msgImage: MutableList<String>? = mutableListOf(),
-              var timeCreate: String = "",var stickerCode:String?="",
+              var timeCreate: String = "",
               var audio:String?="",
               var mType: Int = 0
               ) : Serializable

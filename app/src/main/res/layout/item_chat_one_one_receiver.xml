@@ -44,7 +44,7 @@
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
             android:text="@string/time"
-            android:textSize="@dimen/dimen_10sp" />
+            />
 
     </LinearLayout>
 

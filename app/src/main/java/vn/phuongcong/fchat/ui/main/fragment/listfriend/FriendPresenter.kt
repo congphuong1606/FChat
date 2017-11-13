@@ -14,7 +14,7 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                                           var dbReference: DatabaseReference,
                                           var friendView: FriendView) {
     fun onLoadFriendIds() {
-       /* var uid = sPref.getString(Contans.PRE_USER_ID, "")
+        var uid = sPref.getString(Contans.PRE_USER_ID, "")
         dbReference.child(Contans.FRIEND_PATH).child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 friendView.onRequestFailure(error.toString())
@@ -30,7 +30,6 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                 }
             }
         })
-*/
 
     }
 

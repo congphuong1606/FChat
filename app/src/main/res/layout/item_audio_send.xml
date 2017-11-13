@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -17,20 +16,31 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="@dimen/dimen_200dp"
+            android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_30dp"
-            android:layout_marginRight="@dimen/dimen_10dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_10dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <ImageView
+                android:id="@+id/img_play_pause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/aar_ic_stop"
-                />
+                android:src="@drawable/ic_play" />
+
+            <TextView
+                android:id="@+id/txt_time_duration_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:text="@string/time" />
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_avatar_send"
+            android:id="@+id/img_avatar_send_audio"
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_gravity="center_vertical"
@@ -39,7 +49,7 @@
 
     <TextView
 
-        android:id="@+id/txt_time_send_image"
+        android:id="@+id/txt_time_send_audio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
