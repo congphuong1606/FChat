@@ -14,6 +14,7 @@ import vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAddingDialog
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
 import vn.phuongcong.fchat.ui.profile.ProfileActivity
 import vn.phuongcong.fchat.ui.splash.SplashActivity
@@ -36,4 +37,5 @@ interface SubComponent {
     fun injectTo(chatGroupActivity: ChatGroupActivity)
     fun injectTo(mainActivity: MainActivity)
     fun injectTo(showImageActivity: ShowImageActivity)
+    fun injectTo(friendAddingDialog: FriendAddingDialog)
 }

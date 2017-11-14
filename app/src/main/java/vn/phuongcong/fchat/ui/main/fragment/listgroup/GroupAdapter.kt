@@ -2,6 +2,7 @@ package vn.phuongcong.fchat.ui.main.fragment.listgroup
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import vn.phuongcong.fchat.event.IitemClick
 import vn.phuongcong.fchat.model.Group
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.common.utils.DatabaseRef
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAddingDialog
 
 /**
  * Created by vietcoscc on 10/20/2017.
@@ -52,9 +54,13 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
         lateinit var uid: String
         fun bind(group: Group, onItemClick: IitemClick) {
             itemView.setOnClickListener {
-                onItemClick.iClick(position,null)
+                onItemClick.iClick(position, null)
             }
             uid = FirebaseAuth.getInstance().currentUser!!.uid
+            itemView.ivAddMember.setOnClickListener {
+                var activity: AppCompatActivity = itemView.context as AppCompatActivity
+                FriendAddingDialog(itemView.context, "", "").show(activity.fragmentManager, "")
+            }
             itemView.tvGroupName.text = group.groupName
             itemView.tvTimeStamp.text = group.timeStamp
             itemView.ivAvatar.shape = MultiImageView.Shape.CIRCLE

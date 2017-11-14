@@ -54,34 +54,8 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>, var arrMessageKey: Ar
             } else {
                 itemView.recyclerViewImage.visibility = View.INVISIBLE
             }
-            imageAdapter = ImageAdapter(arrImage)
+            imageAdapter = ImageAdapter(message.msgImage!!)
             itemView.recyclerViewImage.adapter = imageAdapter
-            imageAdapter.clearItem()
-            var childEvent = object : ChildEventListener {
-                override fun onCancelled(p0: DatabaseError?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
-                    var image = p0!!.getValue(String::class.java)
-                    imageAdapter.addItem(image!!)
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-            }
-            DatabaseRef.groupContentRef(adminKey).child(groupKey).child(messageKey).child("msgImage").removeEventListener(childEvent)
-            DatabaseRef.groupContentRef(adminKey).child(groupKey).child(messageKey).child("msgImage").addChildEventListener(childEvent)
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate
             DatabaseRef.userInfoRef(FirebaseAuth.getInstance().currentUser!!.uid)
