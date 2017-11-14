@@ -2,7 +2,6 @@ package vn.phuongcong.fchat.ui.chat
 
 
 import android.content.Context
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
@@ -14,10 +13,11 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_audio_receiver.view.*
 import kotlinx.android.synthetic.main.item_audio_send.view.*
-import kotlinx.android.synthetic.main.item_chat_one_one_receiver.view.*
-import kotlinx.android.synthetic.main.item_chat_one_one_send.view.*
+import kotlinx.android.synthetic.main.item_text_receiver.view.*
+import kotlinx.android.synthetic.main.item_text_send.view.*
 import kotlinx.android.synthetic.main.item_image_receiver.view.*
 import kotlinx.android.synthetic.main.item_image_send.view.*
+import vc908.stickerfactory.StickersManager
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
 import vn.phuongcong.fchat.model.Chat
@@ -35,6 +35,8 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
         val RIGHT_IMAGE = 3
         val LEFT_AUDIO = 5
         val RIGHT_AUDIO = 4
+        val LEFT_STICKER = 7
+        val RIGHT_STICKER = 6
     }
 
     interface Isend {
@@ -45,9 +47,9 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         var viewHolder: RecyclerView.ViewHolder? = null
         if (viewType == RIGHT_TEXT)
-            viewHolder = ChatItemViewHolderSend(LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_one_one_send, parent, false))
+            viewHolder = ChatItemViewHolderSend(LayoutInflater.from(parent!!.context).inflate(R.layout.item_text_send, parent, false))
         if (viewType == LEFT_TEXT)
-            viewHolder = ChatItemViewHolderReceiver(LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_one_one_receiver, parent, false))
+            viewHolder = ChatItemViewHolderReceiver(LayoutInflater.from(parent!!.context).inflate(R.layout.item_text_receiver, parent, false))
         if (viewType == RIGHT_IMAGE)
             viewHolder = ChatItemViewHolderSendImage(LayoutInflater.from(parent!!.context).inflate(R.layout.item_image_send, parent, false))
         if (viewType == LEFT_IMAGE)
@@ -206,7 +208,16 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
             return RIGHT_IMAGE
         else if (mMessage.get(position).mType == LEFT_AUDIO)
             return LEFT_AUDIO
+        else if (mMessage.get(position).mType == LEFT_STICKER)
+            return LEFT_STICKER
         else
-            return RIGHT_AUDIO
+            return RIGHT_STICKER
+
+    }
+
+    private fun loadSticker(convertView: ImageView, message: String) {
+        StickersManager.with(mContext)
+                .loadSticker(message)
+                .into(convertView)
     }
 }
