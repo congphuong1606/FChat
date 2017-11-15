@@ -25,14 +25,23 @@ import javax.inject.Inject
  * Created by vietcoscc on 14/11/2017.
  */
 class FriendAddingDialog() : DialogFragment(), FriendAddingView {
-    override fun showFriend(friendId: String) {
-        Log.i("showFriend", friendId)
+    override fun showMember(arrCurrentMember: MutableList<String>) {
+        Log.e("showMember", "" + arrCurrentMember.size)
     }
 
-    lateinit var dialog: AlertDialog
+
+    override fun showFriend(friendId: String) {
+        adapter.addItem(friendId)
+        arrCkecked.add(false)
+    }
+
+    private lateinit var dialog: AlertDialog
     lateinit var mContext: Context
     lateinit var groupKey: String
-    lateinit var adminKey: String
+    private lateinit var adminKey: String
+    lateinit var adapter: FriendMemberAdapter
+    private var arrMember: MutableList<String> = arrayListOf()
+    private var arrCkecked: MutableList<Boolean> = arrayListOf()
     @Inject
     lateinit var mPresenter: FriendAddingPresenter
 
@@ -43,6 +52,7 @@ class FriendAddingDialog() : DialogFragment(), FriendAddingView {
         this.adminKey = adminKey
         injectDependency()
         mPresenter.receiveFriendData(FirebaseAuth.getInstance().currentUser!!.uid)
+//        mPresenter.receiveCurrentMemberData(adminKey, groupKey)
     }
 
     private fun injectDependency() {
@@ -73,6 +83,7 @@ class FriendAddingDialog() : DialogFragment(), FriendAddingView {
 
     private fun initViews(view: View?) {
         view!!.recyclerViewFriend.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
-
+        adapter = FriendMemberAdapter(arrMember, arrCkecked, adminKey, groupKey)
+        view!!.recyclerViewFriend.adapter = adapter
     }
 }

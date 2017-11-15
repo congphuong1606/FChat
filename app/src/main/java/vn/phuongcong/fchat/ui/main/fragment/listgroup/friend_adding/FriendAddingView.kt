@@ -5,4 +5,5 @@ package vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding
  */
 interface FriendAddingView {
     fun showFriend(friendId: String)
+    fun showMember(arrCurrentMember: MutableList<String>)
 }

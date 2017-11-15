@@ -23,7 +23,7 @@ import java.util.*
 /**
  * Created by vietcoscc on 01/11/2017.
  */
-class ChatGroupAdapter(var arrMessage: ArrayList<Message>, var arrMessageKey: ArrayList<String>, var adminKey: String, var groupKey: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatGroupAdapter(private var arrMessage: ArrayList<Message>, private var arrMessageKey: ArrayList<String>, private var adminKey: String, private var groupKey: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         var v = LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_group, parent, false)
         return ChatGroupViewHolder(v)

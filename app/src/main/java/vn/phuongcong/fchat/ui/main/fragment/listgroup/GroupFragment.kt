@@ -100,7 +100,7 @@ class GroupFragment : BaseFragment, GroupView {
     override fun onDestroyComposi() {
     }
 
-    fun showNameDialog() {
+    private fun showNameDialog() {
         var edtGroupName = EditText(context)
 
         var builder: AlertDialog.Builder = AlertDialog.Builder(context)

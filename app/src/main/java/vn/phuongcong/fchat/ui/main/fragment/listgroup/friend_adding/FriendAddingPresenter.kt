@@ -3,6 +3,7 @@ package vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import vn.phuongcong.fchat.common.utils.DatabaseRef
 import javax.inject.Inject
 
@@ -33,6 +34,27 @@ class FriendAddingPresenter @Inject constructor(var friendAddingView: FriendAddi
 
             override fun onChildRemoved(p0: DataSnapshot?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
+    }
+
+    fun receiveCurrentMemberData(adminKey: String, groupKey: String) {
+        DatabaseRef.groupMemberRef(adminKey).child(groupKey).addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                if (p0!!.exists()) {
+                    var arrMember: MutableList<String> = arrayListOf()
+                    var arrDatasnapshot: Iterable<DataSnapshot> = p0.children
+                    for (member in arrDatasnapshot!!) {
+                        var uid = member.getValue(String::class.java)
+                        arrMember.add(uid!!)
+
+                    }
+                    friendAddingView.showMember(arrMember)
+                }
             }
         })
     }

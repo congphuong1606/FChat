@@ -27,7 +27,7 @@ import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAdding
 /**
  * Created by vietcoscc on 10/20/2017.
  */
-class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick: IitemClick) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private var onItemClick: IitemClick) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var context: Context
 
 
@@ -50,44 +50,38 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
 
     class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
-        lateinit var uid: String
         fun bind(group: Group, onItemClick: IitemClick) {
             itemView.setOnClickListener {
                 onItemClick.iClick(position, null)
             }
-            uid = FirebaseAuth.getInstance().currentUser!!.uid
+
             itemView.ivAddMember.setOnClickListener {
                 var activity: AppCompatActivity = itemView.context as AppCompatActivity
                 FriendAddingDialog(itemView.context, "", "").show(activity.fragmentManager, "")
             }
+
             itemView.tvGroupName.text = group.groupName
             itemView.tvTimeStamp.text = group.timeStamp
             itemView.ivAvatar.shape = MultiImageView.Shape.CIRCLE
-            DatabaseRef.userInfoRef(group.adminKey).addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError?) {
-
-                }
-
-                override fun onDataChange(p0: DataSnapshot?) {
-                    var user: User = p0!!.getValue(User::class.java)!!
-                    itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
-                    if (user.avatar == null) {
-                        Toast.makeText(itemView.context, "Null", Toast.LENGTH_SHORT).show()
-                        return
-                    }
-                    Thread {
-                        var bm: Bitmap = Picasso.with(itemView.context).load(user.avatar).get()
-                        runOnUiThread {
-                            itemView.ivAvatar.addImage(bm)
-                        }
-                    }.start()
-                }
-            })
-            DatabaseRef.groupMemberRef(uid).addChildEventListener(object : ChildEventListener {
+//            DatabaseRef.userInfoRef(group.adminKey).addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onCancelled(p0: DatabaseError?) {
+//
+//                }
+//
+//                override fun onDataChange(p0: DataSnapshot?) {
+//                    var user: User = p0!!.getValue(User::class.java)!!
+//                    itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
+//                    if (user.avatar == null) {
+//                        Toast.makeText(itemView.context, "Null", Toast.LENGTH_SHORT).show()
+//                        return
+//                    }
+//
+//                }
+//            })
+            DatabaseRef.groupMemberRef(group.adminKey).child(group.groupKey).addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                     var uid: String = p0!!.getValue(String::class.java)!!
-                    DatabaseRef.userInfoRef(uid).addValueEventListener(object : ValueEventListener {
+                    DatabaseRef.userInfoRef(uid).addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError?) {
 
                         }
@@ -95,7 +89,12 @@ class GroupAdapter constructor(var arrGorup: ArrayList<Group>?, var onItemClick:
                         override fun onDataChange(p0: DataSnapshot?) {
                             var user: User = p0!!.getValue(User::class.java)!!
                             itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
-
+                            Thread {
+                                var bm: Bitmap = Picasso.with(itemView.context).load(user.avatar).get()
+                                runOnUiThread {
+                                    itemView.ivAvatar.addImage(bm)
+                                }
+                            }.start()
                         }
                     })
                 }

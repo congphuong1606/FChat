@@ -5,6 +5,7 @@ import com.google.firebase.database.*
 import vn.phuongcong.fchat.model.Group
 import vn.phuongcong.fchat.common.utils.DatabaseRef
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.groupInfoRef
+import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.groupMemberRef
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.othersGroupInfoRef
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.ownGroupInfoRef
 import javax.inject.Inject
@@ -85,10 +86,17 @@ class GroupPresenter @Inject constructor(
     }
 
     fun createGroup(group: Group) {
-        DatabaseRef.ownGroupInfoRef(mAuth.currentUser!!.uid).push().setValue(group).addOnSuccessListener {
-            groupView.showToast("Susscessful ")
-        }.addOnFailureListener {
-            groupView.showToast("Failed ")
-        }
+        var groupKey = ownGroupInfoRef(mAuth.currentUser!!.uid).push().key
+        ownGroupInfoRef(mAuth.currentUser!!.uid)
+                .child(groupKey).setValue(group)
+                .addOnSuccessListener {
+                    groupMemberRef(mAuth.currentUser!!.uid)
+                            .child(groupKey).child(mAuth.currentUser!!.uid)
+                            .setValue(mAuth.currentUser!!.uid)
+                    groupView.showToast("Susscessful ")
+                }
+                .addOnFailureListener {
+                    groupView.showToast("Failed ")
+                }
     }
 }
