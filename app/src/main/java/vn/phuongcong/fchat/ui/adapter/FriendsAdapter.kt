@@ -44,6 +44,7 @@ class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick
             var friendName = itemView.findViewById<TextView>(R.id.tvFriendName)
             var imvLight = itemView.findViewById<ImageView>(R.id.imvlight)
             var tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
+
             var timeStamp=friend.timeStamp
             if(timeStamp!=0L ){
                 if(((System.currentTimeMillis() - timeStamp) > Contans.TIME_TO_OFFLINE)){

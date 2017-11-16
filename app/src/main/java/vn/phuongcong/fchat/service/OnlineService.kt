@@ -31,9 +31,7 @@ class OnlineService : Service() {
             override fun onTick(l: Long) {
                 updateUserTimeStamp(applicationContext)
             }
-
             override fun onFinish() {
-
             }
         }
         updateOnline.start()
@@ -45,7 +43,7 @@ class OnlineService : Service() {
             var dbReference=FirebaseDatabase.getInstance().reference
             val uId = sPref.getString(Contans.PRE_USER_ID,"")
             if (uId != "") {
-                dbReference.child(Contans.USERS_PATH).child(uId).child(Contans.TIME_STAMP).setValue(System.currentTimeMillis());
+                dbReference.child(Contans.USERS_PATH).child(uId).child(Contans.TIME_STAMP).setValue(System.currentTimeMillis())
             }
         }
     }

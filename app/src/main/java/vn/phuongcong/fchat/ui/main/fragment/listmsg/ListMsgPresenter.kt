@@ -47,6 +47,7 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
     private fun getListMessageLastByUid(listUid: MutableList<String>) {
         var listMessagelast: MutableList<Messagelast> = mutableListOf()
 
+
         for (idFriend in listUid) {
             databaseReference.child(Contans.MESSAGE_LASTS)!!.child(uid).child(idFriend).addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError?) {
@@ -54,11 +55,14 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot?) {
-
-                    listMessagelast.add(dataSnapshot!!.getValue(Messagelast::class.java)!!)
-                    if(listMessagelast.size==listUid.size){
-                        listMsgView.onLoadListMessagelast(listMessagelast)
+                    for (chil in dataSnapshot!!.children){
+                        var messageLast:Messagelast= chil.getValue(Messagelast::class.java)!!
+                        listMessagelast.add(messageLast)
                     }
+
+                   // if(listMessagelast.size==listUid.size){
+                        listMsgView.onLoadListMessagelast(listMessagelast)
+                  //  }
 
                 }
             })

@@ -3,6 +3,8 @@ package vn.phuongcong.fchat
 
 import android.app.ProgressDialog
 import android.content.SharedPreferences
+import android.view.MotionEvent
+import android.view.View
 import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*

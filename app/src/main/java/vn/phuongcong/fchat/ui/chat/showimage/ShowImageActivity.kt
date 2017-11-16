@@ -14,6 +14,9 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 class ShowImageActivity : BaseActivity(), ChatView {
+    override fun getAvatarUserSendSuccess(image: String) {
+
+    }
 
 
     override fun sendAudioSuccess(downloadUrl: String) {

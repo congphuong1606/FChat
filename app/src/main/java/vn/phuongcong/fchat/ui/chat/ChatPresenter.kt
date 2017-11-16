@@ -33,11 +33,11 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     private var uid = mAuth.currentUser!!.uid
     private var messages: MutableList<Message> = mutableListOf()
 
-    fun getListChat(mChatItem: Chat,start:Int, end:Int  ) {
+    fun getListChat(mChatItem: Chat, start: Int, end: Int) {
         //Todo mType=0: textSend, mType=3: ImageSend, mType=1: textReceiver, mType=2: ImageReceiver
         if (uid != "" && mChatItem != null) {
             //.orderByChild("timeCreate").startAt(start.toDouble()).endAt(end.toDouble()).limitToFirst(end)
-            databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).orderByChild("timeCreate").startAt(start.toDouble()).limitToFirst(end).addChildEventListener(object : ChildEventListener {
+            databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).addChildEventListener(object : ChildEventListener {
                 override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
@@ -49,19 +49,26 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 override fun onChildAdded(dataSnapshot: DataSnapshot?, p1: String?) {
 
                     var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
-                    if (!message.content.isNullOrEmpty()) {
-                        message.mType = 0
+                    if (message.mType == 1) {
+                        message.mType = 6
                         messages.add(message)
                         chatView.getListMessageSuccess(messages)
-                    } else {
-                        if (!message.msgImage!!.isEmpty()) {
-                            message.mType = 3
+                    }
+                    if (message.mType == 0) {
+                        if (!message.content.isNullOrEmpty()) {
+                            message.mType = 0
                             messages.add(message)
                             chatView.getListMessageSuccess(messages)
                         } else {
-                            message.mType = 4
-                            messages.add(message)
-                            chatView.getListMessageSuccess(messages)
+                            if (!message.msgImage!!.isEmpty()) {
+                                message.mType = 3
+                                messages.add(message)
+                                chatView.getListMessageSuccess(messages)
+                            } else {
+                                message.mType = 4
+                                messages.add(message)
+                                chatView.getListMessageSuccess(messages)
+                            }
                         }
                     }
                 }
@@ -73,9 +80,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 override fun onCancelled(dataError: DatabaseError?) {
                 }
             })
-
-
-            databaseReference.child(Contans.CHAT).child(mChatItem.uIdFriend).child(uid).orderByChild("timeCreate").startAt(start.toDouble()).limitToFirst(end).addChildEventListener(object : ChildEventListener {
+            databaseReference.child(Contans.CHAT).child(mChatItem.uIdFriend).child(uid).addChildEventListener(object : ChildEventListener {
                 override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
 
                 }
@@ -90,19 +95,26 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot?, p1: String?) {
                     var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
-                    if (!message.content.isNullOrEmpty()) {
-                        message.mType = 1
+                    if (message.mType == 1) {
+                        message.mType = 7
                         messages.add(message)
                         chatView.getListMessageSuccess(messages)
-                    } else {
-                        if (!message.msgImage!!.isEmpty()) {
-                            message.mType = 2
+                    }
+                    if (message.mType == 0) {
+                        if (!message.content.isNullOrEmpty()) {
+                            message.mType = 1
                             messages.add(message)
                             chatView.getListMessageSuccess(messages)
                         } else {
-                            message.mType = 5
-                            messages.add(message)
-                            chatView.getListMessageSuccess(messages)
+                            if (!message.msgImage!!.isEmpty()) {
+                                message.mType = 2
+                                messages.add(message)
+                                chatView.getListMessageSuccess(messages)
+                            } else {
+                                message.mType = 5
+                                messages.add(message)
+                                chatView.getListMessageSuccess(messages)
+                            }
                         }
                     }
                 }
@@ -118,7 +130,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
         var message = Message(uid, messagetext, mutableListOf(), DateTimeUltil.getTimeCurrent(), null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
 
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext, null, null)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -176,7 +188,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     fun sendMessageImage(linkImage: MutableList<String>, mChatItem: Chat) {
         var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent(), null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", linkImage, null)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), Contans.HINH_ANH)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -187,7 +199,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
         linkImage.add(downloadUrl!!)
         var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent(), null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", linkImage, null)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), Contans.HINH_ANH)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -210,8 +222,12 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     fun sendsticker(code: String, mChatItem: Chat) {
-        var message = Message(uid, null, mutableListOf(), DateTimeUltil.getTimeCurrent(), null)
+        var message = Message(uid, code, mutableListOf(), DateTimeUltil.getTimeCurrent(), null, 1)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
+
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), Contans.STICKER)
+        databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
+        databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
 
     fun senAudio(audioPath: String, mChatItem: Chat) {
@@ -236,39 +252,24 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     fun saveAudioFirebase(audio: String?, mChatItem: Chat) {
         var message = Message(uid, null, null, DateTimeUltil.getTimeCurrent(), audio)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), "", null, audio)
+        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), Contans.AM_THANH as String?)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
 
-    fun getAvatarUserSend(): String {
+    fun getAvatarUserSend() {
         var image: String = ""
-        databaseReference.child(Contans.USERS_PATH).child(uid).child(Contans.AVATAR).addChildEventListener(object : ChildEventListener, ValueEventListener {
+        databaseReference.child(Contans.USERS_PATH).child(uid).child(Contans.AVATAR).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(data: DataSnapshot?) {
                 image = data!!.getValue().toString()
+                chatView.getAvatarUserSendSuccess(image)
             }
 
             override fun onCancelled(p0: DatabaseError?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
-            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildChanged(data: DataSnapshot?, p1: String?) {
-                image = data!!.getValue().toString()
-            }
-
-            override fun onChildAdded(data: DataSnapshot?, p1: String?) {
-                image = data!!.getValue().toString()
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
         })
-        return image
+
     }
 
     fun playAudio(linkAudio: String, imgPlayPause: ImageView) {

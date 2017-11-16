@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.item_text_receiver.view.*
 import kotlinx.android.synthetic.main.item_text_send.view.*
 import kotlinx.android.synthetic.main.item_image_receiver.view.*
 import kotlinx.android.synthetic.main.item_image_send.view.*
+import kotlinx.android.synthetic.main.item_sticker_receiver.view.*
+import kotlinx.android.synthetic.main.item_sticker_send.view.*
 import vc908.stickerfactory.StickersManager
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.utils.DateTimeUltil
@@ -58,6 +60,10 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
             viewHolder = ChatItemViewHolderSendAudio(LayoutInflater.from(parent!!.context).inflate(R.layout.item_audio_send, parent, false))
         if (viewType == LEFT_AUDIO)
             viewHolder = ChatItemViewHolderReceiverAudio(LayoutInflater.from(parent!!.context).inflate(R.layout.item_audio_receiver, parent, false))
+        if (viewType == RIGHT_STICKER)
+            viewHolder = ChatItemViewHolderSendSticker(LayoutInflater.from(parent!!.context).inflate(R.layout.item_sticker_send, parent, false))
+        if (viewType == LEFT_STICKER)
+            viewHolder = ChatItemViewHolderReceiverSticker(LayoutInflater.from(parent!!.context).inflate(R.layout.item_sticker_receiver, parent, false))
 
         return viewHolder!!
     }
@@ -116,6 +122,23 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
 
             }
         }
+
+        if (holder is ChatItemViewHolderSendSticker) {
+            if (mMessage != null && mMessage.size > 0) {
+                mMessage.sortBy { message: Message -> message.timeCreate.toLong() }
+                var messageReceiver = mMessage.get(position)
+                holder.bindSendSticker(messageReceiver, mContext, isend,mImgUserSend)
+
+            }
+        }
+        if (holder is ChatItemViewHolderReceiverSticker) {
+            if (mMessage != null && mMessage.size > 0) {
+                mMessage.sortBy { message: Message -> message.timeCreate.toLong() }
+                var messageReceiver = mMessage.get(position)
+                holder.bindReceiverSticker(messageReceiver, mContext, isend, chatItem, mImgUserSend)
+
+            }
+        }
     }
 
     // MessageText
@@ -164,7 +187,10 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
     //Message Audio
 
     class ChatItemViewHolderSendAudio(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+
         fun bindSendAudio(message: Message, mContext: Context, isend: Isend, mImgUserSend: String) {
+           itemView.txt_time_send_audio.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+            Glide.with(mContext).load(mImgUserSend).into(itemView.img_avatar_send_audio)
             try {
                 val player = MediaPlayer.create(mContext, Uri.parse(message.audio))
                 itemView.txt_time_duration_send.text = DateTimeUltil.fotmatTime(player.duration.toLong(), DateTimeUltil.mTimeSFormat)
@@ -172,7 +198,7 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
             } catch (ex: Exception) {
 
             }
-            itemView.txt_time_send_audio.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+
             itemView.setOnClickListener {
                 isend.sendDataAudio(message.audio!!, itemView.img_play_pause)
             }
@@ -183,6 +209,7 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
 
         fun bindReceiverAudio(message: Message, mContext: Context, isend: Isend, chatItem: Chat, mImgUserSend: String) {
             itemView.txt_time_receiver_audio.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+            Glide.with(mContext).load(mImgUserSend).into(itemView.img_avatar_receive_audio)
             try {
                 val player = MediaPlayer.create(mContext, Uri.parse(message.audio))
                 itemView.txt_time_duration_receiver.text = DateTimeUltil.fotmatTime(player.duration.toLong(), DateTimeUltil.mTimeSFormat)
@@ -197,6 +224,33 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
         }
     }
 
+    // sticker
+
+    class ChatItemViewHolderSendSticker(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+
+        fun bindSendSticker(message: Message, mContext: Context, isend: Isend, mImgUserSend: String) {
+            itemView.txt_time_sticker.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+            Glide.with(mContext).load(mImgUserSend).into(itemView.img_avatar_sticker_send)
+            StickersManager.with(mContext)
+                    .loadSticker(message.content)
+                    .into(itemView.img_sticker_send)
+        }
+    }
+
+    class ChatItemViewHolderReceiverSticker(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+
+        fun bindReceiverSticker(message: Message, mContext: Context, isend: Isend, chatItem: Chat, mImgUserSend: String) {
+            itemView.txt_time_sticker_receiver.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
+            Glide.with(mContext).load(mImgUserSend).into(itemView.img_sticker_receiver)
+            Glide.with(mContext).load(mImgUserSend).into(itemView.img_avatar_sticker_send)
+            StickersManager.with(mContext)
+                    .loadSticker(message.content)
+                    .into(itemView.img_sticker_receiver)
+        }
+
+
+    }
+
     override fun getItemViewType(position: Int): Int {
         if (mMessage.get(position).mType == RIGHT_TEXT)
             return RIGHT_TEXT
@@ -208,6 +262,8 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
             return RIGHT_IMAGE
         else if (mMessage.get(position).mType == LEFT_AUDIO)
             return LEFT_AUDIO
+        else if (mMessage.get(position).mType == RIGHT_AUDIO)
+            return RIGHT_AUDIO
         else if (mMessage.get(position).mType == LEFT_STICKER)
             return LEFT_STICKER
         else
@@ -215,9 +271,5 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
 
     }
 
-    private fun loadSticker(convertView: ImageView, message: String) {
-        StickersManager.with(mContext)
-                .loadSticker(message)
-                .into(convertView)
-    }
+
 }

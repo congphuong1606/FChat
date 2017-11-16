@@ -90,6 +90,7 @@ object Contans {
     val GROUP_FRAGMENT: Int=2
     val MSG_FRAGMENT: Int=0
     val FRIEND_FRAGMENT: Int=1
-    val AM_THANH: CharSequence?="[Tin nhắn thoại]"
+    val AM_THANH: String?="[Tin nhắn thoại]"
     val AVATAR: String?="avatar"
+    val STICKER: String?="[STICKER]"
 }

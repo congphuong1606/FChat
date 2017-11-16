@@ -40,7 +40,6 @@ class DateTimeUltil {
                         timeString = "$totaldate ngày trước "
                     }
                 }
-
             }
             return timeString!!
         }

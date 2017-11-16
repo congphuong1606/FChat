@@ -56,7 +56,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private lateinit var mLinkImageAdapter: LinkImageAdapter
     private var count = 0
     private lateinit var mChatItem: Chat
-    private lateinit var mImgUserSend: String
+    private  var mImgUserSend: String=""
 
     companion object {
         private val REQUEST_RECORD_AUDIO = 0
@@ -104,9 +104,10 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         if (intent.getSerializableExtra(Contans.CHAT_ITEM) != null) {
             mChatItem = intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
         }
-        mImgUserSend = mChatPresenter.getAvatarUserSend()
+        mChatPresenter.getAvatarUserSend()
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
         mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this, chatItem = mChatItem, mImgUserSend = mImgUserSend)
+
         rc_chat.apply {
             setHasFixedSize(true)
             adapter = mChatAdapter
@@ -114,15 +115,16 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
 
 
-        mChatPresenter.getListChat(mChatItem, 0,5)
+        mChatPresenter.getListChat(mChatItem, 0, 5)
+
         addEvent()
         sticker()
 
     }
 
     override fun onRefresh() {
-        mMessages.clear()
-        mChatPresenter.getListChat(mChatItem, 6,5)
+        //  mMessages.clear()
+        //  mChatPresenter.getListChat(mChatItem, 6,5)
         sr_load_more.isRefreshing = false
     }
 
@@ -148,7 +150,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
                 .setStickersKeyboardLayout(stickersLayout)
                 .setStickersFragment(stickersFragment)
                 .setStickersFrame(sticker_frame)
-                // .setContentContainer(chat_content)
+                .setContentContainer(chat_content)
                 .setStickersButton(btn_stickers)
                 .setChatEdit(edt_input_message)
                 // .setSuggestContainer(rc_chat)
@@ -409,5 +411,10 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     override fun isStop(imgPlayPause: ImageView) {
         imgPlayPause.setImageResource(R.drawable.ic_stop)
+    }
+
+    override fun getAvatarUserSendSuccess(image: String) {
+        mChatAdapter.mImgUserSend = image
+        mChatAdapter.notifyDataSetChanged()
     }
 }

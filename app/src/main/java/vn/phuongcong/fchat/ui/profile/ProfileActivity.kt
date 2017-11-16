@@ -178,7 +178,7 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
         if (bitmap != null) {
             val imgB = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 60, imgB)
-            newAvatar=imgB.toByteArray();
+            newAvatar=imgB.toByteArray()
             showDialogConfirm(Contans.CF_CHANGE_AVATAR,Contans.REQUEST_CONFRIM_CHANGE_AVATAR)
 
         }

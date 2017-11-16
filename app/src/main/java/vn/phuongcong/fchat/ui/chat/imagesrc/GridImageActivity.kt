@@ -167,4 +167,7 @@ class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickList
     override fun sendAudioSuccess(downloadUrl: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+    override fun getAvatarUserSendSuccess(image: String) {
+
+    }
 }
