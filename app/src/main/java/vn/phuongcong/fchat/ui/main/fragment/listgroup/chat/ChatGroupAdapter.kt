@@ -1,5 +1,7 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup.chat
 
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -15,11 +18,12 @@ import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.common.utils.DatabaseRef
+import java.util.*
 
 /**
  * Created by vietcoscc on 01/11/2017.
  */
-class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatGroupAdapter(var arrMessage: ArrayList<Message>, var arrMessageKey: ArrayList<String>, var adminKey: String, var groupKey: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         var v = LayoutInflater.from(parent!!.context).inflate(R.layout.item_chat_group, parent, false)
         return ChatGroupViewHolder(v)
@@ -31,21 +35,31 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         var chatGroupViewHolder: ChatGroupViewHolder = holder as ChatGroupViewHolder
-        chatGroupViewHolder.bindView(arrMessage[position])
+        chatGroupViewHolder.bindView(arrMessage[position], arrMessageKey[position], adminKey, groupKey)
     }
 
     class ChatGroupViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(message: Message) {
-           /* if (!TextUtils.isEmpty(message.msgImage)) {
-                itemView.visibility = View.VISIBLE
-                Glide.with(itemView.context).load(message.msgImage).into(itemView.ivImage)
+        var arrImage = arrayListOf<String>()
+        lateinit var imageAdapter: ImageAdapter
+        fun bindView(message: Message, messageKey: String, adminKey: String, groupKey: String) {
+
+            if (message.msgImage!!.size > 0) {
+                itemView.recyclerViewImage.visibility = View.VISIBLE
+                if (message.msgImage!!.size == 1) {
+                    itemView.recyclerViewImage.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
+                } else {
+                    itemView.recyclerViewImage.layoutManager = GridLayoutManager(itemView.context, 2)
+                }
+                itemView.recyclerViewImage.adapter = ImageAdapter(arrImage)
             } else {
-                itemView.visibility = View.INVISIBLE
-            }*/
+                itemView.recyclerViewImage.visibility = View.INVISIBLE
+            }
+            imageAdapter = ImageAdapter(message.msgImage!!)
+            itemView.recyclerViewImage.adapter = imageAdapter
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate
             DatabaseRef.userInfoRef(FirebaseAuth.getInstance().currentUser!!.uid)
-                    .addValueEventListener(object : ValueEventListener {
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError?) {
 
                         }
@@ -53,10 +67,10 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
                         override fun onDataChange(p0: DataSnapshot?) {
                             if (p0!!.exists()) {
                                 var user: User = p0!!.getValue(User::class.java)!!
-                                if (TextUtils.isEmpty(user.avatar)) {
+                                if (!TextUtils.isEmpty(user.avatar)) {
                                     Glide.with(itemView.context).load(user.avatar).into(itemView.ivAvatar)
                                 }
-                                if (TextUtils.isEmpty(user.name)) {
+                                if (!TextUtils.isEmpty(user.name)) {
                                     itemView.tvDisplayName.text = user.name
                                 }
                             }
@@ -65,13 +79,15 @@ class ChatGroupAdapter(var arrMessage: ArrayList<Message>) : RecyclerView.Adapte
         }
     }
 
-    fun addItem(message: Message) {
+    fun addItem(message: Message, key: String) {
         arrMessage.add(message)
+        arrMessageKey.add(key)
         notifyItemInserted(arrMessage.size - 1)
     }
 
     fun removeItem(position: Int) {
         arrMessage.removeAt(position)
+        arrMessageKey.removeAt(position)
         notifyItemRemoved(position)
     }
 }

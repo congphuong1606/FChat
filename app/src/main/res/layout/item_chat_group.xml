@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/default_padding"
-    android:weightSum="10">
+    android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -15,14 +13,14 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvatar"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:layout_height="50dp"
+            android:maxHeight="@dimen/dimen_100dp"
+            android:layout_weight="2"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="8"
             android:orientation="vertical">
 
@@ -49,9 +47,9 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivImage"
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:id="@+id/recyclerViewImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -4,14 +4,17 @@ import dagger.Subcomponent
 import vn.phuongcong.fchat.LoginActivity
 import vn.phuongcong.fchat.RegisActivity
 import vn.phuongcong.fchat.di.module.SharedPreference
+
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.di.scope.ActivityScope
-import vn.phuongcong.fchat.ui.chat.ChatActivity
-import vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity
 import vn.phuongcong.fchat.ui.main.MainActivity
+import vn.phuongcong.fchat.ui.chat.ChatActivity
+import vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity
+import vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupFragment
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAddingDialog
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
 import vn.phuongcong.fchat.ui.profile.ProfileActivity
 import vn.phuongcong.fchat.ui.splash.SplashActivity
@@ -29,9 +32,10 @@ interface SubComponent {
     fun injectTo(msgFragment: MsgFragment)
     fun injectTo(profileActivity: ProfileActivity)
     fun injectTo(splashActivity: SplashActivity)
+    fun injectTo(chatActivity: ChatActivity)
+    fun injectTo(gridImageActivity: GridImageActivity)
     fun injectTo(chatGroupActivity: ChatGroupActivity)
     fun injectTo(mainActivity: MainActivity)
-    fun injectTo(chatActivity: ChatActivity)
     fun injectTo(showImageActivity: ShowImageActivity)
-
+    fun injectTo(friendAddingDialog: FriendAddingDialog)
 }

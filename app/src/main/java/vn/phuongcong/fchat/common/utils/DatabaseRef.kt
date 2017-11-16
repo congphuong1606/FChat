@@ -19,37 +19,32 @@ class DatabaseRef {
         val ADMIN_KEY = "ADMIN_KEY"
         val GROUP_KEY = "GROUP_KEY"
         var databaseRef: DatabaseReference = FirebaseDatabase.getInstance().reference
-        //
-        fun groupRef(): DatabaseReference {
-            return databaseRef.child(GROUP)
-        }
+        // Friend
+        val FRIEND = "FRIEND"
 
-        fun groupInfoRef(uid: String): DatabaseReference {
-            return groupRef().child(GROUP_BASIC_INFO).child(uid)
-        }
+        fun groupRef(): DatabaseReference = databaseRef.child(GROUP)
 
-        fun ownGroupInfoRef(uid: String): DatabaseReference {
-            return groupRef().child(GROUP_BASIC_INFO).child(uid).child(OWN)
-        }
+        fun groupInfoRef(uid: String): DatabaseReference =
+                groupRef().child(GROUP_BASIC_INFO).child(uid)
 
-        fun othersGroupInfoRef(uid: String): DatabaseReference {
-            return groupRef().child(GROUP_BASIC_INFO).child(uid).child(OTHERS)
-        }
+        fun ownGroupInfoRef(uid: String): DatabaseReference =
+                groupRef().child(GROUP_BASIC_INFO).child(uid).child(OWN)
 
-        fun groupContentRef(uid: String): DatabaseReference {
-            return groupRef().child(GROUP_CHAT_CONTENT).child(uid)
-        }
+        fun othersGroupInfoRef(uid: String): DatabaseReference =
+                groupRef().child(GROUP_BASIC_INFO).child(uid).child(OTHERS)
 
-        fun groupMemberRef(uid: String): DatabaseReference {
-            return groupRef().child(GROUP_MEMBER).child(uid)
-        }
+        fun groupContentRef(uid: String): DatabaseReference =
+                groupRef().child(GROUP_CHAT_CONTENT).child(uid)
 
-        fun userRef(): DatabaseReference {
-            return databaseRef.child(USER)
-        }
+        fun groupMemberRef(uid: String): DatabaseReference =
+                groupRef().child(GROUP_MEMBER).child(uid)
 
-        fun userInfoRef(uid: String): DatabaseReference {
-            return userRef().child(uid)
-        }
+        fun userRef(): DatabaseReference = databaseRef.child(USER)
+
+        fun userInfoRef(uid: String): DatabaseReference = userRef().child(uid)
+
+        fun friendRef(): DatabaseReference = databaseRef.child(FRIEND)
+
+        fun friendInfoRef(uid: String): DatabaseReference = friendRef().child(uid)
     }
 }

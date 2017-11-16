@@ -10,6 +10,7 @@ import vn.phuongcong.fchat.ui.chat.ChatView
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupView
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAddingView
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.ListMsgView
 import vn.phuongcong.fchat.ui.profile.ProfileView
 import vn.phuongcong.fchat.ui.regis.RegisView
@@ -30,8 +31,11 @@ class ViewModule {
     lateinit var splashView: SplashView
     lateinit var chatGroupView: ChatGroupView
     lateinit var mainView: MainView
+    lateinit var friendAddingView: FriendAddingView
 
-
+    @Provides
+    @ActivityScope
+    fun provideFriendAddingView(): FriendAddingView = friendAddingView
 
     @Provides
     @ActivityScope
@@ -64,6 +68,7 @@ class ViewModule {
     @Provides
     @ActivityScope
     fun provideSplashView(): SplashView = splashView
+
     @Provides
     @ActivityScope
     fun provideMainView(): MainView = mainView
@@ -72,6 +77,10 @@ class ViewModule {
     @Provides
     @ActivityScope
     fun provideChatGroupView(): ChatGroupView = chatGroupView
+
+    constructor(friendAddingView: FriendAddingView){
+        this.friendAddingView = friendAddingView
+    }
 
     constructor(loginView: LoginView) {
         this.loginView = loginView
@@ -105,16 +114,15 @@ class ViewModule {
     constructor(splashView: SplashView) {
         this.splashView = splashView
     }
+
     constructor(chatGroupView: ChatGroupView) {
         this.chatGroupView = chatGroupView
     }
 
-    constructor(mainView: MainView){
-        this.mainView=mainView
+    constructor(mainView: MainView) {
+        this.mainView = mainView
 
     }
-
-
 
 
 }
