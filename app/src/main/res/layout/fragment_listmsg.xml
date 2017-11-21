@@ -6,10 +6,16 @@
     android:paddingRight="@dimen/fab_margin"
     tools:context="vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rc_list_msg"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sr_load_chat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rc_list_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

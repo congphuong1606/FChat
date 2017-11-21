@@ -6,12 +6,14 @@
     android:background="@drawable/border_image">
 
     <ImageView
+        android:scaleType="fitXY"
         android:id="@+id/img_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/ic_image" />
 
     <ImageView
+
         android:id="@+id/img_check"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

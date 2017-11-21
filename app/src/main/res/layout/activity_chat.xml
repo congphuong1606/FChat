@@ -1,30 +1,35 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<vc908.stickerfactory.ui.view.StickersKeyboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sizeNotifierLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chat.ChatActivity">
+    android:background="@color/chat_bg">
 
     <RelativeLayout
+        android:id="@+id/chat_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="@dimen/dimen_5dp"
         android:windowSoftInputMode="adjustPan|adjustResize">
 
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/sr_load_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rl1">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_chat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/rl1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:paddingLeft="@dimen/dimen_10dp"
-                android:paddingRight="@dimen/dimen_10dp">
+                android:paddingRight="@dimen/dimen_10dp"></android.support.v7.widget.RecyclerView>
 
-            </android.support.v7.widget.RecyclerView>
-
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 
         <LinearLayout
@@ -51,13 +56,13 @@
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_voice" />
 
-                <ImageView
-                    android:id="@+id/img_emoticon"
+                <vc908.stickerfactory.ui.view.BadgedStickersButton
+                    android:id="@+id/btn_stickers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingLeft="@dimen/dimen_10dp"
-                    android:src="@drawable/ic_emoticon" />
+                    android:layout_marginLeft="@dimen/dimen_10dp"
+                    android:background="@drawable/ic_emoticon" />
 
                 <ImageView
                     android:id="@+id/btn_send_image"
@@ -69,6 +74,7 @@
 
 
                 <EditText
+                    android:focusable="auto"
                     android:id="@+id/edt_input_message"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_30dp"
@@ -99,4 +105,11 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/sticker_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/red"/>
+</vc908.stickerfactory.ui.view.StickersKeyboardLayout>

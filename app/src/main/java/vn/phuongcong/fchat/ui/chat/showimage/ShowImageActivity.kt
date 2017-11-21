@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.chat.showimage
 
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_show_image.*
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
@@ -13,7 +14,15 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 class ShowImageActivity : BaseActivity(), ChatView {
-    @Inject
+    override fun getAvatarUserSendSuccess(image: String) {
+
+    }
+
+
+    override fun sendAudioSuccess(downloadUrl: String) {
+
+    }
+@Inject
     lateinit var mChatPresenter: ChatPresenter
     private lateinit var mChatItem: Chat
     private lateinit var mShowImageAdapter: ShowImageAdapter
@@ -34,7 +43,7 @@ class ShowImageActivity : BaseActivity(), ChatView {
         indicator.setViewPager(pager)
 
         //listPath=    mChatPresenter.getAllLinkImage(mChatItem)
-        mChatPresenter.getListChat(mChatItem)
+        mChatPresenter.getListChat(mChatItem,"","")
 
     }
 
@@ -88,6 +97,12 @@ class ShowImageActivity : BaseActivity(), ChatView {
     override fun onClick() {
 
     }
+    override fun isPlaying(imgPlayPause: ImageView) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
+    override fun isStop(imgPlayPause: ImageView) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }

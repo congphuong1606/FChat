@@ -21,7 +21,8 @@ import javax.inject.Inject
 
 class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickListener {
 
-    @Inject
+
+
     lateinit var mChatPresenter: ChatPresenter
     private var mListImage: MutableList<String> = mutableListOf()
     private lateinit var mImageAdapter: GridImageAdapter
@@ -32,7 +33,7 @@ class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickList
         get() = R.layout.activity_grid_image
 
     override fun injectDependence() {
-        App().get(this).plus(ViewModule(this)).injectTo(this)
+//        App().get(this).plus(ViewModule(this)).injectTo(this)
     }
 
     override fun initData() {
@@ -43,7 +44,7 @@ class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickList
         gr_image.apply {
             adapter = mImageAdapter
         }
-        mChatPresenter.getListImage(this)
+//        mChatPresenter.getListImage(this)
         addEvent()
     }
 
@@ -155,5 +156,18 @@ class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickList
         startActivity(intent)
         finish()
     }
+    override fun isPlaying(imgPlayPause: ImageView) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
+    override fun isStop(imgPlayPause: ImageView) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun sendAudioSuccess(downloadUrl: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    override fun getAvatarUserSendSuccess(image: String) {
+
+    }
 }

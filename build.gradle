@@ -24,6 +24,7 @@ allprojects {
         maven {
             url "https://maven.google.com" // Google's Maven repository
         }
+        maven { url  'http://maven.stickerpipe.com/artifactory/stickerfactory' }
     }
 }
 

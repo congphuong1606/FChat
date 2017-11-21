@@ -83,12 +83,12 @@ class GroupFragment : BaseFragment, GroupView {
 
     fun initViews(v: View) {
         recylerView = v.rcvListGroup
-        fab = v.fabCreateGroup
+   //    fab = v.fabCreateGroup
         recylerView.adapter = groupAdapter
         recylerView.layoutManager = GridLayoutManager(v!!.context, 2)
-        fab.setOnClickListener({
+       /* fab.setOnClickListener({
             showNameDialog()
-        })
+        })*/
     }
 
     override val LayoutId: Int
@@ -106,6 +106,7 @@ class GroupFragment : BaseFragment, GroupView {
     }
 
     override fun onDestroyComposi() {
+
     }
 
     private fun showNameDialog() {

@@ -17,10 +17,10 @@ import vn.phuongcong.fchat.common.utils.DateTimeUltil
  * Created by Ominext on 10/20/2017.
  */
 class ListMessageAdapter(var mListMessage: MutableList<Chat>, var mIChat:
-IChat,var mListMessageLast :MutableList<Messagelast>,var mContext:Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+IChat, var mListMessageLast: MutableList<Messagelast>, var mContext: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface IChat{
-        fun chat(chat :Chat)
+    interface IChat {
+        fun chat(chat: Chat)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -30,10 +30,15 @@ IChat,var mListMessageLast :MutableList<Messagelast>,var mContext:Context) : Rec
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ChatHolder) {
 
-            if (mListMessage != null && mListMessage.size > 0 && mListMessageLast.size>0) {
+            if (mListMessage != null && mListMessage.isNotEmpty() && mListMessageLast.isNotEmpty()) {
                 var chat: Chat = mListMessage.get(position)
-                var messagelast =mListMessageLast.get(position)
-               holder.bin(chat,mIChat,messagelast,mContext)
+                var messagelast :Messagelast
+
+                if(position<mListMessageLast.size)
+                    messagelast = mListMessageLast.get(position)
+                else messagelast=Messagelast("")
+
+                holder.bin(chat, mIChat, messagelast, mContext)
 
             }
 
@@ -47,20 +52,34 @@ IChat,var mListMessageLast :MutableList<Messagelast>,var mContext:Context) : Rec
     class ChatHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bin(chat: Chat, mIChat: IChat, messagelast: Messagelast, mContext: Context) {
             itemView.txt_name_friend.text = chat.mFriend
-            if(messagelast.messageLast.isNullOrEmpty()){
-                itemView.txt_message_last.text = Contans.HINH_ANH
-            }else{
-                itemView.txt_message_last.text = messagelast.messageLast
-            }
 
-            itemView.txt_time.text=DateTimeUltil.fotmatTime(messagelast.timeLastSend.toLong(),DateTimeUltil.mTimeFormat)
+            when (messagelast.messageLast) {
+                Contans.STICKER -> itemView.txt_message_last.text = Contans.STICKER
+                Contans.AM_THANH -> itemView.txt_message_last.text = Contans.AM_THANH
+                Contans.HINH_ANH -> itemView.txt_message_last.text = Contans.HINH_ANH
+                else -> itemView.txt_message_last.text = messagelast.messageLast
+            }
+            if (messagelast.timeLastSend != "")
+                itemView.txt_time.text = DateTimeUltil.convertLongToTime(DateTimeUltil.getTimeCurrent().toLong()-messagelast.timeLastSend!!.toLong())
+
+
+          /*  var timeStamp=da
+            if(timeStamp!=0L ){
+                if(((System.currentTimeMillis() - timeStamp) > Contans.TIME_TO_OFFLINE)){
+                    var timeOffLine=DateTimeUltil.convertLongToTime((System.currentTimeMillis() - timeStamp as Long))
+                    itemView.img_light.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.offline))
+
+                }else{
+                    itemView.img_light.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.online))
+
+                }*/
+
+           // }
             Glide.with(mContext).load(chat.mImageFriend).into(itemView.img_image_friend)
             itemView.img_image_friend
             itemView.setOnClickListener {
                 mIChat.chat(chat)
             }
-
         }
     }
-
 }

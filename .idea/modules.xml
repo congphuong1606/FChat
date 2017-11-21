@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fchat.iml" filepath="$PROJECT_DIR$/Fchat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FChat.iml" filepath="$PROJECT_DIR$/FChat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fabscrollanimations/fabscrollanimations.iml" filepath="$PROJECT_DIR$/fabscrollanimations/fabscrollanimations.iml" />
     </modules>
   </component>
 </project>

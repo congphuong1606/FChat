@@ -9,10 +9,15 @@
     android:paddingTop="@dimen/dimen_5dp"
     android:weightSum="10">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_receiver"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_weight="1"
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
-        android:gravity="right"
-        android:id="@+id/ll_message"
+        android:id="@+id/ll_messagess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,27 +28,25 @@
 
 
         <TextView
-            android:id="@+id/txt_message_send"
+            android:id="@+id/txt_message_receiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
             android:text="@string/app_name"
             android:textSize="@dimen/dimen_20sp" />
 
 
         <TextView
-            android:id="@+id/txt_time_send"
+            android:id="@+id/txt_time_receicver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
             android:text="@string/time"
-            android:textSize="@dimen/dimen_10sp" />
+            />
 
     </LinearLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_send"
-        android:layout_width="@dimen/dimen_40dp"
-        android:layout_height="@dimen/dimen_40dp"
-        android:layout_gravity="right"
-        android:layout_weight="2"
-        android:src="@mipmap/ic_launcher" />
+
 </LinearLayout>

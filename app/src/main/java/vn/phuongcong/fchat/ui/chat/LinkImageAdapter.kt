@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_image_small.view.*
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.event.IitemClick
+import java.util.logging.Handler
 
 /**
  * Created by Ominext on 11/3/2017.
@@ -18,7 +19,8 @@ class LinkImageAdapter(var mListImage: MutableList<String>,var mItemClick: Iitem
         var view: View
         view = LayoutInflater.from(parent!!.context).inflate(R.layout.item_image_small, parent, false)
         Log.d("aaaaaaaLinkImage",mListImage.get(position))
-        Glide.with(parent.context).load(mListImage.get(position)).into(view.img_image_small)
+
+        Glide.with(parent.context.applicationContext).load(mListImage.get(position)).into(view.img_image_small)
         view.setOnClickListener{
             mItemClick.iClick(mListImage.get(position))
         }

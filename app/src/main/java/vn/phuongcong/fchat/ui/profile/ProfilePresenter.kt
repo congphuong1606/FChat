@@ -20,7 +20,6 @@ class ProfilePresenter @Inject constructor(var fAuth: FirebaseAuth,
                                            var dbReference: DatabaseReference) {
     fun onSignOut() {
         fAuth.signOut()
-        sPref.edit().clear().commit()
         profileView.onSignOutSuccessful()
     }
 
@@ -42,8 +41,7 @@ class ProfilePresenter @Inject constructor(var fAuth: FirebaseAuth,
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         profileView.onUpdateAvatarSuccessful(avatarUrl)
-                        sPref.edit().putString(Contans.PRE_USER_AVATAR, avatarUrl)
-                                .commit()
+
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -57,8 +55,6 @@ class ProfilePresenter @Inject constructor(var fAuth: FirebaseAuth,
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         profileView.onUpdateNameSuccessful(text)
-                        sPref.edit().putString(Contans.PRE_USER_NAME, text)
-                                .commit()
                     }
                 }
                 .addOnFailureListener { exception ->

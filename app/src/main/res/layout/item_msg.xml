@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -14,13 +15,31 @@
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen_10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_image_friend"
+        <RelativeLayout
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_50dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/bacgroud" />
+            android:layout_gravity="center_vertical">
 
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_image_friend"
+                android:layout_width="@dimen/dimen_40dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:src="@drawable/bacgroud" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:visibility="invisible"
+                android:id="@+id/img_light"
+                android:layout_width="@dimen/dimen_12dp"
+                android:layout_height="@dimen/dimen_12dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/dimen_1dp"
+                android:src="@drawable/online"
+                app:civ_border_color="#fff"
+                app:civ_border_width="0.5dp" />
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -64,6 +83,7 @@
                 android:layout_weight="2"
                 android:text="@string/time" />
         </LinearLayout>
+
     </LinearLayout>
 
     <View

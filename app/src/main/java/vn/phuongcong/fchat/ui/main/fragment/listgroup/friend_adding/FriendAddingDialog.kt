@@ -64,7 +64,7 @@ class FriendAddingDialog() : DialogFragment(), FriendAddingView {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         var builder = AlertDialog.Builder(mContext)
-        builder.setPositiveButton("Ok") { _, _ ->
+        builder.setPositiveButton("Oke") { _, _ ->
             Toast.makeText(mContext, "OK", Toast.LENGTH_SHORT).show()
             for ((index, value) in arrMember.withIndex()) {
                 if (arrCkecked[index]) {

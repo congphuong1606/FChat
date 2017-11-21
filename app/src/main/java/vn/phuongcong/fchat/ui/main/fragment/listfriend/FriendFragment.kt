@@ -1,16 +1,13 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
-import android.support.v7.app.AlertDialog
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.InputType
 import android.view.View
-import android.widget.Toast
-import com.yarolegovich.lovelydialog.LovelyTextInputDialog
-import kotlinx.android.synthetic.main.fragment_friend.*
-import kotlinx.android.synthetic.main.fragment_friend.view.*
+
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
+
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
@@ -18,10 +15,21 @@ import vn.phuongcong.fchat.event.OnFriendClick
 import vn.phuongcong.fchat.ui.adapter.FriendsAdapter
 import vn.phuongcong.fchat.ui.base.BaseFragment
 import javax.inject.Inject
+import android.support.v7.app.AlertDialog
+import android.text.InputType
+import android.widget.Toast
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog
+import kotlinx.android.synthetic.main.fragment_friend.*
+import kotlinx.android.synthetic.main.fragment_friend.view.*
+import vn.phuongcong.fchat.event.OnFabClick
+import vn.phuongcong.fchat.model.Chat
 
 
-class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
+import vn.phuongcong.fchat.ui.chat.ChatActivity
+import vn.phuongcong.fchat.ui.main.MainActivity
 
+
+class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
 
     lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
@@ -42,9 +50,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     override fun initData(v: View) {
         setAdapter(v)
         mPresenter.onLoadFriendIds()
-
-        v.fabAddFriend.setOnClickListener { showAddFrienđiaglog() }
         v.swipeRefreshLayout.setOnRefreshListener { onRefresh() }
+        MainActivity.setOnFabClickListenner(this)
     }
 
     private fun onRefresh() {
@@ -54,10 +61,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
 
     private fun showAddFrienđiaglog() {
         LovelyTextInputDialog(context, R.style.EditTextTintTheme)
-                .setTopColorRes(R.color.colorPrimary)
                 .setTitle(Contans.TITLE_ADD_FRIEND)
                 .setMessage(Contans.REQUEST_INPUT_EMAIL)
-                .setIcon(R.drawable.ic_add)
                 .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
                 .setInputFilter(Contans.EMAIL_FAIL, object : LovelyTextInputDialog.TextFilter {
                     override fun check(text: String): Boolean {
@@ -107,8 +112,14 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick {
     }
 
     override fun onItemClick(friend: User) {
+        var chat= Chat(friend.id,friend.name,friend.avatar,null,null)
+        var intent = Intent(activity, ChatActivity::class.java)
+        intent.putExtra(Contans.CHAT_ITEM, chat)
+        startActivity(intent)
 
-
+    }
+    override fun onFabClickListener() {
+        showAddFrienđiaglog()
     }
 
     override fun onRequestFailure(string: String) {

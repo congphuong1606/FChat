@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.chat
 
+import android.widget.ImageView
 import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.ui.base.BaseView
 
@@ -11,5 +12,9 @@ interface ChatView :BaseView{
     fun getListImageSuccess(absolutePathOfImage: MutableList<String>)
     fun sendImageSuccess(linkImage: MutableList<String>)
     fun sendImageCamereSuccess(downloadUrl: String?)
+    fun sendAudioSuccess(downloadUrl: String)
+    fun isPlaying(imgPlayPause: ImageView)
+    fun isStop(imgPlayPause: ImageView)
+    fun getAvatarUserSendSuccess(image: String)
 
 }
