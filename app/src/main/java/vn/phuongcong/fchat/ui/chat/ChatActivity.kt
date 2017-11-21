@@ -7,10 +7,12 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment
+import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.GridView
 import android.widget.ImageView
@@ -19,9 +21,10 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
 import cafe.adriel.androidaudiorecorder.model.AudioSource
+import com.pawegio.kandroid.runDelayedOnUiThread
 
 import kotlinx.android.synthetic.main.activity_chat.*
-import kotlinx.android.synthetic.main.fragment_friend.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_list_image.*
 import vc908.stickerfactory.StickersKeyboardController
 import vc908.stickerfactory.StickersManager
@@ -31,6 +34,7 @@ import vc908.stickerfactory.ui.view.StickersKeyboardLayout
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.common.utils.KeyboardUtils
 import vn.phuongcong.fchat.common.utils.PermissionUtil
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.event.IitemClick
@@ -57,6 +61,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private var count = 0
     private lateinit var mChatItem: Chat
     private  var mImgUserSend: String=""
+    private var stickersFragment: StickersFragment? = null
 
     companion object {
         private val REQUEST_RECORD_AUDIO = 0
@@ -100,7 +105,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
             }
         }
 
-
+        //KeyboardUtils.hideKeyboard(this,edt_search)
+        edt_input_message.isClickable=false
         if (intent.getSerializableExtra(Contans.CHAT_ITEM) != null) {
             mChatItem = intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
         }
@@ -113,30 +119,27 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
             adapter = mChatAdapter
             layoutManager = LinearLayoutManager(context)
         }
-
-
-        mChatPresenter.getListChat(mChatItem, 0, 5)
-
+        mChatPresenter.getListChat(mChatItem, "-KyoyHdWngdEpSzsiZeg", "-KyoyJSBFJHE_GkEIrv8")
         addEvent()
         sticker()
 
     }
 
     override fun onRefresh() {
-        //  mMessages.clear()
-        //  mChatPresenter.getListChat(mChatItem, 6,5)
-        sr_load_more.isRefreshing = false
+          runOnUiThread {
+            mChatPresenter.getListChat(mChatItem, "-KynVlseJe0XTxRJQJ17","-KyoyGVKvprAlZyzOtWJ") }
     }
 
     private fun sticker() {
-        var stickersFragment: StickersFragment? = null
+        list_image.visibility=View.GONE
+
 
         //supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
         if (stickersFragment == null) {
             stickersFragment = StickersFragment()
             supportFragmentManager.beginTransaction().replace(R.id.sticker_frame, stickersFragment).commit()
         }
-        stickersFragment.setOnStickerSelectedListener(object : OnStickerSelectedListener {
+        stickersFragment!!.setOnStickerSelectedListener(object : OnStickerSelectedListener {
             override fun onStickerSelected(code: String) {
                 addStickerMessage(code, false, System.currentTimeMillis())
             }
@@ -148,7 +151,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         val stickersLayout = findViewById<StickersKeyboardLayout>(R.id.sizeNotifierLayout)
         stickersKeyboardController = StickersKeyboardController.Builder(this)
                 .setStickersKeyboardLayout(stickersLayout)
-                .setStickersFragment(stickersFragment)
+                .setStickersFragment(stickersFragment!!)
                 .setStickersFrame(sticker_frame)
                 .setContentContainer(chat_content)
                 .setStickersButton(btn_stickers)
@@ -193,6 +196,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         btn_send.setOnClickListener(this)
         btn_cancel.setOnClickListener(this)
         btn_send_audio.setOnClickListener(this)
+       // btn_stickers.setOnClickListener(this)
     }
 
     override fun onRequestFailure(string: String) {
@@ -214,6 +218,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
             R.id.btn_send -> sendImageFromStorage(mListPathCurrent)
             R.id.btn_cancel -> cancelChooseImage()
             R.id.btn_send_audio -> chooseAudio()
+          //  R.id.btn_stickers->{list_image.visibility=View.GONE}
         }
     }
 
@@ -243,6 +248,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
     private fun cancelChooseImage() {
         mImageAdapter.checkVisibleImageCheck = true
+        supportFragmentManager.beginTransaction().remove(stickersFragment).commit()
         mImageAdapter.notifyDataSetChanged()
         txt_count_send.text = ""
         count = 0
@@ -298,12 +304,16 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     private fun focusMessage() {
+        edt_input_message.setFocusable(true)
+        edt_input_message.setFocusableInTouchMode(true)
         list_image.visibility = View.GONE
         count = 0
         mListPathCurrent.clear()
     }
 
     private fun chooseImage() {
+        sticker_frame.visibility=View.GONE
+        KeyboardUtils.hideKeyboard(this,edt_input_message)
         mChatPresenter.getListImage(this)
         list_image.visibility = View.VISIBLE
         rc_list_image.apply {
@@ -329,6 +339,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
 
 
         mChatAdapter.notifyDataSetChanged()
+        sr_load_more.isRefreshing = false
         rc_chat.smoothScrollToPosition(messages.size)
     }
 

@@ -74,6 +74,7 @@
 
 
                 <EditText
+                    android:focusable="auto"
                     android:id="@+id/edt_input_message"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_30dp"
@@ -107,7 +108,8 @@
     <FrameLayout
         android:id="@+id/sticker_frame"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:background="@color/red"/>
 </vc908.stickerfactory.ui.view.StickersKeyboardLayout>

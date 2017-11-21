@@ -32,7 +32,12 @@ IChat, var mListMessageLast: MutableList<Messagelast>, var mContext: Context) : 
 
             if (mListMessage != null && mListMessage.isNotEmpty() && mListMessageLast.isNotEmpty()) {
                 var chat: Chat = mListMessage.get(position)
-                var messagelast = mListMessageLast.get(position)
+                var messagelast :Messagelast
+
+                if(position<mListMessageLast.size)
+                    messagelast = mListMessageLast.get(position)
+                else messagelast=Messagelast("")
+
                 holder.bin(chat, mIChat, messagelast, mContext)
 
             }

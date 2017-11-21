@@ -21,7 +21,7 @@
             android:layout_alignParentTop="true"
             android:scaleType="fitStart" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_avatar_sticker_send"
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_40dp"

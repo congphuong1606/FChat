@@ -25,6 +25,7 @@ import vn.phuongcong.fchat.event.OnFabClick
 
 import android.support.design.widget.TabLayout
 import vn.phuongcong.fchat.R.id.*
+import vn.phuongcong.fchat.common.utils.KeyboardUtils
 
 
 class MainActivity : BaseActivity(), MainView {
@@ -48,7 +49,8 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun initData() {
 
-        editText.textWatcher {
+        KeyboardUtils.hideKeyboard(this,edt_search)
+        edt_search.textWatcher {
             beforeTextChanged { text, start, count, after -> }
             onTextChanged { text, start, before, count -> if (timer != null) timer.cancel(); }
             afterTextChanged { text -> if (text!!.length >= 3) after(text) }

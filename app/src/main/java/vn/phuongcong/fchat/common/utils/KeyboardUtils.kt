@@ -18,11 +18,11 @@ object KeyboardUtils {
 
 
     @JvmOverloads
-    fun showDelayedKeyboard(context: Context, view: View, delay: Int = 100) {
+    fun showDelayedKeyboard(context: Context, view: View, delay: Int? = 100) {
         object : AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg params: Void): Void? {
                 try {
-                    Thread.sleep(delay.toLong())
+                    Thread.sleep(delay!!.toLong())
                 } catch (e: InterruptedException) {
                 }
 

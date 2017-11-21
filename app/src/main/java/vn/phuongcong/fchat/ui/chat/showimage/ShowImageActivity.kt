@@ -43,7 +43,7 @@ class ShowImageActivity : BaseActivity(), ChatView {
         indicator.setViewPager(pager)
 
         //listPath=    mChatPresenter.getAllLinkImage(mChatItem)
-        mChatPresenter.getListChat(mChatItem,0,5)
+        mChatPresenter.getListChat(mChatItem,"","")
 
     }
 

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/material_8"
     android:paddingRight="@dimen/material_40">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar_receiver"
         android:layout_width="@dimen/dimen_40dp"
         android:layout_height="@dimen/dimen_40dp"

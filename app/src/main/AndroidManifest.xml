@@ -34,6 +34,7 @@
         <activity android:name="vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity" />
         <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" />
         <activity android:name="vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity"></activity>
+        <activity android:name=".ui.chat.sticker.ShopActivity"></activity>
 
         <service android:name=".service.OnlineService" />
         <provider

@@ -30,8 +30,8 @@
                 android:gravity="center">
 
                 <EditText
-
-                    android:id="@+id/editText"
+                    android:focusable="auto"
+                    android:id="@+id/edt_search"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"

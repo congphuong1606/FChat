@@ -33,10 +33,11 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     private var uid = mAuth.currentUser!!.uid
     private var messages: MutableList<Message> = mutableListOf()
 
-    fun getListChat(mChatItem: Chat, start: Int, end: Int) {
+    fun getListChat(mChatItem: Chat, start: String, end: String) {
         //Todo mType=0: textSend, mType=3: ImageSend, mType=1: textReceiver, mType=2: ImageReceiver
         if (uid != "" && mChatItem != null) {
             //.orderByChild("timeCreate").startAt(start.toDouble()).endAt(end.toDouble()).limitToFirst(end)
+            //.orderByKey().startAt(start).endAt(end)
             databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).addChildEventListener(object : ChildEventListener {
                 override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -48,7 +49,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot?, p1: String?) {
 
-                    var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
+                         var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
                     if (message.mType == 1) {
                         message.mType = 6
                         messages.add(message)
@@ -94,6 +95,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 }
 
                 override fun onChildAdded(dataSnapshot: DataSnapshot?, p1: String?) {
+                    dataSnapshot
                     var message: Message = dataSnapshot!!.getValue(Message::class.java)!!
                     if (message.mType == 1) {
                         message.mType = 7
@@ -101,7 +103,8 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                         chatView.getListMessageSuccess(messages)
                     }
                     if (message.mType == 0) {
-                        if (!message.content.isNullOrEmpty()) {
+                        if (!message.content.isNullOrEmpty())
+                        {
                             message.mType = 1
                             messages.add(message)
                             chatView.getListMessageSuccess(messages)

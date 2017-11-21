@@ -98,6 +98,7 @@ class GroupFragment : BaseFragment, GroupView {
     }
 
     override fun onDestroyComposi() {
+
     }
 
     fun showNameDialog() {
