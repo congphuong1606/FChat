@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAdding
 /**
  * Created by vietcoscc on 10/20/2017.
  */
-class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private var onItemClick: IitemClick) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private var arrGroupKey: ArrayList<String>, private var onItemClick: IitemClick) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var context: Context
 
 
@@ -57,7 +58,7 @@ class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private 
 
             itemView.ivAddMember.setOnClickListener {
                 var activity: AppCompatActivity = itemView.context as AppCompatActivity
-                FriendAddingDialog(itemView.context, "", "").show(activity.fragmentManager, "")
+                FriendAddingDialog(itemView.context, group.adminKey, group.groupKey).show(activity.fragmentManager, "")
             }
 
             itemView.tvGroupName.text = group.groupName
@@ -89,12 +90,16 @@ class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private 
                         override fun onDataChange(p0: DataSnapshot?) {
                             var user: User = p0!!.getValue(User::class.java)!!
                             itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
-                            Thread {
-                                var bm: Bitmap = Picasso.with(itemView.context).load(user.avatar).get()
-                                runOnUiThread {
-                                    itemView.ivAvatar.addImage(bm)
-                                }
-                            }.start()
+                            if (!TextUtils.isEmpty(user.avatar)) {
+                                Thread {
+                                    var bm: Bitmap = Picasso.with(itemView.context).load(user.avatar).get()
+                                    runOnUiThread {
+                                        itemView.ivAvatar.addImage(bm)
+                                    }
+                                }.start()
+                            } else {
+
+                            }
                         }
                     })
                 }
@@ -122,12 +127,16 @@ class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private 
 
     fun addItem(group: Group) {
         arrGorup!!.add(group)
+        arrGroupKey.add(group.groupKey)
         notifyItemInserted(arrGorup!!.size - 1)
     }
 
     fun removeItem(position: Int) {
-        arrGorup!!.removeAt(position)
-        notifyItemRemoved(position)
+        if (position > -1) {
+            arrGorup!!.removeAt(position)
+            arrGroupKey.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
 }

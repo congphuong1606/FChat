@@ -34,7 +34,7 @@
 
         <activity android:name=".ui.chat.FChatActivity" />
         <activity android:name="vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity" />
-        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" />
+        <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name="vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity"></activity>
     </application>
 

@@ -38,8 +38,7 @@ class FriendMemberAdapter(private var arrMember: MutableList<String>, private va
 
     class FriendMemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(uid: String, adminKey: String, groupKey: String, arrCheck: MutableList<Boolean>, position: Int) {
-            itemView.setOnClickListener {
-                itemView.checkBox.isChecked = !itemView.checkBox.isChecked
+            itemView.checkBox.setOnClickListener {
                 arrCheck[position] = itemView.checkBox.isChecked
             }
             DatabaseRef.userInfoRef(uid).addListenerForSingleValueEvent(object:ValueEventListener{

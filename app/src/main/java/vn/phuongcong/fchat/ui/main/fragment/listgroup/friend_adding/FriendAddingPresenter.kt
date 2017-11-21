@@ -1,10 +1,12 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import vn.phuongcong.fchat.common.utils.DatabaseRef
+import vn.phuongcong.fchat.model.OtherGroup
 import javax.inject.Inject
 
 /**
@@ -38,24 +40,36 @@ class FriendAddingPresenter @Inject constructor(var friendAddingView: FriendAddi
         })
     }
 
-    fun receiveCurrentMemberData(adminKey: String, groupKey: String) {
-        DatabaseRef.groupMemberRef(adminKey).child(groupKey).addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-
-            }
-
-            override fun onDataChange(p0: DataSnapshot?) {
-                if (p0!!.exists()) {
-                    var arrMember: MutableList<String> = arrayListOf()
-                    var arrDatasnapshot: Iterable<DataSnapshot> = p0.children
-                    for (member in arrDatasnapshot!!) {
-                        var uid = member.getValue(String::class.java)
-                        arrMember.add(uid!!)
-
-                    }
-                    friendAddingView.showMember(arrMember)
-                }
-            }
-        })
+    fun addMember(memberId: String, adminKey: String, grouKey: String) {
+        DatabaseRef.groupMemberRef(adminKey).child(grouKey).child(memberId).setValue(memberId)
+        var otherGroup = OtherGroup("", adminKey, grouKey)
+        DatabaseRef.othersGroupInfoRef(memberId).child(adminKey + "+" + grouKey).setValue(otherGroup)
     }
+
+    fun removeMember(memberId: String, adminKey: String, grouKey: String) {
+        if (FirebaseAuth.getInstance().currentUser!!.uid.equals(adminKey)) {
+            DatabaseRef.groupMemberRef(adminKey).child(grouKey).child(memberId).removeValue()
+            DatabaseRef.othersGroupInfoRef(memberId).child(adminKey + "+" + grouKey).removeValue()
+        }
+    }
+//    fun receiveCurrentMemberData(adminKey: String, groupKey: String) {
+//        DatabaseRef.groupMemberRef(adminKey).child(groupKey).addValueEventListener(object : ValueEventListener {
+//            override fun onCancelled(p0: DatabaseError?) {
+//
+//            }
+//
+//            override fun onDataChange(p0: DataSnapshot?) {
+//                if (p0!!.exists()) {
+//                    var arrMember: MutableList<String> = arrayListOf()
+//                    var arrDatasnapshot: Iterable<DataSnapshot> = p0.children
+//                    for (member in arrDatasnapshot!!) {
+//                        var uid = member.getValue(String::class.java)
+//                        arrMember.add(uid!!)
+//
+//                    }
+//                    friendAddingView.showMember(arrMember)
+//                }
+//            }
+//        })
+//    }
 }

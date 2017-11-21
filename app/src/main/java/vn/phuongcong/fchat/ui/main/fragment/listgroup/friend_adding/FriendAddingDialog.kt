@@ -50,6 +50,7 @@ class FriendAddingDialog() : DialogFragment(), FriendAddingView {
         this.mContext = context
         this.groupKey = groupKey
         this.adminKey = adminKey
+        adapter = FriendMemberAdapter(arrMember, arrCkecked, adminKey, groupKey)
         injectDependency()
         mPresenter.receiveFriendData(FirebaseAuth.getInstance().currentUser!!.uid)
 //        mPresenter.receiveCurrentMemberData(adminKey, groupKey)
@@ -63,12 +64,16 @@ class FriendAddingDialog() : DialogFragment(), FriendAddingView {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         var builder = AlertDialog.Builder(mContext)
-        builder.setPositiveButton("Ok", object : DialogInterface.OnClickListener {
-            override fun onClick(p0: DialogInterface?, p1: Int) {
-                Toast.makeText(mContext, "OK", Toast.LENGTH_SHORT).show()
+        builder.setPositiveButton("Ok") { _, _ ->
+            Toast.makeText(mContext, "OK", Toast.LENGTH_SHORT).show()
+            for ((index, value) in arrMember.withIndex()) {
+                if (arrCkecked[index]) {
+                    mPresenter.addMember(value, adminKey, groupKey)
+                } else {
+                    mPresenter.removeMember(value, adminKey, groupKey)
+                }
             }
-
-        })
+        }
         builder.setNegativeButton("CANCEL", null)
         dialog = builder.create()
         return dialog
@@ -83,7 +88,7 @@ class FriendAddingDialog() : DialogFragment(), FriendAddingView {
 
     private fun initViews(view: View?) {
         view!!.recyclerViewFriend.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
-        adapter = FriendMemberAdapter(arrMember, arrCkecked, adminKey, groupKey)
+
         view!!.recyclerViewFriend.adapter = adapter
     }
 }

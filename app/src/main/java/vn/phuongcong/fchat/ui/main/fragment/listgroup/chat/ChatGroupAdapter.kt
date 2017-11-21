@@ -58,7 +58,7 @@ class ChatGroupAdapter(private var arrMessage: ArrayList<Message>, private var a
             itemView.recyclerViewImage.adapter = imageAdapter
             itemView.tvContent.text = message.content
             itemView.tvTimeStamp.text = message.timeCreate
-            DatabaseRef.userInfoRef(FirebaseAuth.getInstance().currentUser!!.uid)
+            DatabaseRef.userInfoRef(message.senderId    )
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError?) {
 

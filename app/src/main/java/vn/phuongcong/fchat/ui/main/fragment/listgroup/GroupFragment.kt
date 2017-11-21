@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.github.clans.fab.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_group.view.*
+import kotlinx.android.synthetic.main.item_list_image.*
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.di.module.ViewModule
@@ -30,6 +31,10 @@ import javax.inject.Inject
 
 
 class GroupFragment : BaseFragment, GroupView {
+    override fun removeGroup(groupKey: String) {
+        groupAdapter.removeItem(arrGroupKey.indexOf(groupKey))
+    }
+
     override fun showGroup(group: Group) {
         groupAdapter.addItem(group)
     }
@@ -43,6 +48,8 @@ class GroupFragment : BaseFragment, GroupView {
     }
 
     var arrGroup: ArrayList<Group> = ArrayList()
+    var arrGroupKey: ArrayList<String> = ArrayList()
+
     private var groupAdapter: GroupAdapter
     private lateinit var recylerView: RecyclerView
     private lateinit var fab: FloatingActionButton
@@ -51,7 +58,7 @@ class GroupFragment : BaseFragment, GroupView {
 
     constructor() : super() {
 
-        groupAdapter = GroupAdapter(arrGroup, object : IitemClick {
+        groupAdapter = GroupAdapter(arrGroup, arrGroupKey, object : IitemClick {
             override fun iClick(o: Any) {
 
             }
@@ -95,6 +102,7 @@ class GroupFragment : BaseFragment, GroupView {
 
     override fun initData(v: View) {
         mPresenter.receiveGroupData()
+        mPresenter.receiveOtherGroupData()
     }
 
     override fun onDestroyComposi() {

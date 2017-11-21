@@ -8,4 +8,6 @@ import vn.phuongcong.fchat.ui.base.BaseView
  */
 interface GroupView : BaseView {
     fun showGroup(group: Group)
+
+    fun removeGroup(groupKey: String)
 }

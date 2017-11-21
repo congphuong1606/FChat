@@ -19,7 +19,7 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                                            var listMsgView: ListMsgView,
                                            var sPref: SharedPreferences) {
     // = sPref.getString(Contans.PRE_USER_ID, "")
-    var uid= mAuth.currentUser!!.uid
+    var uid = mAuth.currentUser!!.uid
     var listUserChat = mutableListOf<User>()
 
     fun loadListChat() {
@@ -40,18 +40,19 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     private fun getListMessageLastByUid(listUid: MutableList<String>) {
-        var listMessagelast :MutableList<Messagelast> = mutableListOf()
+        var listMessagelast: MutableList<Messagelast> = mutableListOf()
 
-        for(idFriend in listUid){
-            databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(idFriend).child(Contans.MESSAGE_LAST).addValueEventListener(object : ValueEventListener{
+        for (idFriend in listUid) {
+            databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(idFriend).child(Contans.MESSAGE_LAST).addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot?) {
-
-                    listMessagelast.add(dataSnapshot!!.getValue(Messagelast::class.java)!!)
-                    listMsgView.onLoadListMessagelast(listMessagelast)
+                    if (dataSnapshot!!.getValue(Messagelast::class.java) != null) {
+                        listMessagelast.add(dataSnapshot!!.getValue(Messagelast::class.java)!!)
+                        listMsgView.onLoadListMessagelast(listMessagelast)
+                    }
                 }
             })
         }
@@ -69,12 +70,12 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 for (uid in listUid) {
                     for (user in data!!.children) {
                         if (user.key == uid) {
-                            if(listUserChat.size>0){
-                                if(listUserChat.contains(user.getValue(User::class.java)!!)){
+                            if (listUserChat.size > 0) {
+                                if (listUserChat.contains(user.getValue(User::class.java)!!)) {
                                     listUserChat.add(user.getValue(User::class.java)!!)
                                 }
 
-                            }else{
+                            } else {
                                 listUserChat.add(user.getValue(User::class.java)!!)
                             }
 
@@ -86,8 +87,6 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
         })
 
     }
-
-
 
 
 }

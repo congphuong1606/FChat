@@ -170,7 +170,6 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
         txt_count_send.text = ""
         count = 0
         mListPathCurrent.clear()
-        rl_send.visibility = View.GONE
-
+        list_image.visibility = View.GONE
     }
 }
