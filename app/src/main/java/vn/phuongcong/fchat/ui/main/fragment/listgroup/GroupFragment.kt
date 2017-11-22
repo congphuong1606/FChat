@@ -1,9 +1,13 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup
 
+import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -13,6 +17,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
+import cafe.adriel.androidaudiorecorder.model.AudioChannel
+import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
+import cafe.adriel.androidaudiorecorder.model.AudioSource
 import com.github.clans.fab.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_group.view.*
@@ -27,10 +35,18 @@ import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupActivity
 import vn.phuongcong.fchat.common.utils.CalendarUtils
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.ADMIN_KEY
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.GROUP_KEY
+import vn.phuongcong.fchat.common.utils.PermissionUtil
+import vn.phuongcong.fchat.event.OnFabClick
+import vn.phuongcong.fchat.ui.chat.ChatActivity
+import vn.phuongcong.fchat.ui.main.MainActivity
 import javax.inject.Inject
 
 
-class GroupFragment : BaseFragment, GroupView {
+class GroupFragment : BaseFragment, GroupView, OnFabClick {
+    override fun onFabClickListener() {
+        showNameDialog()
+    }
+
     override fun removeGroup(groupKey: String) {
         groupAdapter.removeItem(arrGroupKey.indexOf(groupKey))
     }
@@ -52,7 +68,6 @@ class GroupFragment : BaseFragment, GroupView {
 
     private var groupAdapter: GroupAdapter
     private lateinit var recylerView: RecyclerView
-    private lateinit var fab: FloatingActionButton
     @Inject
     lateinit var mPresenter: GroupPresenter
 
@@ -81,14 +96,15 @@ class GroupFragment : BaseFragment, GroupView {
         return v
     }
 
-    fun initViews(v: View) {
+    private fun initViews(v: View) {
         recylerView = v.rcvListGroup
-   //    fab = v.fabCreateGroup
+        //    fab = v.fabCreateGroup
         recylerView.adapter = groupAdapter
         recylerView.layoutManager = GridLayoutManager(v!!.context, 2)
-       /* fab.setOnClickListener({
-            showNameDialog()
-        })*/
+        MainActivity.setOnFabClickListenner(this)
+        /* fab.setOnClickListener({
+
+         })*/
     }
 
     override val LayoutId: Int
@@ -129,4 +145,26 @@ class GroupFragment : BaseFragment, GroupView {
 
     }
 
+    private fun chooseAudio() {
+        PermissionUtil.requestPermission(context as Activity, Manifest.permission.RECORD_AUDIO)
+        PermissionUtil.requestPermission(context as Activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                AndroidAudioRecorder.with(this)
+                        // Required
+                        .setFilePath(ChatActivity.AUDIO_FILE_PATH)
+                        .setColor(ContextCompat.getColor(context, R.color.red))
+                        .setRequestCode(ChatActivity.REQUEST_RECORD_AUDIO)
+
+                        // Optional
+                        .setSource(AudioSource.MIC)
+                        .setChannel(AudioChannel.STEREO)
+                        .setSampleRate(AudioSampleRate.HZ_48000)
+                        .setAutoStart(false)
+                        .setKeepDisplayOn(true)
+
+                        // Start recording
+                        .record()
+        }
+    }
 }

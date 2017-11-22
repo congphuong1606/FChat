@@ -28,9 +28,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            multiDexKeepFile file('multidex-config.txt')
-        }
+//        debug {
+//            multiDexKeepFile file('multidex-config.txt')
+//        }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

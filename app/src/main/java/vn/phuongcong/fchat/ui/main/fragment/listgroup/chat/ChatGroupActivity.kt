@@ -1,18 +1,32 @@
 package vn.phuongcong.fchat.ui.main.fragment.listgroup.chat
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
+import cafe.adriel.androidaudiorecorder.model.AudioChannel
+import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
+import cafe.adriel.androidaudiorecorder.model.AudioSource
+import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.item_list_image.*
+import vc908.stickerfactory.StickersKeyboardController
+import vc908.stickerfactory.StickersManager
+import vc908.stickerfactory.ui.OnStickerSelectedListener
+import vc908.stickerfactory.ui.fragment.StickersFragment
+import vc908.stickerfactory.ui.view.StickersKeyboardLayout
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
@@ -20,7 +34,10 @@ import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.model.Message
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.ADMIN_KEY
 import vn.phuongcong.fchat.common.utils.DatabaseRef.Companion.GROUP_KEY
+import vn.phuongcong.fchat.common.utils.KeyboardUtils
+import vn.phuongcong.fchat.common.utils.PermissionUtil
 import vn.phuongcong.fchat.event.IitemClick
+import vn.phuongcong.fchat.ui.chat.ChatActivity
 import vn.phuongcong.fchat.ui.chat.LinkImageAdapter
 import vn.phuongcong.fchat.ui.chat.ListImageAdapter
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
@@ -28,6 +45,10 @@ import java.text.CollationKey
 import javax.inject.Inject
 
 class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
+    override fun clearChatImage() {
+        cancelChooseImage()
+    }
+
     override fun onClick() {
     }
 
@@ -88,6 +109,8 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
     private var mListImage: MutableList<String> = mutableListOf()
     private var mListPathCurrent: MutableList<String> = mutableListOf()
     private var count = 0
+    private var stickersFragment: StickersFragment? = null
+    private var stickersKeyboardController: StickersKeyboardController? = null
     override val contentLayoutID: Int
         get() = R.layout.activity_chat
 
@@ -105,6 +128,7 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
             requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), Contans.EXTERNAL_PERMISSION_REQUEST)
         }
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
+        sticker()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,25 +136,31 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
         setContentView(R.layout.activity_chat)
         initViews()
         mPresenter.receiveChatData(adminKey, groupKey)
-        Log.e("TAG", contentResolver.toString())
     }
 
     private fun initViews() {
         rc_chat.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         chatGroupAdapter = ChatGroupAdapter(arrMessage, arrMessageKey, adminKey, groupKey)
         rc_chat.adapter = chatGroupAdapter
+        edt_input_message.requestFocus()
         btn_send_message.setOnClickListener {
             var content = edt_input_message.text.toString()
-            if (!TextUtils.isEmpty(content)) {
+            Log.e("content : ",content)
+            if (!TextUtils.isEmpty(content) || (TextUtils.isEmpty(content) && mListPathCurrent.size > 0)) {
                 mPresenter.onChat(edt_input_message.text.toString(), mListPathCurrent, adminKey, groupKey)
                 edt_input_message.setText("")
+
             }
+
         }
         btn_send_image.setOnClickListener {
             chooseImage()
         }
         btn_cancel.setOnClickListener {
             cancelChooseImage()
+        }
+        btn_send_audio.setOnClickListener {
+            chooseAudio()
         }
     }
 
@@ -147,29 +177,121 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
 
     }
 
+
     private fun chooseImage() {
-        mPresenter.getListImage(this)
         list_image.visibility = View.VISIBLE
+        sticker_frame.visibility=View.GONE
+        KeyboardUtils.hideKeyboard(this,edt_input_message)
+        mPresenter.getListImage(this)
         rc_list_image.apply {
             adapter = mImageAdapter
             layoutManager = LinearLayoutManager(this@ChatGroupActivity, LinearLayoutManager.HORIZONTAL, false)
         }
+        mListPathCurrent.clear()
     }
-
-    private fun sendImageFromStorage(mListPathCurrent: MutableList<String>) {
-
-        mImageAdapter.checkVisibleImageCheck = true
-        mImageAdapter.notifyDataSetChanged()
-        txt_count_send.text = ""
-        count = 0
-    }
+//
+//    private fun sendImageFromStorage(mListPathCurrent: MutableList<String>) {
+//
+//        mImageAdapter.checkVisibleImageCheck = true
+//        mImageAdapter.notifyDataSetChanged()
+//        txt_count_send.text = ""
+//        count = 0
+//    }
 
     private fun cancelChooseImage() {
         mImageAdapter.checkVisibleImageCheck = true
         mImageAdapter.notifyDataSetChanged()
         txt_count_send.text = ""
-        count = 0
+//        count = 0
         mListPathCurrent.clear()
         list_image.visibility = View.GONE
+    }
+
+    private fun chooseAudio() {
+        PermissionUtil.requestPermission(this, Manifest.permission.RECORD_AUDIO)
+        PermissionUtil.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                AndroidAudioRecorder.with(this)
+                        // Required
+                        .setFilePath(ChatActivity.AUDIO_FILE_PATH)
+                        .setColor(ContextCompat.getColor(this, R.color.red))
+                        .setRequestCode(ChatActivity.REQUEST_RECORD_AUDIO)
+
+                        // Optional
+                        .setSource(AudioSource.MIC)
+                        .setChannel(AudioChannel.STEREO)
+                        .setSampleRate(AudioSampleRate.HZ_48000)
+                        .setAutoStart(false)
+                        .setKeepDisplayOn(true)
+
+                        // Start recording
+                        .record()
+        }
+    }
+
+
+    private fun sticker() {
+        //supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
+        if (stickersFragment == null) {
+            stickersFragment = StickersFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.sticker_frame, stickersFragment).commit()
+        }
+        stickersFragment!!.setOnStickerSelectedListener(object : OnStickerSelectedListener {
+            override fun onStickerSelected(code: String) {
+                addStickerMessage(code, false, System.currentTimeMillis())
+            }
+
+            override fun onEmojiSelected(emoji: String) {
+                edt_input_message.append(emoji)
+            }
+        })
+        val stickersLayout = findViewById<StickersKeyboardLayout>(R.id.sizeNotifierLayout)
+        stickersKeyboardController = StickersKeyboardController.Builder(this)
+                .setStickersKeyboardLayout(stickersLayout)
+                .setStickersFragment(stickersFragment!!)
+                .setStickersFrame(sticker_frame)
+                .setContentContainer(chat_content)
+                .setStickersButton(btn_stickers)
+//                .setChatEdit(edt_input_message)
+                // .setSuggestContainer(rc_chat)
+                .build()
+
+        stickersKeyboardController!!.setKeyboardVisibilityChangeListener(object :
+                StickersKeyboardController.KeyboardVisibilityChangeListener {
+            override fun onTextKeyboardVisibilityChanged(isVisible: Boolean) {
+                if (arrMessage.isNotEmpty()) {
+                    rc_chat.smoothScrollToPosition(arrMessage.size)
+                }
+            }
+
+            override fun onStickersKeyboardVisibilityChanged(isVisible: Boolean) {
+
+            }
+        })
+    }
+
+    private fun addStickerMessage(code: String, b: Boolean, currentTimeMillis: Long) {
+        if (code.isNullOrEmpty()) {
+            return
+        }
+        if (StickersManager.isSticker(code)) {
+            Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
+            mPresenter.sendStickers(code,adminKey,groupKey)
+            StickersManager.onUserMessageSent(true)
+        } else {
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == ChatActivity.REQUEST_RECORD_AUDIO) {
+            if (resultCode == Activity.RESULT_OK) {
+                mPresenter.onSendAudio(ChatActivity.AUDIO_FILE_PATH, adminKey, groupKey)
+            } else if (requestCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
     }
 }
