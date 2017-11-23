@@ -20,6 +20,7 @@ import java.io.File
 import java.io.FileInputStream
 import android.media.AudioManager
 import android.media.MediaPlayer
+import vn.phuongcong.fchat.model.Notification
 
 
 /**
@@ -134,6 +135,8 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
 
         var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext)
+        var noti = Notification("ok",messagetext)
+        databaseReference.child(Contans.NOTIFICATION).child("NotiID").setValue(noti)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }

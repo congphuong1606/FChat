@@ -93,4 +93,5 @@ object Contans {
     val AM_THANH: String?="[Tin nhắn thoại]"
     val AVATAR: String?="avatar"
     val STICKER: String?="[STICKER]"
+    val NOTIFICATION: String?="NOTIFICATION"
 }
