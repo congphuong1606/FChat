@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.SimpleTarget
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -94,15 +96,20 @@ class GroupAdapter constructor(private var arrGorup: ArrayList<Group>?, private 
                             itemView.tvMember.text = "" + itemView.tvMember.text + user.email + ", "
                             if (!TextUtils.isEmpty(user.avatar)) {
                                 Thread {
-                                    var bm = Glide.
-                                            with(itemView.context).
-                                            load(user.avatar).
-                                            asBitmap().
-                                            into(100, 100). // Width and height
-                                            get()
-                                    runOnUiThread {
-                                        itemView.ivAvatar.addImage(bm)
+                                    try {
+                                        var bm = Glide.
+                                                with(itemView.context).
+                                                load(user.avatar).
+                                                asBitmap().
+                                                into(100, 100).get() // Width and height
+
+                                        runOnUiThread {
+                                            itemView.ivAvatar.addImage(bm)
+                                        }
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
                                     }
+
                                 }.start()
                             } else {
 

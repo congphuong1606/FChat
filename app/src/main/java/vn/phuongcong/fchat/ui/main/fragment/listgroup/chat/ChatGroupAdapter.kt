@@ -18,6 +18,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.pawegio.kandroid.runOnUiThread
 import kotlinx.android.synthetic.main.item_audio_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_group.view.*
 import kotlinx.android.synthetic.main.item_image_chat_group.view.*
@@ -110,7 +111,10 @@ class ChatGroupAdapter(private var arrMessage: ArrayList<Message>, private var a
                                 var user: User = p0!!.getValue(User::class.java)!!
                                 if (!TextUtils.isEmpty(user.avatar)) {
                                     Glide.with(itemView.context).load(user.avatar).into(itemView.ivAvatar)
+                                } else {
+                                    Glide.with(itemView.context).load(R.drawable.ic_no_image).into(itemView.ivAvatar)
                                 }
+
                                 if (!TextUtils.isEmpty(user.name)) {
                                     itemView.tvDisplayName.text = user.name
                                 }
@@ -121,23 +125,47 @@ class ChatGroupAdapter(private var arrMessage: ArrayList<Message>, private var a
     }
 
     class ChatGroupAudioViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        var player = MediaPlayer()
+        private var player = MediaPlayer()
+        private var timer = Timer()
+
+
         fun bind(message: Message) {
             itemView.img_avatar_receive_audio
             itemView.txt_time_duration_receiver.text = ""
             itemView.txt_time_receiver_audio.text = ""
 
             itemView.setOnClickListener {
-                player.release()
-                player.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                player.setDataSource(message.audio)
-                player.prepareAsync()
-                player.setOnPreparedListener {
-                    player.start()
-                    itemView.txt_time_duration_receiver.text = "" + player.duration
-                    itemView.txt_time_receiver_audio.text = "" + player.currentPosition
-                    Toast.makeText(itemView.context, "started", Toast.LENGTH_SHORT).show()
+                if (player.isPlaying) {
+                    player.pause()
+                    itemView.img_play_pause_receiver.setImageResource(R.drawable.aar_ic_play)
+                } else {
+                    itemView.img_play_pause_receiver.setImageResource(R.drawable.aar_ic_pause)
+                    player = MediaPlayer()
+                    player.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                    player.setDataSource(message.audio)
+                    player.prepareAsync()
+                    player.setOnPreparedListener {
+                        player.start()
+                        timer.cancel()
+                        timer = Timer()
+                        var timerTask = kotlin.concurrent.timerTask {
+                            runOnUiThread {
+                                itemView.txt_time_receiver_audio.text = "" + player.currentPosition
+                            }
+
+                        }
+                        timer.schedule(timerTask, 0, 1000)
+                        itemView.txt_time_duration_receiver.text = "" + player.duration
+                        itemView.txt_time_receiver_audio.text = "" + player.currentPosition
+                        Toast.makeText(itemView.context, "started", Toast.LENGTH_SHORT).show()
+                    }
+                    player.setOnCompletionListener {
+                        itemView.img_play_pause_receiver.setImageResource(R.drawable.aar_ic_play)
+                        timer.cancel()
+                        timer = Timer()
+                    }
                 }
+
             }
         }
     }
@@ -145,6 +173,23 @@ class ChatGroupAdapter(private var arrMessage: ArrayList<Message>, private var a
     class ChatGroupStickerViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bind(message: Message) {
             StickersManager.with(itemView.context).loadSticker(message.content).into(itemView.img_sticker_receiver)
+            DatabaseRef.userInfoRef(message.senderId).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError?) {
+
+                }
+
+                override fun onDataChange(p0: DataSnapshot?) {
+                    if (p0!!.exists()) {
+                        var user = p0.getValue(User::class.java)
+                        if (!TextUtils.isEmpty(user!!.avatar)) {
+                            Glide.with(itemView.context).load(user!!.avatar).into(itemView.avatar_receiver)
+                        } else {
+                            Glide.with(itemView.context).load(R.drawable.ic_no_image).into(itemView.avatar_receiver)
+                        }
+                    }
+                }
+
+            })
         }
     }
 
