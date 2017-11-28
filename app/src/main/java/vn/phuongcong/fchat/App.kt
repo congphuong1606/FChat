@@ -18,14 +18,23 @@ import vn.phuongcong.fchat.ui.chat.sticker.ShopActivity
 import java.util.HashMap
 
 
-class App : MultiDexApplication () {
+class App : MultiDexApplication() {
     var UID: String? = null
     var UEMAIL: String? = null
     var UNAME: String? = null
     var UAVATAR: String? = null
+    var position: Int = 0
 
     companion object Factory {
-        fun create(): App = App()
+        var instance: App? = null
+
+        fun getIns(): App? {
+            if (instance == null) {
+                instance = App()
+            }
+            return instance
+        }
+
 
     }
 
@@ -39,10 +48,6 @@ class App : MultiDexApplication () {
         component.inject(this)
         MultiDex.install(this)
         FirebaseMessaging.getInstance().subscribeToTopic("Android")
-
-
-
-
 
 
         //sticker

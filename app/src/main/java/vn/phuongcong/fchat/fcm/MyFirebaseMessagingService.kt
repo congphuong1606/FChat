@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.fcm
 
+import android.app.Application
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -7,10 +8,12 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.event.IStatusListener
 import vn.phuongcong.fchat.ui.chat.ChatActivity
@@ -21,7 +24,7 @@ import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
  * Created by Ominext on 11/16/2017.
  */
 class MyFirebaseMessagingService : FirebaseMessagingService(), IStatusListener {
-    private  var keyTest: String=""
+    private var keyTest: String = ""
     var fr: MsgFragment = MsgFragment(this)
     override fun sendStatus(keyID: String) {
         keyTest = keyID
@@ -43,8 +46,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), IStatusListener {
      */
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-
-        if (keyTest == "aaa") {
+        Log.e("onMessageReceived", "" + App.getIns()!!.position)
+        if (App.getIns()!!.position == 0) {
             if (remoteMessage!!.getData().size > 0) {
                 showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("content"))
 

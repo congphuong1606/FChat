@@ -61,9 +61,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private lateinit var mLinkImageAdapter: LinkImageAdapter
     private var count = 0
     private lateinit var mChatItem: Chat
-    private  var mImgUserSend: String=""
+    private var mImgUserSend: String = ""
     private var stickersFragment: StickersFragment? = null
-
     companion object {
         val REQUEST_RECORD_AUDIO = 0
         val AUDIO_FILE_PATH = Environment.getExternalStorageDirectory().path + "/recorded_audio.wav"
@@ -81,7 +80,26 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         App().get(this).plus(ViewModule(this)).injectTo(this)
     }
 
+    override fun onPause() {
+        Log.e("onPause", "" + App.getIns()!!.position)
+        App.getIns()!!.position = 0
+        super.onPause()
+    }
+
+    override fun onResume() {
+        Log.e("onResume", "" + App.getIns()!!.position)
+        App.getIns()!!.position = 1
+        super.onResume()
+    }
+    override fun onDestroy() {
+        Log.e("onDestroy", "" + App.getIns()!!.position)
+        App.getIns()!!.position = 0
+        super.onDestroy()
+    }
+
     override fun initData() {
+        App.getIns()!!.position = 1
+        Log.e("initData", "" + App.getIns()!!.position)
         FirebaseMessaging.getInstance().subscribeToTopic("Android")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -108,7 +126,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         }
 
         //KeyboardUtils.hideKeyboard(this,edt_search)
-        edt_input_message.isClickable=false
+        edt_input_message.isClickable = false
         if (intent.getSerializableExtra(Contans.CHAT_ITEM) != null) {
             mChatItem = intent.getSerializableExtra(Contans.CHAT_ITEM) as Chat
         }
@@ -128,12 +146,13 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     override fun onRefresh() {
-          runOnUiThread {
-            mChatPresenter.getListChat(mChatItem, "-KynVlseJe0XTxRJQJ17","-KyoyGVKvprAlZyzOtWJ") }
+        runOnUiThread {
+            mChatPresenter.getListChat(mChatItem, "-KynVlseJe0XTxRJQJ17", "-KyoyGVKvprAlZyzOtWJ")
+        }
     }
 
     private fun sticker() {
-        list_image.visibility=View.GONE
+        list_image.visibility = View.GONE
 
 
         //supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
@@ -198,7 +217,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         btn_send.setOnClickListener(this)
         btn_cancel.setOnClickListener(this)
         btn_send_audio.setOnClickListener(this)
-       // btn_stickers.setOnClickListener(this)
+        // btn_stickers.setOnClickListener(this)
     }
 
     override fun onRequestFailure(string: String) {
@@ -220,7 +239,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
             R.id.btn_send -> sendImageFromStorage(mListPathCurrent)
             R.id.btn_cancel -> cancelChooseImage()
             R.id.btn_send_audio -> chooseAudio()
-          //  R.id.btn_stickers->{list_image.visibility=View.GONE}
+        //  R.id.btn_stickers->{list_image.visibility=View.GONE}
         }
     }
 
@@ -314,8 +333,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     private fun chooseImage() {
-        sticker_frame.visibility=View.GONE
-        KeyboardUtils.hideKeyboard(this,edt_input_message)
+        sticker_frame.visibility = View.GONE
+        KeyboardUtils.hideKeyboard(this, edt_input_message)
         mChatPresenter.getListImage(this)
         list_image.visibility = View.VISIBLE
         rc_list_image.apply {
