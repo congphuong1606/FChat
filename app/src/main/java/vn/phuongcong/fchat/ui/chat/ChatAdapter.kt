@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_audio_receiver.view.*
 import kotlinx.android.synthetic.main.item_audio_send.view.*
 import kotlinx.android.synthetic.main.item_text_receiver.view.*
@@ -241,8 +242,8 @@ class ChatAdapter(var mMessage: MutableList<Message>, var mContext: Context, var
 
         fun bindReceiverSticker(message: Message, mContext: Context, isend: Isend, chatItem: Chat, mImgUserSend: String) {
             itemView.txt_time_sticker_receiver.text = DateTimeUltil.fotmatTime(message.timeCreate.toLong(), DateTimeUltil.mTimeFormat)
-            Glide.with(mContext).load(mImgUserSend).into(itemView.img_sticker_receiver)
-            Glide.with(mContext).load(mImgUserSend).into(itemView.img_avatar_sticker_send)
+
+            Glide.with(mContext).load(mImgUserSend).into(itemView.avatar_receiver)
             StickersManager.with(mContext)
                     .loadSticker(message.content)
                     .into(itemView.img_sticker_receiver)

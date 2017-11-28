@@ -64,8 +64,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     private var stickersFragment: StickersFragment? = null
 
     companion object {
-        private val REQUEST_RECORD_AUDIO = 0
-        private val AUDIO_FILE_PATH = Environment.getExternalStorageDirectory().path + "/recorded_audio.wav"
+        val REQUEST_RECORD_AUDIO = 0
+        val AUDIO_FILE_PATH = Environment.getExternalStorageDirectory().path + "/recorded_audio.wav"
 
     }
 

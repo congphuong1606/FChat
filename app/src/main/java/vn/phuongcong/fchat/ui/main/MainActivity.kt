@@ -31,7 +31,6 @@ import vn.phuongcong.fchat.common.utils.KeyboardUtils
 class MainActivity : BaseActivity(), MainView {
 
 
-
     @Inject
     lateinit var sPref: SharedPreferences
     @Inject
@@ -48,8 +47,8 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun initData() {
-
-        KeyboardUtils.hideKeyboard(this,edt_search)
+        edt_search.isFocusable = false
+        KeyboardUtils.hideKeyboard(this, edt_search)
         edt_search.textWatcher {
             beforeTextChanged { text, start, count, after -> }
             onTextChanged { text, start, before, count -> if (timer != null) timer.cancel(); }
@@ -73,6 +72,7 @@ class MainActivity : BaseActivity(), MainView {
     override fun showToast(msg: String) {
 
     }
+
     companion object {
         private var onFabClick: OnFabClick? = null
         fun setOnFabClickListenner(onFabClick: OnFabClick) {

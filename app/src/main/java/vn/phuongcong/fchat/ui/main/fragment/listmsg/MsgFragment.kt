@@ -80,7 +80,7 @@ class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat, Swipe
     }
 
     override fun onRequestFailure(string: String) {
-        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(activity, "Fail", Toast.LENGTH_SHORT).show()
     }
 
     override fun showToast(msg: String) {

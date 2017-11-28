@@ -82,7 +82,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 override fun onCancelled(dataError: DatabaseError?) {
                 }
             })
-            databaseReference.child(Contans.CHAT).child(mChatItem.uIdFriend).child(uid).addChildEventListener(object : ChildEventListener {
+            databaseReference.child(Contans.CHAT).child(mChatItem.uIdFriend).child(uid).limitToLast(10).addChildEventListener(object : ChildEventListener {
                 override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
 
                 }
@@ -148,7 +148,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
         var absolutePathOfImage: String? = null
         val uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-        cursor = context.getContentResolver().query(uri, projection, null, null, null)
+        cursor = context.contentResolver.query(uri, projection, null, null, null)
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
         while (cursor.moveToNext()) {
             absolutePathOfImage = cursor.getString(column_index_data)
