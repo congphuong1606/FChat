@@ -77,17 +77,19 @@ dependencies {
     //dùng cho edittext
     implementation 'com.pawegio.kandroid:kandroid:0.8.5@aar'
     //FIRE BASE
-    implementation 'com.google.firebase:firebase-core:11.4.2'
-    implementation 'com.google.firebase:firebase-database:11.4.2'
-    implementation 'com.google.firebase:firebase-firestore:11.4.2'
-    implementation 'com.google.firebase:firebase-storage:11.4.2'
-    implementation 'com.google.firebase:firebase-auth:11.4.2'
-    implementation 'com.google.firebase:firebase-messaging:11.4.2'
+    implementation 'com.google.firebase:firebase-core:11.6.0'
+    implementation 'com.google.firebase:firebase-database:11.6.0'
+    implementation 'com.google.firebase:firebase-firestore:11.6.0'
+    implementation 'com.google.firebase:firebase-storage:11.6.0'
+    implementation 'com.google.firebase:firebase-auth:11.6.0'
+    compile 'com.google.firebase:firebase-messaging:11.6.0'
+
     //DAGGER
     kapt 'com.google.dagger:dagger-compiler:2.7'
     implementation 'com.google.dagger:dagger:2.7'
     compileOnly 'javax.annotation:javax.annotation-api:1.2'
-    //dialog
+
+//dialog
     implementation 'com.yarolegovich:lovely-dialog:1.0.4'
     implementation 'com.github.stfalcon:multiimageview:0.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
@@ -99,6 +101,8 @@ dependencies {
     }
     //Audio
     implementation 'com.github.adrielcafe:AndroidAudioRecorder:0.3.0'
+    //Event bus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
 
     testImplementation 'junit:junit:4.12'

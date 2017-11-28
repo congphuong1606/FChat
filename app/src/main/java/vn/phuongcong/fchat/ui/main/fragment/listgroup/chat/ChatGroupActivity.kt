@@ -203,7 +203,8 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
         txt_count_send.text = ""
 //        count = 0
         mListPathCurrent.clear()
-        list_image.visibility = View.GONE
+        rl_send.visibility = View.GONE
+
     }
 
     private fun chooseAudio() {

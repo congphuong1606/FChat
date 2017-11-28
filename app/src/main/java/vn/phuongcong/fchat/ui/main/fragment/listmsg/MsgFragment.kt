@@ -1,16 +1,20 @@
 package vn.phuongcong.fchat.ui.main.fragment.listmsg
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_listmsg.*
+import org.greenrobot.eventbus.EventBus
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
 import vn.phuongcong.fchat.common.Contans
 import vn.phuongcong.fchat.di.module.ViewModule
+import vn.phuongcong.fchat.event.IStatusListener
 import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.model.User
@@ -19,15 +23,16 @@ import vn.phuongcong.fchat.ui.chat.ChatActivity
 import javax.inject.Inject
 
 
-class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat, SwipeRefreshLayout.OnRefreshListener {
-
-
-
+@SuppressLint("ValidFragment")
+class MsgFragment @SuppressLint("ValidFragment") constructor
+(protected var mIstatus:IStatusListener) : BaseFragment(), ListMsgView, ListMessageAdapter.IChat, SwipeRefreshLayout.OnRefreshListener {
+    @Inject
+    lateinit var mPresenter: ListMsgPresenter
     private lateinit var listMessageAdapter: ListMessageAdapter
     private var mChats: MutableList<Chat> = mutableListOf()
     private var mMessagelasts:MutableList<Messagelast> = mutableListOf()
-    @Inject
-    lateinit var mPresenter: ListMsgPresenter
+
+
     override val LayoutId: Int
         get() = R.layout.fragment_listmsg
 
@@ -91,4 +96,11 @@ class MsgFragment : BaseFragment(), ListMsgView, ListMessageAdapter.IChat, Swipe
         super.onResume()
         mPresenter.loadListChat()
     }
+
+    override fun onStart() {
+        super.onStart()
+    mIstatus.sendStatus("aaa")
+    }
+
+
 }
