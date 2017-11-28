@@ -21,6 +21,7 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.androidaudiorecorder.model.AudioChannel
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate
 import cafe.adriel.androidaudiorecorder.model.AudioSource
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pawegio.kandroid.runDelayedOnUiThread
 
 import kotlinx.android.synthetic.main.activity_chat.*
@@ -81,6 +82,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     override fun initData() {
+        FirebaseMessaging.getInstance().subscribeToTopic("Android")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(

@@ -136,7 +136,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
 
         var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), messagetext)
         var noti = Notification("ok",messagetext)
-        databaseReference.child(Contans.NOTIFICATION).child("NotiID").setValue(noti)
+        databaseReference.child(Contans.NOTIFICATION).push().setValue(noti)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }

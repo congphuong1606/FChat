@@ -1,28 +1,31 @@
 package vn.phuongcong.fchat.fcm
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
-import android.content.Context.NOTIFICATION_SERVICE
 import android.app.NotificationManager
-import android.R.attr.author
-import android.media.RingtoneManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
-import com.google.firebase.messaging.FirebaseMessaging
+import android.util.Log
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import vn.phuongcong.fchat.R
+import vn.phuongcong.fchat.event.IStatusListener
 import vn.phuongcong.fchat.ui.chat.ChatActivity
-import vn.phuongcong.fchat.ui.main.MainActivity
-
+import vn.phuongcong.fchat.ui.main.fragment.listmsg.MsgFragment
 
 
 /**
  * Created by Ominext on 11/16/2017.
  */
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService(), IStatusListener {
+    private  var keyTest: String=""
+    var fr: MsgFragment = MsgFragment(this)
+    override fun sendStatus(keyID: String) {
+        keyTest = keyID
+    }
 
 
     companion object {
@@ -31,10 +34,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     }
-    override fun onCreate() {
-        super.onCreate()
-        FirebaseMessaging.getInstance().subscribeToTopic("Android")
-    }
+
 
     /**
      * Called when message is received.
@@ -44,14 +44,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
 
-        if (remoteMessage!!.getData().size > 0) {
-            showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("content"))
+        if (keyTest == "aaa") {
+            if (remoteMessage!!.getData().size > 0) {
+                showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("content"))
+
+            }
+
+            // Check if message contains a notification payload.
+            if (remoteMessage.getNotification() != null) {
+
+            }
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-
-        }
 
     }
 
@@ -63,12 +67,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)
-                .setContentTitle("New Article: " + title)
+                .setContentTitle(title)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText("By " + content)
+                .setContentText(content)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
+                .setColor(resources.getColor(R.color.blue))
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

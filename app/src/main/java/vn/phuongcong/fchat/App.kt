@@ -10,6 +10,7 @@ import vn.phuongcong.fchat.di.component.DaggerAppComponent
 import vn.phuongcong.fchat.di.module.AppModule
 import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
+import com.google.firebase.messaging.FirebaseMessaging
 import vc908.stickerfactory.StickersManager
 import vc908.stickerfactory.billing.Prices
 import vc908.stickerfactory.utils.Utils
@@ -37,6 +38,7 @@ class App : MultiDexApplication () {
         super.onCreate()
         component.inject(this)
         MultiDex.install(this)
+        FirebaseMessaging.getInstance().subscribeToTopic("Android")
 
 
 
