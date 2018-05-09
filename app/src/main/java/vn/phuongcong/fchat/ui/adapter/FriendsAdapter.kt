@@ -1,5 +1,6 @@
 package vn.phuongcong.fchat.ui.adapter
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -39,16 +40,17 @@ class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick
     }
 
     class FriendsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bindItems(friend: User, listener: OnFriendClick) {
-            var friendAvatar = itemView.findViewById<ImageView>(R.id.friendAvatar)
-            var friendName = itemView.findViewById<TextView>(R.id.tvFriendName)
-            var imvLight = itemView.findViewById<ImageView>(R.id.imvlight)
-            var tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
+            val friendAvatar = itemView.findViewById<ImageView>(R.id.friendAvatar)
+            val friendName = itemView.findViewById<TextView>(R.id.tvFriendName)
+            val imvLight = itemView.findViewById<ImageView>(R.id.imvlight)
+            val tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
 
-            var timeStamp=friend.timeStamp
+            /*val timeStamp=friend.timeStamp
             if(timeStamp!=0L ){
                 if(((System.currentTimeMillis() - timeStamp) > Contans.TIME_TO_OFFLINE)){
-                    var timeOffLine=DateTimeUltil.convertLongToTime((System.currentTimeMillis() - timeStamp as Long))
+                    val timeOffLine=DateTimeUltil.convertLongToTime((System.currentTimeMillis() - timeStamp as Long))
                     imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.offline))
                     tvStatus.setText(Contans.STATUS_OFFLINE+timeOffLine)
                 }else{
@@ -56,11 +58,12 @@ class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick
                     tvStatus.setText(Contans.STATUS_ONLINE)
                 }
 
-            }
+            }*/
             Glide.with(itemView.context).load(friend.avatar)
                     .error(R.drawable.ic_no_image)
                     .into(friendAvatar)
             friendName.text = friend.name
+            tvStatus.text=friend.email
 
             itemView.setOnClickListener {
                 listener.onItemClick(friend)

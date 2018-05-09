@@ -24,17 +24,22 @@ import android.view.View
 import vn.phuongcong.fchat.event.OnFabClick
 
 import android.support.design.widget.TabLayout
+import kotlinx.android.synthetic.main.activity_profile.*
 import vn.phuongcong.fchat.R.id.*
+import vn.phuongcong.fchat.common.utils.DialogUtils
 import vn.phuongcong.fchat.common.utils.KeyboardUtils
+import vn.phuongcong.fchat.ui.profile.ProfilePresenter
 
 
 class MainActivity : BaseActivity(), MainView {
 
-
-    @Inject
-    lateinit var sPref: SharedPreferences
     @Inject
     lateinit var presenter: MainPresenter
+    private var avatar: String? = null
+    private var name: String? = null
+
+    @Inject
+    lateinit var sRef: SharedPreferences
 
     private var timer = Timer()
     private val DELAY: Long = 2000
@@ -47,16 +52,14 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun initData() {
-        edt_search.isFocusable = false
-        KeyboardUtils.hideKeyboard(this, edt_search)
-        edt_search.textWatcher {
-            beforeTextChanged { text, start, count, after -> }
-            onTextChanged { text, start, before, count -> if (timer != null) timer.cancel(); }
-            afterTextChanged { text -> if (text!!.length >= 3) after(text) }
-        }
+        presenter.getUserInfor()
+        avatar = sRef.getString(Contans.PRE_USER_AVATAR, "")
+        name = sRef.getString(Contans.PRE_USER_NAME, "")
+
+        txt_name.text = name
         onViewPager()
-        val uAvatar = sPref.getString(Contans.PRE_USER_AVATAR, "")
-        Glide.with(this).load(uAvatar).error(resources.getDrawable(R.drawable.ic_no_image)).into(profileAction)
+
+        Glide.with(this).load(avatar).error(resources.getDrawable(R.drawable.ic_no_image)).into(profileAction)
         val myIntent = Intent(this, OnlineService::class.java)
         startService(myIntent)
         fab.visibility = View.GONE

@@ -39,12 +39,12 @@ class OnlineService : Service() {
 
     fun updateUserTimeStamp(context: Context) {
         if (isNetworkConnected(context)) {
-            var sPref=context.getSharedPreferences(Contans.SPF_NAME,Context.MODE_PRIVATE)
-            var dbReference=FirebaseDatabase.getInstance().reference
+          /*  val sPref=context.getSharedPreferences(Contans.SPF_NAME,Context.MODE_PRIVATE)
+            val dbReference=FirebaseDatabase.getInstance().reference
             val uId = sPref.getString(Contans.PRE_USER_ID,"")
             if (uId != "") {
                 dbReference.child(Contans.USERS_PATH).child(uId).child(Contans.TIME_STAMP).setValue(System.currentTimeMillis())
-            }
+            }*/
         }
     }
 

@@ -22,11 +22,6 @@ abstract class BaseFragment : Fragment()  {
     }
 
 
-    override fun onDetach() {
-        super.onDetach()
-
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         onDestroyComposi()

@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vn.phuongcong.fchat">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -33,8 +34,8 @@
         <activity android:name="vn.phuongcong.fchat.ui.chat.ChatActivity" />
         <activity android:name="vn.phuongcong.fchat.ui.chat.imagesrc.GridImageActivity" />
         <activity android:name=".ui.main.fragment.listgroup.chat.ChatGroupActivity" />
-        <activity android:name="vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity"></activity>
-        <activity android:name=".ui.chat.sticker.ShopActivity"></activity>
+        <activity android:name="vn.phuongcong.fchat.ui.chat.showimage.ShowImageActivity" />
+        <activity android:name=".ui.chat.sticker.ShopActivity" />
 
         <service android:name=".service.OnlineService" />
         <provider

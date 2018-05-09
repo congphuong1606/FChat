@@ -55,6 +55,7 @@
             </LinearLayout>
 
             <EditText
+                android:text="itutc56@gmail.com"
                 android:windowSoftInputMode="stateAlwaysVisible"
                 android:id="@+id/edtLoginEmail"
                 android:layout_width="match_parent"
@@ -69,6 +70,7 @@
 
 
             <EditText
+                android:text="1234567a@"
                 android:windowSoftInputMode="stateAlwaysVisible"
                 android:id="@+id/edtLoginPass"
                 android:layout_width="match_parent"

@@ -20,12 +20,9 @@ abstract class BaseActivity : AppCompatActivity() {
         onClick()
     }
 
+
     protected abstract fun onClick()
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     protected abstract fun injectDependence()
     protected abstract fun initData()

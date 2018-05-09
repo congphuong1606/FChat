@@ -11,4 +11,6 @@ interface ListMsgView :BaseView{
 
     fun OnLoadListChatSuccess(listChat: MutableList<User>)
     fun onLoadListMessagelast(listMessagelast: MutableList<Messagelast>)
+    fun onDeleteChatSuccess()
+    fun onDeleteChatFail(message: String?)
 }

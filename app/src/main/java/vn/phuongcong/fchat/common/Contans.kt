@@ -94,4 +94,5 @@ object Contans {
     val AVATAR: String?="avatar"
     val STICKER: String?="[STICKER]"
     val NOTIFICATION: String?="NOTIFICATION"
+    val REQUEST_DELETE_CHAT: String="Bạn có muốn xóa tin nhắn với"
 }

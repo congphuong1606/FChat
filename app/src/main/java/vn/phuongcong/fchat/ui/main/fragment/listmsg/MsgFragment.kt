@@ -3,6 +3,7 @@ package vn.phuongcong.fchat.ui.main.fragment.listmsg
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -24,8 +25,30 @@ import javax.inject.Inject
 
 
 @SuppressLint("ValidFragment")
-class MsgFragment @SuppressLint("ValidFragment") constructor
-(protected var mIstatus:IStatusListener) : BaseFragment(), ListMsgView, ListMessageAdapter.IChat, SwipeRefreshLayout.OnRefreshListener {
+open class MsgFragment @SuppressLint("ValidFragment") constructor
+(private var mIstatus:IStatusListener) : BaseFragment(), ListMsgView, ListMessageAdapter.IChat, SwipeRefreshLayout.OnRefreshListener {
+    override fun onDeleteChatSuccess() {
+
+        mPresenter.loadListChat()
+    }
+
+    override fun onDeleteChatFail(message: String?) {
+
+    }
+
+    override fun deleteChat(chat: Chat) {
+        AlertDialog.Builder(context)
+                .setTitle(Contans.TITLE_DELE_FRIEND)
+                .setMessage(Contans.REQUEST_DELETE_CHAT + " ${chat.mFriend} ?")
+                .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    mPresenter.deleteChat(chat)
+
+                }
+                .setNegativeButton(android.R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }.show()
+
+    }
+
     @Inject
     lateinit var mPresenter: ListMsgPresenter
     private lateinit var listMessageAdapter: ListMessageAdapter
@@ -43,14 +66,14 @@ class MsgFragment @SuppressLint("ValidFragment") constructor
     }
 
     override fun initData(v: View) {
-        var rcListMessage = v.findViewById<RecyclerView>(R.id.rc_list_msg)
-         var srLoad =v.findViewById<SwipeRefreshLayout>(R.id.sr_load_chat)
-
+        val rcListMessage = v.findViewById<RecyclerView>(R.id.rc_list_msg)
+         val srLoad =v.findViewById<SwipeRefreshLayout>(R.id.sr_load_chat)
         listMessageAdapter = ListMessageAdapter(mChats, this,mMessagelasts,activity)
         rcListMessage.apply {
             adapter = listMessageAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
         mPresenter.loadListChat()
         srLoad.setOnRefreshListener(this)
     }
@@ -59,9 +82,9 @@ class MsgFragment @SuppressLint("ValidFragment") constructor
 
     }
     override fun onRefresh() {
-        //mChats.clear()
+
         mPresenter.loadListChat()
-        listMessageAdapter.notifyDataSetChanged()
+
         sr_load_chat.isRefreshing=false
     }
     override fun chat(chat: Chat) {
@@ -76,10 +99,10 @@ class MsgFragment @SuppressLint("ValidFragment") constructor
     }
 
     override fun OnLoadListChatSuccess(listChat: MutableList<User>) {
-        var listMessage = mutableListOf<Chat>()
-        for (user in listChat) {
-            listMessage.add(Chat(user.id, user.name, user.avatar,"",null))
-        }
+        val listMessage = mutableListOf<Chat>()
+        listChat.mapTo(listMessage) { Chat(it.id, it.name, it.avatar,"",null) }
+        mChats=listMessage
+
         listMessageAdapter.mListMessage = listMessage
         listMessageAdapter.notifyDataSetChanged()
     }

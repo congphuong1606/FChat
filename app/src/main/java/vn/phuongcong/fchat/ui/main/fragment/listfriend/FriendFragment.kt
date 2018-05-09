@@ -64,24 +64,17 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
                 .setTitle(Contans.TITLE_ADD_FRIEND)
                 .setMessage(Contans.REQUEST_INPUT_EMAIL)
                 .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                .setInputFilter(Contans.EMAIL_FAIL, object : LovelyTextInputDialog.TextFilter {
-                    override fun check(text: String): Boolean {
-                        val matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(text)
-                        return matcher.find()
-                    }
-                })
-                .setConfirmButton(android.R.string.ok, object : LovelyTextInputDialog.OnTextInputConfirmListener {
-                    override fun onTextInputConfirmed(text: String) {
-                        mPresenter.findIDEmail(text)
-
-                    }
-                })
+                .setInputFilter(Contans.EMAIL_FAIL) { text ->
+                    val matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(text)
+                    matcher.find()
+                }
+                .setConfirmButton(android.R.string.ok) { text -> mPresenter.findIDEmail(text) }
                 .show()
     }
 
 
     private fun setAdapter(v: View) {
-        var rcvListFriend = v.findViewById<RecyclerView>(R.id.rcvListFriend)
+        val rcvListFriend = v.findViewById<RecyclerView>(R.id.rcvListFriend)
         rcvListFriend.layoutManager = LinearLayoutManager(context)
         rcvListFriend.setHasFixedSize(true)
         friends = mutableListOf()
@@ -92,7 +85,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
 
     override fun onLoadFriendsSuccess(friend: User) {
         var isExist: Boolean = false
-        for (i: Int in 0..friends.size - 1) {
+        for (i: Int in 0 until friends.size) {
             if (friends[i].id == friend.id) {
                 friends[i] = friend
                 isExist = true
@@ -123,7 +116,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
     }
 
     override fun onRequestFailure(string: String) {
-
+        Toast.makeText(activity,"Email chưa được đăng ký",Toast.LENGTH_SHORT).show()
     }
 
     override fun showToast(msg: String) {
@@ -135,6 +128,8 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
 
     override fun onDeleteFriendSuccess() {
         Toast.makeText(context, Contans.NOTI_DELETE_FRIEND_SUCCESS, Toast.LENGTH_LONG).show()
+        friends.clear()
+        mPresenter.onLoadFriendIds()
     }
 
     override fun onLongItemClick(friend: User, position: Int) {
@@ -145,8 +140,7 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
                 .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
                     dialogInterface.dismiss()
                     mPresenter.deleteFriend(friend.id)
-                    friends.remove(friend)
-                    mAdapter.notifyDataSetChanged()
+
 
                 }
                 .setNegativeButton(android.R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }.show()

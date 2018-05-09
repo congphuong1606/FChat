@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_msg.view.*
 import vn.phuongcong.fchat.R
@@ -21,6 +22,7 @@ IChat, var mListMessageLast: MutableList<Messagelast>, var mContext: Context) : 
 
     interface IChat {
         fun chat(chat: Chat)
+        fun deleteChat(chat: Chat)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -30,9 +32,9 @@ IChat, var mListMessageLast: MutableList<Messagelast>, var mContext: Context) : 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         if (holder is ChatHolder) {
 
-            if (mListMessage != null && mListMessage.isNotEmpty() && mListMessageLast.isNotEmpty()) {
-                var chat: Chat = mListMessage.get(position)
-                var messagelast :Messagelast
+            if (mListMessage.isNotEmpty() && mListMessageLast.isNotEmpty()) {
+                val chat: Chat = mListMessage.get(position)
+                val messagelast :Messagelast
 
                 if(position<mListMessageLast.size)
                     messagelast = mListMessageLast.get(position)
@@ -75,10 +77,15 @@ IChat, var mListMessageLast: MutableList<Messagelast>, var mContext: Context) : 
                 }*/
 
            // }
+            if(chat.mImageFriend.isNotEmpty())
             Glide.with(mContext).load(chat.mImageFriend).into(itemView.img_image_friend)
-            itemView.img_image_friend
+
             itemView.setOnClickListener {
                 mIChat.chat(chat)
+            }
+            itemView.setOnLongClickListener{
+                mIChat.deleteChat(chat)
+                return@setOnLongClickListener true
             }
         }
     }

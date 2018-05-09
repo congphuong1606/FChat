@@ -56,14 +56,25 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
+                if (dataSnapshot.value == null) {
                     friendView.onRequestFailure(Contans.EMAIL_NOT_FOUND)
                 } else {
                     val id = (dataSnapshot.value as HashMap<*, *>).keys.iterator().next().toString()
-                    if (id.equals(sPref.getString(Contans.PRE_USER_ID, ""))) {
+                    if (id == sPref.getString(Contans.PRE_USER_ID, "")) {
                         friendView.onRequestFailure(Contans.EMAIL_OF_ME)
                     } else {
                         dbReference.child(Contans.FRIEND_PATH).child(sPref.getString(Contans.PRE_USER_ID, "")).child(id).setValue(id)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        loadFriends(id)
+                                        friendView.onAddFriendSuccessful()
+                                    }
+                                }
+                                .addOnFailureListener {
+                                    friendView.onRequestFailure(Contans.ADD_FRIEND_NOT_FOUND)
+                                }
+
+                        dbReference.child(Contans.FRIEND_PATH).child(id).child(sPref.getString(Contans.PRE_USER_ID, "")).setValue(sPref.getString(Contans.PRE_USER_ID, ""))
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         loadFriends(id)
@@ -77,12 +88,12 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                 }
             }
 
-        });
+        })
 
     }
 
     fun deleteFriend(id: String) {
-        var uid = sPref.getString(Contans.PRE_USER_ID, "")
+        val uid = sPref.getString(Contans.PRE_USER_ID, "")
         dbReference.child(Contans.FRIEND_PATH).child(uid).child(id).removeValue()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful)

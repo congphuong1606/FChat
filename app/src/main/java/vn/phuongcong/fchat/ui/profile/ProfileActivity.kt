@@ -58,8 +58,8 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
         email = sRef.getString(Contans.PRE_USER_EMAIL, "")
         accId = sRef.getString(Contans.PRE_USER_ID, "")
         Glide.with(this).load(avatar).error(resources.getDrawable(R.drawable.ic_no_image)).into(imvAvatar)
-        tvAccName.setText(name)
-        tvAccEmail.setText(email)
+        tvAccName.text = name
+        tvAccEmail.text = email
 
     }
 
@@ -93,32 +93,19 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
     }
 
 
-
-
     private fun showDialogChangName() {
         LovelyTextInputDialog(this, R.style.EditTextTintTheme)
                 .setMessage(Contans.REQUEST_INPUT_NEW_ACCOUNT)
-                .setInputFilter(Contans.OLD_NAME, object : LovelyTextInputDialog.TextFilter {
-                    override fun check(text: String): Boolean {
-                        if (text.equals(name))
-                            return false
-                        else return true
-                    }
-                })
-                .setInputFilter(Contans.NAME_NOT_NULL, object : LovelyTextInputDialog.TextFilter {
-                    override fun check(text: String): Boolean {
-                        if (text.isNotEmpty()) {
-                            return true
-                        } else return false
-                    }
-
-                })
-                .setConfirmButton(android.R.string.ok, object : LovelyTextInputDialog.OnTextInputConfirmListener {
-                    override fun onTextInputConfirmed(text: String) {
-                        newName=text
-                        showDialogConfirm(Contans.CF_CHANGE_NAME, Contans.REQUEST_CONFRIM_CHANGE_ACOUNT)
-                    }
-                })
+                .setInputFilter(Contans.OLD_NAME) { text ->
+                    !text.equals(name)
+                }
+                .setInputFilter(Contans.NAME_NOT_NULL) { text ->
+                    text.isNotEmpty()
+                }
+                .setConfirmButton(android.R.string.ok) { text ->
+                    newName = text
+                    showDialogConfirm(Contans.CF_CHANGE_NAME, Contans.REQUEST_CONFRIM_CHANGE_ACOUNT)
+                }
                 .show()
     }
 
@@ -131,7 +118,6 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
         }
 
     }
-
 
 
     private fun requestStoragePermission() {
@@ -147,7 +133,7 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
     private fun isReadStorageAllowed(): Boolean {
         val result = ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        return if (result == PackageManager.PERMISSION_GRANTED) true else false
+        return result == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -157,7 +143,7 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
                 startActivityForResult(Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI), Contans.PIC_CHOOSE_CODE)
             } else {
-                dialogUtils.showInfor(this,Contans.REQUEST_PERMISION_WRITE_STORAGE)
+                dialogUtils.showInfor(this, Contans.REQUEST_PERMISION_WRITE_STORAGE)
             }
         }
     }
@@ -170,20 +156,21 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
         super.onActivityResult(requestCode, resultCode, data)
         var bitmap: Bitmap? = null
         if (resultCode == RESULT_OK) {
-            when(requestCode){
-                Contans.PIC_TAKE_CODE-> bitmap = (data.getExtras())!!.get("data") as Bitmap
-                Contans.PIC_CHOOSE_CODE-> bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.data)
+            when (requestCode) {
+                Contans.PIC_TAKE_CODE -> bitmap = (data.extras)!!.get("data") as Bitmap
+                Contans.PIC_CHOOSE_CODE -> bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, data.data)
             }
         }
         if (bitmap != null) {
             val imgB = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 60, imgB)
-            newAvatar=imgB.toByteArray()
-            showDialogConfirm(Contans.CF_CHANGE_AVATAR,Contans.REQUEST_CONFRIM_CHANGE_AVATAR)
+            newAvatar = imgB.toByteArray()
+            showDialogConfirm(Contans.CF_CHANGE_AVATAR, Contans.REQUEST_CONFRIM_CHANGE_AVATAR)
 
         }
     }
-    private fun showDialogConfirm(key: Int,msg:String) {
+
+    private fun showDialogConfirm(key: Int, msg: String) {
         AlertDialog.Builder(this).setMessage(msg)
                 .setPositiveButton(android.R.string.ok) { a, i ->
                     dialogUtils.showLoading()
@@ -196,23 +183,26 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
                 }
                 .setNegativeButton(android.R.string.cancel) { a, i -> a.dismiss() }.show()
     }
+
     override fun onUpdateNameSuccessful(name: String) {
         editSRef.putString(Contans.PRE_USER_NAME, name).commit()
         dialogUtils.hideLoading()
-        tvAccName.setText(name)
-        dialogUtils.showInfor(this,Contans.CHANGE_NAME_SUCCESS)
+        tvAccName.text = name
+        dialogUtils.showInfor(this, Contans.CHANGE_NAME_SUCCESS)
 
     }
+
     override fun onUpdateAvatarSuccessful(avatarUrl: String) {
         editSRef.putString(Contans.PRE_USER_AVATAR, avatarUrl).commit()
         dialogUtils.hideLoading()
         Glide.with(this).load(avatarUrl).into(imvAvatar)
-        dialogUtils.showInfor(this,Contans.CHANGE_AVATAR_SUCCESS)
+        dialogUtils.showInfor(this, Contans.CHANGE_AVATAR_SUCCESS)
 
     }
+
     override fun onUpdatePassWordSuccessfull() {
         dialogUtils.hideLoading()
-        dialogUtils.showInfor(this,Contans.CHANGE_PASS_SUCCESS)
+        dialogUtils.showInfor(this, Contans.CHANGE_PASS_SUCCESS)
     }
 
     override fun onRequestFailure(error: String) {
@@ -237,7 +227,7 @@ class ProfileActivity : BaseActivity(), ProfileView, OnPhotoListener {
                     if (repeatNewPass.isNotEmpty()) {
                         if (!newPass.equals(oldPass)) {
                             if (newPass.equals(repeatNewPass)) {
-                                showDialogConfirm(Contans.CF_CHANGE_PASS,Contans.REQUEST_CONFRIM_CHANGE_PASS)
+                                showDialogConfirm(Contans.CF_CHANGE_PASS, Contans.REQUEST_CONFRIM_CHANGE_PASS)
                                 passDialog.dismiss()
                             } else {
                                 passDialog.repeatNewPass.requestFocus()

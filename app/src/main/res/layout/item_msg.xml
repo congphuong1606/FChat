@@ -25,7 +25,7 @@
                 android:id="@+id/img_image_friend"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_50dp"
-                android:src="@drawable/bacgroud" />
+                android:src="@drawable/ic_no_image" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:visibility="invisible"

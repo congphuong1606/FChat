@@ -23,29 +23,15 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <RelativeLayout
+            <LinearLayout
+                android:paddingLeft="@dimen/fab_margin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:focusable="auto"
-                    android:id="@+id/edt_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/profileAction"
-                    android:background="@drawable/searchbox"
-                    android:drawableLeft="@drawable/ic_search_black"
-                    android:drawablePadding="10dp"
-                    android:hint="tìm kiếm"
-                    android:padding="5dp"
-                    android:textColor="@color/red"
-                    android:textColorHint="#FFB7B7B7">
 
-                </EditText>
 
                 <de.hdodenhof.circleimageview.CircleImageView
 
@@ -55,9 +41,15 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_no_image" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_name"
+                    android:text="Nguyen Thanh Nam"
+                    android:textSize="20sp"/>
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 
@@ -99,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:fabSize="mini"
+        android:visibility="gone"
         android:clickable="true"
         app:layout_behavior="vn.phuongcong.fchat.common.utils.ScrollAwareFABBehavior"
         android:layout_margin="@dimen/activity_horizontal_margin"

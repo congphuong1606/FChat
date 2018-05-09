@@ -102,28 +102,19 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         Log.e("initData", "" + App.getIns()!!.position)
         FirebaseMessaging.getInstance().subscribeToTopic("Android")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED|| checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
                 if (shouldShowRequestPermissionRationale(
                         Manifest.permission.CAMERA)) {
 
                 } else {
 
                 }
-                requestPermissions(arrayOf(Manifest.permission.CAMERA), Contans.CAMERA_PERMISSION_REQUEST)
 
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA), Contans.EXTERNAL_PERMISSION_REQUEST)
             }
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (shouldShowRequestPermissionRationale(
-                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-                } else {
-
-                }
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), Contans.EXTERNAL_PERMISSION_REQUEST)
-            }
         }
+
 
         //KeyboardUtils.hideKeyboard(this,edt_search)
         edt_input_message.isClickable = false
@@ -133,7 +124,6 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
         mChatPresenter.getAvatarUserSend()
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
         mChatAdapter = ChatAdapter(mMessage = mMessages, mContext = this, isend = this, chatItem = mChatItem, mImgUserSend = mImgUserSend)
-
         rc_chat.apply {
             setHasFixedSize(true)
             adapter = mChatAdapter
@@ -146,9 +136,7 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     }
 
     override fun onRefresh() {
-        runOnUiThread {
-            mChatPresenter.getListChat(mChatItem, "-KynVlseJe0XTxRJQJ17", "-KyoyGVKvprAlZyzOtWJ")
-        }
+        sr_load_more.isRefreshing = false
     }
 
     private fun sticker() {

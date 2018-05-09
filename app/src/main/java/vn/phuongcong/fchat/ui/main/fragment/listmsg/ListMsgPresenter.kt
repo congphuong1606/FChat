@@ -5,6 +5,7 @@ import vn.phuongcong.fchat.common.Contans
 import javax.inject.Inject
 import android.content.SharedPreferences
 import com.google.firebase.database.*
+import vn.phuongcong.fchat.model.Chat
 import vn.phuongcong.fchat.model.Messagelast
 import vn.phuongcong.fchat.model.User
 
@@ -20,23 +21,21 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
     var listUserChat = mutableListOf<User>()
 
     fun loadListChat() {
-        databaseReference.child(Contans.CHAT).child(uid).addValueEventListener(object : ValueEventListener{
+        databaseReference.child(Contans.CHAT).child(uid).addValueEventListener(object : ValueEventListener {
 
             override fun onCancelled(databaseError: DatabaseError?) {
                 listMsgView.onRequestFailure(databaseError.toString())
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot?) {
-                var listUid = mutableListOf<String>()
-                for (user in dataSnapshot!!.children) {
-                    listUid.add(user.key.toString())
-                }
-                if(listUid.size==dataSnapshot.children.count())
-                getProfileByUid(listUid)
+                val listUid = mutableListOf<String>()
+                dataSnapshot!!.children.mapTo(listUid) { it.key.toString() }
+                if (listUid.size == dataSnapshot.children.count())
+                    getProfileByUid(listUid)
 
-                   if(databaseReference.child(Contans.MESSAGE_LAST).child(uid)!=null){
-                       getListMessageLastByUid(listUid)
-                   }
+                if (databaseReference.child(Contans.MESSAGE_LAST).child(uid) != null) {
+                    getListMessageLastByUid(listUid)
+                }
 
             }
         })
@@ -55,14 +54,14 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot?) {
-                    for (chil in dataSnapshot!!.children){
-                        var messageLast:Messagelast= chil.getValue(Messagelast::class.java)!!
+                    for (chil in dataSnapshot!!.children) {
+                        val messageLast: Messagelast = chil.getValue(Messagelast::class.java)!!
                         listMessagelast.add(messageLast)
                     }
 
-                   // if(listMessagelast.size==listUid.size){
+                    if (listMessagelast.size == listUid.size) {
                         listMsgView.onLoadListMessagelast(listMessagelast)
-                  //  }
+                    }
 
                 }
             })
@@ -90,10 +89,29 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                         }
                     }
                 }
-                if(listUserChat.size==listUid.size){
+                if (listUserChat.size == listUid.size) {
                     listMsgView.OnLoadListChatSuccess(listUserChat)
+                    listUserChat= mutableListOf()
                 }
             }
         })
+    }
+
+    fun deleteChat(chat: Chat) {
+        databaseReference.child(Contans.CHAT).child(uid).child(chat.uIdFriend).removeValue()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(chat.uIdFriend).removeValue()
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful)
+                                        listMsgView.onDeleteChatSuccess()
+                                }.addOnFailureListener { exception ->
+                            listMsgView.onDeleteChatFail(exception.message)
+                        }
+                    }
+
+                }.addOnFailureListener { exception ->
+            listMsgView.onDeleteChatFail(exception.message)
+        }
     }
 }

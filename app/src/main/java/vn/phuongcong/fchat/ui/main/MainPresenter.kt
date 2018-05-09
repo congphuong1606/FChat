@@ -19,4 +19,8 @@ class MainPresenter @Inject constructor(var fAuth: FirebaseAuth,
     fun updateUserStatus() {
 
     }
+
+    fun getUserInfor() {
+
+    }
 }
