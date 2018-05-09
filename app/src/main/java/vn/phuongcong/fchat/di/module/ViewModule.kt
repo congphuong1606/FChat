@@ -4,14 +4,16 @@ import dagger.Module
 import dagger.Provides
 import vn.phuongcong.fchat.di.scope.ActivityScope
 import vn.phuongcong.fchat.ui.login.LoginView
-import vn.phuongcong.fchat.ui.main.fragment.addFriend.AddFriendView
-import vn.phuongcong.fchat.ui.main.fragment.chat.ChatView
+import vn.phuongcong.fchat.ui.main.MainView
+
+import vn.phuongcong.fchat.ui.chat.ChatView
 import vn.phuongcong.fchat.ui.main.fragment.listfriend.FriendView
 import vn.phuongcong.fchat.ui.main.fragment.listgroup.GroupView
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.chat.ChatGroupView
+import vn.phuongcong.fchat.ui.main.fragment.listgroup.friend_adding.FriendAddingView
 import vn.phuongcong.fchat.ui.main.fragment.listmsg.ListMsgView
 import vn.phuongcong.fchat.ui.profile.ProfileView
 import vn.phuongcong.fchat.ui.regis.RegisView
-import vn.phuongcong.fchat.ui.splash.SplashActivity
 import vn.phuongcong.fchat.ui.splash.SplashView
 
 /**
@@ -23,12 +25,17 @@ class ViewModule {
     lateinit var regisView: RegisView
     lateinit var groupView: GroupView
     lateinit var chatView: ChatView
-    lateinit var addFriendView: AddFriendView
     lateinit var friendView: FriendView
     lateinit var listMsgView: ListMsgView
     lateinit var profileView: ProfileView
     lateinit var splashView: SplashView
+    lateinit var chatGroupView: ChatGroupView
+    lateinit var mainView: MainView
+    lateinit var friendAddingView: FriendAddingView
 
+    @Provides
+    @ActivityScope
+    fun provideFriendAddingView(): FriendAddingView = friendAddingView
 
     @Provides
     @ActivityScope
@@ -41,24 +48,39 @@ class ViewModule {
     @Provides
     @ActivityScope
     fun provideGroupView(): GroupView = groupView
+
     @Provides
     @ActivityScope
     fun provideChatView(): ChatView = chatView
-    @Provides
-    @ActivityScope
-    fun provideAddFriendView(): AddFriendView = addFriendView
+
     @Provides
     @ActivityScope
     fun provideFriendView(): FriendView = friendView
+
     @Provides
     @ActivityScope
     fun provideListMsgView(): ListMsgView = listMsgView
+
     @Provides
     @ActivityScope
     fun provideProfileView(): ProfileView = profileView
+
     @Provides
     @ActivityScope
     fun provideSplashView(): SplashView = splashView
+
+    @Provides
+    @ActivityScope
+    fun provideMainView(): MainView = mainView
+
+
+    @Provides
+    @ActivityScope
+    fun provideChatGroupView(): ChatGroupView = chatGroupView
+
+    constructor(friendAddingView: FriendAddingView){
+        this.friendAddingView = friendAddingView
+    }
 
     constructor(loginView: LoginView) {
         this.loginView = loginView
@@ -71,24 +93,35 @@ class ViewModule {
     constructor(groupView: GroupView) {
         this.groupView = groupView
     }
+
     constructor(chatView: ChatView) {
         this.chatView = chatView
     }
+
     constructor(friendView: FriendView) {
         this.friendView = friendView
     }
-    constructor(addFriendView: AddFriendView) {
-        this.addFriendView = addFriendView
-    }
+
+
     constructor(listMsgView: ListMsgView) {
         this.listMsgView = listMsgView
     }
+
     constructor(profileView: ProfileView) {
         this.profileView = profileView
     }
 
-    constructor(splashView: SplashView){
-        this.splashView=splashView
+    constructor(splashView: SplashView) {
+        this.splashView = splashView
+    }
+
+    constructor(chatGroupView: ChatGroupView) {
+        this.chatGroupView = chatGroupView
+    }
+
+    constructor(mainView: MainView) {
+        this.mainView = mainView
+
     }
 
 

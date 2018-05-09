@@ -9,7 +9,7 @@ import vn.phuongcong.fchat.di.module.ViewModule
 import javax.inject.Singleton
 
 /**
- * Created by Ominext on 10/12/2017.
+ * Created by Phuongnv on 10/12/2017.
  */
 @Singleton
 @Component(modules = arrayOf(AppModule::class,FirebaseModule::class))

@@ -6,10 +6,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.pawegio.kandroid.i
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import javax.inject.Inject
 
 /**
@@ -35,18 +34,14 @@ class SplashPresenter @Inject constructor(var fAuth: FirebaseAuth,
     private fun getUserDatabase(uid: String){
         val databaseUser: DatabaseReference =
                 dbReference.child(Contans.USERS_PATH).child(uid)
-        databaseUser.addValueEventListener(object : ValueEventListener {
+        databaseUser.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user= dataSnapshot.getValue(User::class.java)
                 if(user!=null){
                     setValue(user)
-                    App().setInforUser(user)
                     splashView.onLognInEd()
                 }
-//
-//                App().UEMAIL=user.email
-//                App().UNAME=user.name
-//                App().UAVATAR=user.avatar
+
 
 
             }

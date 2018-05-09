@@ -8,13 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import vn.phuongcong.fchat.R
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.common.Contans
+import vn.phuongcong.fchat.common.utils.DateTimeUltil
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.event.OnFriendClick
 
 /**
  * Created by Ominext on 10/19/2017.
  */
-class FriendsAdapter(var friends: ArrayList<User>,var listener: OnFriendClick)
+class FriendsAdapter(var friends: MutableList<User>, var listener: OnFriendClick)
     : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 //    lateinit var listener: OnFriendClick
 //    fun onListener(onFriendClick: OnFriendClick) {
@@ -28,25 +30,46 @@ class FriendsAdapter(var friends: ArrayList<User>,var listener: OnFriendClick)
     }
 
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
-        holder.bindItems(friends[position],listener)
+        holder.bindItems(friends[position], listener)
     }
 
     override fun getItemCount(): Int {
         return friends.size
+
     }
 
     class FriendsViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(friend: User, listener: OnFriendClick) {
             var friendAvatar = itemView.findViewById<ImageView>(R.id.friendAvatar)
             var friendName = itemView.findViewById<TextView>(R.id.tvFriendName)
+            var imvLight = itemView.findViewById<ImageView>(R.id.imvlight)
+            var tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
+
+            var timeStamp=friend.timeStamp
+            if(timeStamp!=0L ){
+                if(((System.currentTimeMillis() - timeStamp) > Contans.TIME_TO_OFFLINE)){
+                    var timeOffLine=DateTimeUltil.convertLongToTime((System.currentTimeMillis() - timeStamp as Long))
+                    imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.offline))
+                    tvStatus.setText(Contans.STATUS_OFFLINE+timeOffLine)
+                }else{
+                    imvLight.setImageDrawable(itemView.context.resources.getDrawable(R.drawable.online))
+                    tvStatus.setText(Contans.STATUS_ONLINE)
+                }
+
+            }
             Glide.with(itemView.context).load(friend.avatar)
                     .error(R.drawable.ic_no_image)
                     .into(friendAvatar)
             friendName.text = friend.name
 
             itemView.setOnClickListener {
-                  listener.onItemClick(friend)
+                listener.onItemClick(friend)
             }
+            itemView.setOnLongClickListener {
+                listener.onLongItemClick(friend,adapterPosition)
+                return@setOnLongClickListener true
+            }
+
         }
     }
 }

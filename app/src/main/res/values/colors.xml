@@ -11,10 +11,12 @@
     <color name="lighbrown">#f4f3f3</color>
     <color name="text_color_black">#696868</color>
     <color name="text_color_pink">#fc6a6a</color>
-    <color name="a">#82bdf9</color>
     <color name="text_name_acount">#616060</color>
     <color name="color_text_time">#d6c7c7</color>
     <color name="blue">#224070</color>
     <color name="textginho">#61758e</color>
     <color name="tablayout">#419ed4</color>
+    <color name="online">#10df1a</color>
+    <color name="offline">#959695</color>
+    <color name="chat_bg">#fff</color>
 </resources>

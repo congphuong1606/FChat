@@ -7,4 +7,7 @@ import vn.phuongcong.fchat.ui.base.BaseView
  */
 interface ProfileView:BaseView {
     fun onSignOutSuccessful()
+    fun onUpdateAvatarSuccessful(avatarUrl: String)
+    fun onUpdateNameSuccessful(name: String)
+    fun onUpdatePassWordSuccessfull()
 }

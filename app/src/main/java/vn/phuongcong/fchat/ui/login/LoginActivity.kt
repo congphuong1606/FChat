@@ -3,22 +3,23 @@ package vn.phuongcong.fchat
 
 import android.app.ProgressDialog
 import android.content.SharedPreferences
+import android.view.MotionEvent
+import android.view.View
 import vn.phuongcong.fchat.ui.login.LoginView
 import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.di.module.ViewModule
 import vn.phuongcong.fchat.ui.main.MainActivity
-import vn.phuongcong.fchat.utils.CheckInput
-import vn.phuongcong.fchat.utils.DialogUtils
+import vn.phuongcong.fchat.common.utils.CheckInput
+import vn.phuongcong.fchat.common.utils.DialogUtils
 
 import javax.inject.Inject
-import android.app.Activity
-
 
 
 class LoginActivity : BaseActivity(), LoginView {
+
 
 
     private var email: String? = null
@@ -119,10 +120,11 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onVerified(user: User?) {
         dialogUtils.hideLoading()
-        App().UID=user!!.id
-        App().UEMAIL=user!!.email
-        App().UNAME=user!!.name
-        App().UAVATAR=user!!.avatar
+        prefsEditor.putString(Contans.PRE_USER_ID,user!!.id)
+                .putString(Contans.PRE_USER_EMAIL,user.email)
+                .putString(Contans.PRE_USER_NAME,user.name)
+                .putString(Contans.PRE_USER_AVATAR,user.avatar)
+                .commit()
         onStartActivity(MainActivity::class.java)
         finish()
     }

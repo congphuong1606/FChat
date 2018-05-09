@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 import com.google.firebase.database.DatabaseReference
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.data.User
+import vn.phuongcong.fchat.model.User
 
 
 /**
@@ -16,35 +16,44 @@ import vn.phuongcong.fchat.data.User
  */
 class RegisPresenter @Inject constructor(var regisView: RegisView,
                                          var firebaseAuth: FirebaseAuth,
-                                         var databaseReference: DatabaseReference){
-    fun onSignUp(email:String,pass:String ){
-        firebaseAuth.createUserWithEmailAndPassword(email,pass)
-                .addOnCompleteListener{task: Task<AuthResult> ->
-                    if(task.isSuccessful){
-                        val firebaseUser:FirebaseUser=task.result.user
-                       firebaseUser?.let { firebaseUser ->
-                           sendVeriEmail(firebaseUser)
+                                         var databaseReference: DatabaseReference) {
+    fun onSignUp(email: String, pass: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener { task: Task<AuthResult> ->
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result.user
+                        firebaseUser?.let { firebaseUser ->
+                            sendVeriEmail(firebaseUser)
 
-                       }
+                        }
                     }
                 }
-                .addOnFailureListener{exception ->
+                .addOnFailureListener { exception ->
                     regisView.onRequestFailure(exception.toString())
                 }
     }
 
     private fun sendVeriEmail(firebaseUser: FirebaseUser) {
-        firebaseUser.sendEmailVerification().addOnSuccessListener {
-            regisView.onSignUpSuccessful()
+
+        val user = firebaseAuth.getCurrentUser()
+        if (user != null) {
+            user.sendEmailVerification().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    regisView.onSignUpSuccessful()
+                } else {
+                    regisView.onRequestFailure("lỗi")
+                }
+            }
         }
     }
+
 
     fun onCreatUserDatabase(email: String, pass: String) {
         val id = firebaseAuth.currentUser!!.uid
         val userName = (email.split("@".toRegex()))[0]
-        val currentUser = User(id, userName, email, "")
+        val currentUser = User(id, userName, email, "",System.currentTimeMillis())
         databaseReference.child(Contans.USERS_PATH).child(id).setValue(currentUser).addOnSuccessListener {
-            regisView.onCreateUserSuccessful();
+            regisView.onCreateUserSuccessful()
         }
 
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
     tools:context="vn.phuongcong.fchat.ui.main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -13,24 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:fitsSystemWindows="true"
-        app:theme="@style/CustomActionBar">
-
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="?actionBarSize"
             android:background="@color/colorPrimary"
+            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <RelativeLayout
-
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:gravity="center">
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:focusable="auto"
+                    android:id="@+id/edt_search"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
@@ -47,6 +48,7 @@
                 </EditText>
 
                 <de.hdodenhof.circleimageview.CircleImageView
+
                     android:id="@+id/profileAction"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -63,7 +65,6 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:background="@color/tablayout"
             app:layout_collapseMode="pin">
@@ -89,10 +90,22 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v4.view.ViewPager>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:fabSize="mini"
+        android:clickable="true"
+        app:layout_behavior="vn.phuongcong.fchat.common.utils.ScrollAwareFABBehavior"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        app:layout_anchor="@id/viewPager"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+
     <!-- <FrameLayout
          android:id="@+id/framlayout"
          android:layout_width="match_parent"

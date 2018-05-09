@@ -1,6 +1,7 @@
 package vn.phuongcong.fchat.ui.main.fragment.listfriend
 
-import vn.phuongcong.fchat.data.User
+
+import vn.phuongcong.fchat.model.User
 import vn.phuongcong.fchat.ui.base.BaseView
 
 /**
@@ -8,5 +9,7 @@ import vn.phuongcong.fchat.ui.base.BaseView
  */
 interface FriendView :BaseView{
     fun onLoadFriendsSuccess(friend: User)
+    fun onAddFriendSuccessful()
+    fun onDeleteFriendSuccess()
 
 }
