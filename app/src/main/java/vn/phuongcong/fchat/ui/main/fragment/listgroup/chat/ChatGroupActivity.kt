@@ -26,6 +26,7 @@ import vc908.stickerfactory.StickersKeyboardController
 import vc908.stickerfactory.StickersManager
 import vc908.stickerfactory.ui.OnStickerSelectedListener
 import vc908.stickerfactory.ui.fragment.StickersFragment
+import vc908.stickerfactory.ui.view.BadgedStickersButton
 import vc908.stickerfactory.ui.view.StickersKeyboardLayout
 import vn.phuongcong.fchat.App
 import vn.phuongcong.fchat.R
@@ -128,14 +129,10 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
             requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), Contans.EXTERNAL_PERMISSION_REQUEST)
         }
         mImageAdapter = ListImageAdapter(mListImage, this, this, false)
-        sticker()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        edt_input_message.isClickable=false
         initViews()
         mPresenter.receiveChatData(adminKey, groupKey)
+        sticker()
     }
 
     private fun initViews() {
@@ -145,11 +142,10 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
         edt_input_message.requestFocus()
         btn_send_message.setOnClickListener {
             var content = edt_input_message.text.toString()
-            Log.e("content : ",content)
+            Log.e("content : ", content)
             if (!TextUtils.isEmpty(content) || (TextUtils.isEmpty(content) && mListPathCurrent.size > 0)) {
                 mPresenter.onChat(edt_input_message.text.toString(), mListPathCurrent, adminKey, groupKey)
                 edt_input_message.setText("")
-
             }
 
         }
@@ -161,6 +157,9 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
         }
         btn_send_audio.setOnClickListener {
             chooseAudio()
+        }
+        edt_input_message.setOnClickListener {
+            focusMessage()
         }
     }
 
@@ -180,8 +179,8 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
 
     private fun chooseImage() {
         list_image.visibility = View.VISIBLE
-        sticker_frame.visibility=View.GONE
-        KeyboardUtils.hideKeyboard(this,edt_input_message)
+        sticker_frame.visibility = View.GONE
+        KeyboardUtils.hideKeyboard(this, edt_input_message)
         mPresenter.getListImage(this)
         rc_list_image.apply {
             adapter = mImageAdapter
@@ -233,6 +232,9 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
 
 
     private fun sticker() {
+//        list_image.visibility=View.GONE
+
+
         //supportFragmentManager.findFragmentById(R.id.sticker_frame) as StickersFragment
         if (stickersFragment == null) {
             stickersFragment = StickersFragment()
@@ -254,8 +256,8 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
                 .setStickersFrame(sticker_frame)
                 .setContentContainer(chat_content)
                 .setStickersButton(btn_stickers)
-//                .setChatEdit(edt_input_message)
-                // .setSuggestContainer(rc_chat)
+               .setChatEdit(edt_input_message)
+               // .setSuggestContainer(rc_chat)
                 .build()
 
         stickersKeyboardController!!.setKeyboardVisibilityChangeListener(object :
@@ -271,13 +273,19 @@ class ChatGroupActivity : BaseActivity(), ChatGroupView, IitemClick {
             }
         })
     }
+    private fun focusMessage() {
+        edt_input_message.isFocusable = true
+        edt_input_message.isFocusableInTouchMode = true
+        list_image.visibility = View.GONE
+        count = 0
+        mListPathCurrent.clear()
+    }
 
     private fun addStickerMessage(code: String, b: Boolean, currentTimeMillis: Long) {
         if (code.isNullOrEmpty()) {
             return
         }
         if (StickersManager.isSticker(code)) {
-            Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
             mPresenter.sendStickers(code,adminKey,groupKey)
             StickersManager.onUserMessageSent(true)
         } else {
