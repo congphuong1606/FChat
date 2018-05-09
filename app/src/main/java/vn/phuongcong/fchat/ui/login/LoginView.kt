@@ -10,4 +10,5 @@ interface LoginView: BaseView {
     fun onLoginSuccessfull();
     fun onViriFail()
     fun  onVerified(user: User?)
+    fun loginFail()
 }

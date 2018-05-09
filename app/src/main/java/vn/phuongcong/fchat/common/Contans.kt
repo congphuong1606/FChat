@@ -8,7 +8,7 @@ import android.content.Context
 object Contans {
     val SPF_NAME = "saveUser"
     val VERY_FAIL = "email chưa được xác nhận, vui lòng kiểm tra hộp thư đến "
-    val ERROR_ACOUNT_EXISTED = "com.google.firebase.auth.FirebaseAuthUserCollisionException: The email address is already in use by another account."
+    const val ERROR_ACOUNT_EXISTED = "Email được đăng ký vui lòng chọn email khác"
     val ACOUNT_EXISTED = "địa chỉ email đã được sử dụng cho một tài khoản khác ! hê hê"
     val REGIS_ACTIVITY="regisActivity"
     val REQUEST_CHECK_EMAIL="kiểm tra hộp thư đến email để xác nhận tài khoản mới"
@@ -84,7 +84,7 @@ object Contans {
     val REQUEST_CONFRIM_CHANGE_ACOUNT: String="Tên tài khoản của bạn sẽ được thay đổi"
     val REQUEST_CONFRIM_CHANGE_AVATAR: String="bạn chắc chắn muốn thay đổi ảnh đại diện"
     val REQUEST_CONFRIM_CHANGE_PASS: String="Mật khẩu của bạn sẽ được thay đổi"
-    val REQUEST_PERMISION_WRITE_STORAGE: String="Oops you just denied the permission"
+    const val REQUEST_PERMISION_WRITE_STORAGE: String="Oops you just denied the permission"
     val CHANGE_AVATAR_SUCCESS: String="thay đổi ảnh dại diện thành công"
     val CHANGE_NAME_SUCCESS: String="Thay đổi tên thành công"
     val GROUP_FRAGMENT: Int=2

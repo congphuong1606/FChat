@@ -11,5 +11,6 @@ interface FriendView :BaseView{
     fun onLoadFriendsSuccess(friend: User)
     fun onAddFriendSuccessful()
     fun onDeleteFriendSuccess()
+     fun onFindError(error: String)
 
 }

@@ -86,6 +86,7 @@
 
 
             <CheckBox
+                android:visibility="invisible"
                 android:windowSoftInputMode="stateAlwaysVisible"
                 android:id="@+id/Remember"
                 android:layout_width="wrap_content"

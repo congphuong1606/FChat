@@ -20,6 +20,7 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
     var uid = mAuth.currentUser!!.uid
     var listUserChat = mutableListOf<User>()
 
+
     fun loadListChat() {
         databaseReference.child(Contans.CHAT).child(uid).addValueEventListener(object : ValueEventListener {
 
@@ -91,7 +92,7 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
                 }
                 if (listUserChat.size == listUid.size) {
                     listMsgView.OnLoadListChatSuccess(listUserChat)
-                    listUserChat= mutableListOf()
+                    listUserChat = mutableListOf()
                 }
             }
         })
@@ -100,18 +101,25 @@ class ListMsgPresenter @Inject constructor(var mAuth: FirebaseAuth,
     fun deleteChat(chat: Chat) {
         databaseReference.child(Contans.CHAT).child(uid).child(chat.uIdFriend).removeValue()
                 .addOnCompleteListener { task ->
-                    if (task.isSuccessful){
+                    if (task.isSuccessful) {
                         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(chat.uIdFriend).removeValue()
                                 .addOnCompleteListener { task ->
-                                    if (task.isSuccessful)
-                                        listMsgView.onDeleteChatSuccess()
+                                    if (task.isSuccessful) {
+                                        databaseReference.child(Contans.CHAT).child(chat.uIdFriend).child(uid).removeValue()
+                                                .addOnCompleteListener { task ->
+                                                    if (task.isSuccessful)
+                                                        listMsgView.onDeleteChatSuccess()
+                                                }.addOnFailureListener { exception ->
+                                                    listMsgView.onDeleteChatFail(exception.message)
+                                                }
+                                    }
                                 }.addOnFailureListener { exception ->
-                            listMsgView.onDeleteChatFail(exception.message)
-                        }
+                                    listMsgView.onDeleteChatFail(exception.message)
+                                }
                     }
 
                 }.addOnFailureListener { exception ->
-            listMsgView.onDeleteChatFail(exception.message)
-        }
+                    listMsgView.onDeleteChatFail(exception.message)
+                }
     }
 }

@@ -60,7 +60,7 @@
 
         android:layout_marginBottom="10dp"
         android:gravity="bottom|center"
-        android:text="PhuongCong Copyright  (C) 2017"
+        android:text="fchat Copyright  (C) 2017"
         android:textColor="#ffffff"
         android:textSize="12dp" />
 </LinearLayout>

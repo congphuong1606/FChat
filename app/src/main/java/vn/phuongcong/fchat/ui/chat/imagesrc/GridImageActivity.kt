@@ -20,6 +20,9 @@ import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 class GridImageActivity : BaseActivity(), ChatView, IitemClick, View.OnClickListener {
+    override fun getAvatarUserSendFail() {
+
+    }
 
 
     @Inject

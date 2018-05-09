@@ -193,9 +193,9 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
     }
 
     fun sendMessageImage(linkImage: MutableList<String>, mChatItem: Chat) {
-        var message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent(), null)
+        val message = Message(uid, null, linkImage, DateTimeUltil.getTimeCurrent(), null)
         databaseReference.child(Contans.CHAT).child(uid).child(mChatItem.uIdFriend).push().setValue(message)
-        var messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), Contans.HINH_ANH)
+        val messageLast = Messagelast(DateTimeUltil.getTimeCurrent(), Contans.HINH_ANH)
         databaseReference.child(Contans.MESSAGE_LASTS).child(uid).child(mChatItem.uIdFriend).child(Contans.MESSAGE_LAST).setValue(messageLast)
         databaseReference.child(Contans.MESSAGE_LASTS).child(mChatItem.uIdFriend).child(uid).child(Contans.MESSAGE_LAST).setValue(messageLast)
     }
@@ -273,7 +273,7 @@ class ChatPresenter @Inject constructor(var mAuth: FirebaseAuth,
             }
 
             override fun onCancelled(p0: DatabaseError?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                chatView.getAvatarUserSendFail()
             }
         })
 

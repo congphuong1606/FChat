@@ -71,7 +71,7 @@ class FriendPresenter @Inject constructor(var sPref: SharedPreferences,
                                     }
                                 }
                                 .addOnFailureListener {
-                                    friendView.onRequestFailure(Contans.ADD_FRIEND_NOT_FOUND)
+                                    friendView.onFindError(Contans.ADD_FRIEND_NOT_FOUND)
                                 }
 
                         dbReference.child(Contans.FRIEND_PATH).child(id).child(sPref.getString(Contans.PRE_USER_ID, "")).setValue(sPref.getString(Contans.PRE_USER_ID, ""))

@@ -23,10 +23,10 @@ class LoginPresenter @Inject constructor(var fAuth: FirebaseAuth,
     fun onSignIn(email: String, pass: String) {
         fAuth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener {
-                    loginView.onLoginSuccessfull();
+                    loginView.onLoginSuccessfull()
                 }
                 .addOnFailureListener { exception: Exception ->
-                    loginView.onRequestFailure(exception.toString())
+                    loginView.loginFail()
                 }
     }
 

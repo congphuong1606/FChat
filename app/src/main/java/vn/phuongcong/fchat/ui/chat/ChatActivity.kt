@@ -50,6 +50,7 @@ import javax.inject.Inject
 class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick, ChatAdapter.Isend, SwipeRefreshLayout.OnRefreshListener {
 
 
+
     @Inject
     lateinit var mChatPresenter: ChatPresenter
     private var stickersKeyboardController: StickersKeyboardController? = null
@@ -436,5 +437,8 @@ class ChatActivity : BaseActivity(), ChatView, View.OnClickListener, IitemClick,
     override fun getAvatarUserSendSuccess(image: String) {
         mChatAdapter.mImgUserSend = image
         mChatAdapter.notifyDataSetChanged()
+    }
+    override fun getAvatarUserSendFail() {
+
     }
 }

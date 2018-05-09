@@ -16,5 +16,6 @@ interface ChatView :BaseView{
     fun isPlaying(imgPlayPause: ImageView)
     fun isStop(imgPlayPause: ImageView)
     fun getAvatarUserSendSuccess(image: String)
+    fun getAvatarUserSendFail()
 
 }

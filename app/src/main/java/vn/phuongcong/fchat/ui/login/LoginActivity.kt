@@ -3,23 +3,25 @@ package vn.phuongcong.fchat
 
 import android.app.ProgressDialog
 import android.content.SharedPreferences
-import android.view.MotionEvent
-import android.view.View
-import vn.phuongcong.fchat.ui.login.LoginView
-import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.phuongcong.fchat.common.Contans
-import vn.phuongcong.fchat.model.User
-import vn.phuongcong.fchat.di.module.ViewModule
-import vn.phuongcong.fchat.ui.main.MainActivity
 import vn.phuongcong.fchat.common.utils.CheckInput
 import vn.phuongcong.fchat.common.utils.DialogUtils
-
+import vn.phuongcong.fchat.di.module.ViewModule
+import vn.phuongcong.fchat.model.User
+import vn.phuongcong.fchat.ui.login.LoginView
+import vn.phuongcong.fchat.ui.main.MainActivity
+import vn.phuongcong.fchattranslate.ui.base.BaseActivity
 import javax.inject.Inject
 
 
 class LoginActivity : BaseActivity(), LoginView {
-
+    override fun loginFail() {
+        dialogUtils.hideLoading()
+        if (!isFinishing) {
+            DialogUtils.showErorr(this, "Tài khoản chưa được dăng ký, hoặc sai mật khẩu vui lòng kiểm tra lại")
+        }
+    }
 
 
     private var email: String? = null
@@ -56,12 +58,10 @@ class LoginActivity : BaseActivity(), LoginView {
         edtLoginPass.setText(pass)
         var fromActivity = getIntent().getStringExtra(Contans.KEY_FROM_ACTIVTY)
         fromActivity?.let {
-            if (fromActivity.equals(Contans.REGIS_ACTIVITY)) {
+            if (fromActivity == Contans.REGIS_ACTIVITY) {
                 DialogUtils.showErorr(this, Contans.REQUEST_CHECK_EMAIL)
-            }else {
-                if(pass!!.length>0){
-                    Remember.isChecked=true
-                }else Remember.isChecked=false
+            } else {
+                Remember.isChecked = pass!!.isNotEmpty()
             }
         }
 
@@ -82,16 +82,16 @@ class LoginActivity : BaseActivity(), LoginView {
 
     private fun loginAction() {
         if (CheckInput.checkInPutLogin(edtLoginEmail,
-                edtLoginPass, this)) {
+                        edtLoginPass, this)) {
             dialogUtils.showLoading()
             email = edtLoginEmail.text.toString().trim();
             pass = edtLoginPass.text.toString().trim();
             if (Remember.isChecked) {
-                prefsEditor.putString(Contans.LOGIN_EMAIL,email)
+                prefsEditor.putString(Contans.LOGIN_EMAIL, email)
                         .putString(Contans.LOGIN_PASS, pass)
                         .commit()
 
-            }else{
+            } else {
                 prefsEditor.clear().commit()
             }
             mPresenter.onSignIn(email!!, pass!!)
@@ -100,10 +100,6 @@ class LoginActivity : BaseActivity(), LoginView {
 
 
     override fun onRequestFailure(string: String) {
-        dialogUtils.hideLoading()
-        if (!isFinishing) {
-            DialogUtils.showErorr(this, string)
-        }
 
 
     }
@@ -120,10 +116,10 @@ class LoginActivity : BaseActivity(), LoginView {
 
     override fun onVerified(user: User?) {
         dialogUtils.hideLoading()
-        prefsEditor.putString(Contans.PRE_USER_ID,user!!.id)
-                .putString(Contans.PRE_USER_EMAIL,user.email)
-                .putString(Contans.PRE_USER_NAME,user.name)
-                .putString(Contans.PRE_USER_AVATAR,user.avatar)
+        prefsEditor.putString(Contans.PRE_USER_ID, user!!.id)
+                .putString(Contans.PRE_USER_EMAIL, user.email)
+                .putString(Contans.PRE_USER_NAME, user.name)
+                .putString(Contans.PRE_USER_AVATAR, user.avatar)
                 .commit()
         onStartActivity(MainActivity::class.java)
         finish()

@@ -29,7 +29,10 @@ import vn.phuongcong.fchat.ui.chat.ChatActivity
 import vn.phuongcong.fchat.ui.main.MainActivity
 
 
-class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
+class FriendFragment : BaseFragment(), FriendView, OnFriendClick, OnFabClick {
+    override fun onFindError(error: String) {
+        Toast.makeText(activity, "Email chưa được đăng ký", Toast.LENGTH_SHORT).show()
+    }
 
     lateinit var friends: MutableList<User>
     lateinit var mAdapter: FriendsAdapter
@@ -44,7 +47,6 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
                 .plus(ViewModule(this))
                 .injectTo(this)
     }
-
 
 
     override fun initData(v: View) {
@@ -105,18 +107,19 @@ class FriendFragment : BaseFragment(), FriendView, OnFriendClick ,OnFabClick{
     }
 
     override fun onItemClick(friend: User) {
-        var chat= Chat(friend.id,friend.name,friend.avatar,null,null)
+        var chat = Chat(friend.id, friend.name, friend.avatar, null, null)
         var intent = Intent(activity, ChatActivity::class.java)
         intent.putExtra(Contans.CHAT_ITEM, chat)
         startActivity(intent)
 
     }
+
     override fun onFabClickListener() {
         showAddFrienđiaglog()
     }
 
     override fun onRequestFailure(string: String) {
-        Toast.makeText(activity,"Email chưa được đăng ký",Toast.LENGTH_SHORT).show()
+
     }
 
     override fun showToast(msg: String) {
